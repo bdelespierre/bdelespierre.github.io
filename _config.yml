@@ -1,0 +1,3 @@
+name: Testing Jekyll (with Foundation)
+markdown: redcarpet
+pygments: true

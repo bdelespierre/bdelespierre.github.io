@@ -1,0 +1,21 @@
+
+.hero {
+  background-image: url(/img/hero.png) center center;
+  background-color: #074e68;
+  height: 300px;
+}
+
+section#main-content > .footer-top {
+  background: #074e68;
+  padding: 40px 0;
+  color: white;
+}
+
+section#main-content > .footer-top h4 {
+  color: inherit;
+}
+
+section#main-content > .footer-bottom {
+  background: #333;
+  padding: 24px 0 10px;
+}
