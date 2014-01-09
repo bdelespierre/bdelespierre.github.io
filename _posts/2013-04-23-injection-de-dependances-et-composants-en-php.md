@@ -1,5 +1,6 @@
 ---
 layout: post
+type: article
 title: Injections de dépendances et composants en PHP
 date: 2013-04-23
 category: php

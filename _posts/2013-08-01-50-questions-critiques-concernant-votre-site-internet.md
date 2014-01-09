@@ -1,5 +1,6 @@
 ---
 layout: post
+type: article
 title: 50 questions critiques concernant votre site internet
 date: 2013-08-01
 category: article

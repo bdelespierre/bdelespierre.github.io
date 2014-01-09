@@ -1,5 +1,6 @@
 ---
 layout: post
+type: article
 title: La POO en PHP en 10 minutes (ou moins)
 date: 2013-03-19
 category: php

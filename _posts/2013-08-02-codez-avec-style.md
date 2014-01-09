@@ -1,5 +1,6 @@
 ---
 layout: post
+type: article
 title: Codez avec style
 date: 2013-08-02
 category: article

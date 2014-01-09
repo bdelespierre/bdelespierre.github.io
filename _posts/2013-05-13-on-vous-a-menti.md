@@ -1,8 +1,9 @@
 ---
 layout: post
+type: article
 title: On vous a menti !
 date: 2013-05-13
-category: articles
+category: article
 tags: elearning web developpement tutorial
 ---
 # On vous a menti !

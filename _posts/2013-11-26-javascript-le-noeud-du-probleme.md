@@ -1,5 +1,6 @@
 ---
 layout: post
+type: article
 title: JavaScript, le noeud du problème
 date: 2013-11-26
 category: javascript

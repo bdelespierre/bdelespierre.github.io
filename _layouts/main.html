@@ -1,82 +1,100 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ page.title }}</title>
-  <link rel="stylesheet" href="/components/foundation/css/normalize.css">
-  <link rel="stylesheet" href="/components/foundation/css/foundation.min.css">
-  <link rel="stylesheet" href="/css/main.css">
-  <script src="/components/modernizr/modernizr.js"></script>
-</head>
-<body>
-  <div class="off-canvas-wrap">
-    <div class="inner-wrap">
+<!DOCTYPE HTML>
+<!--
+  Prologue 1.1 by HTML5 UP
+  html5up.net | @n33co
+  Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+  <head>
+    <title>{{ page.title }}</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="{{ page.description }}" />
+    <meta name="keywords" content="{% for keywork in page.tags %}{{ keyword }}{% endfor %}" />
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/css/syntax.css" />
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/skel.min.js"></script>
+    <script src="/js/skel-panels.min.js"></script>
+    <script src="/js/init.js"></script>
+    <!--[if lte IE 8]><script src="/js/html5shiv.js"></script><![endif]-->
+    <noscript>
+      <link rel="stylesheet" href="/css/skel-noscript.css" />
+      <link rel="stylesheet" href="/css/style.css" />
+      <link rel="stylesheet" href="/css/style-wide.css" />
+    </noscript>
+    <!--[if lte IE 9]><link rel="stylesheet" href="/css/ie9.css" /><![endif]-->
+    <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie8.css" /><![endif]-->
+  </head>
+  <body>
 
-      <nav class="tab-bar">
-        <section class="left-small">
-          <a href="" class="left-off-canvas-toggle menu-icon"><span></span></a>
-        </section>
-        <section class="middle tab-bar-section">
-          <h1 class="title"><a href="/">{{ site.name }}</a></h1>
-        </section>
-      </nav>
+    <!-- Header -->
+      <div id="header" class="skel-panels-fixed">
 
-      <aside class="left-off-canvas-menu">
-        <ul class="off-canvas-list">
-          <li><label>Menu</label></li>
-          <li><a href="/articles.html">Articles</a></li>
-          <li><a href="/projets.html">Projets</a></li>
-          <li><a href="/contact.html">Contact</a></li>
-        </ul>
-      </aside>
+        <div class="top">
 
-      <section id="main-content">
+          <!-- Logo -->
+            <div id="logo">
+              <span class="image avatar48"><img src="/images/avatar.jpg" alt=""></span>
+              <h1 id="title"><a href="/">@bdelespierre</a></h1>
+              <span class="byline">Arcaniste PHP</span>
+            </div>
+
+          <!-- Nav -->
+            <nav id="nav">
+              {% if page.type == "article" %}
+              <ul>
+                <!--<li><a href="/" id="top-link" class="skel-panels-ignoreHref"><span class="fa fa-arrow-left">Accueil</span></a></li>-->
+                <li><a href="#article-content" class="skel-panels-ignoreHref" id="articles-link"><span class="fa fa-file-text-o">Article</span></a></li>
+                <li><a href="#article-comments" id="comments-link" class="skel-panels-ignoreHref"><span class="fa fa-comments-o">Commentaires</span></a></li>
+              </ul>
+              {% else %}
+              <ul>
+                <li><a href="#top" id="top-link" class="skel-panels-ignoreHref"><span class="fa fa-home">Intro</span></a></li>
+                <li><a href="#articles" class="skel-panels-ignoreHref" id="articles-link"><span class="fa fa-file-text-o">Articles</span></a></li>
+                <li><a href="#portfolio" id="portfolio-link" class="skel-panels-ignoreHref"><span class="fa fa-th">Portfolio</span></a></li>
+                <li><a href="#about" id="about-link" class="skel-panels-ignoreHref"><span class="fa fa-user">About Me</span></a></li>
+                <li><a href="#contact" id="contact-link" class="skel-panels-ignoreHref"><span class="fa fa-envelope">Contact</span></a></li>
+              </ul>
+              {% endif %}
+            </nav>
+            
+        </div>
+        
+        <div class="bottom">
+
+          <!-- Social Icons -->
+            <ul class="icons">
+              <li><a href="#" class="fa fa-twitter solo"><span>Twitter</span></a></li>
+              <li><a href="#" class="fa fa-google-plus solo"><span>Google+</span></a></li>
+              <li><a href="#" class="fa fa-github solo"><span>Github</span></a></li>
+              <li><a href="#" class="fa fa-rss solo"><span>RSS</span></a></li>
+              <li><a href="#" class="fa fa-envelope solo js-inject-email"><span>Email</span></a></li>
+            </ul>
+        
+        </div>
+      
+      </div>
+
+    <!-- Main -->
+      <div id="main">
+      
         {{ content }}
+      
+      </div>
 
-        <div class="footer-top">
-          <div class="row">
-            <div class="small-4 large-4 columns">
-              <h4>Populaire</h4>
-              <ul>
-                <li>1.1</li>
-                <li>1.2</li>
-                <li>1.3</li>
-                <li>1.4</li>
-              </ul>
-            </div>
-            <div class="small-4 large-4 columns">
-              <h4>Partenaires</h4>
-              <ul>
-                <li>2.1</li>
-                <li>2.2</li>
-                <li>2.3</li>
-                <li>2.4</li>
-              </ul>
-            </div>
-            <div class="small-4 large-4 columns">
-              <h4>Derniers projets</h4>
-              <ul>
-                <li>3.1</li>
-                <li>3.2</li>
-                <li>3.3</li>
-                <li>3.4</li>
-              </ul>
-            </div>
+    <!-- Footer -->
+      <div id="footer">
+        
+        <!-- Copyright -->
+          <div class="copyright">
+            <p>&copy; 2014 Benjamin Delespierre. All rights reserved.</p>
+            <ul class="menu">
+              <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+              <li>Propulsé par <a href="http://jekyllrb.com/">Jekyll</a></li>
+              <li>Hosté sur <a href="https://github.com/">GitHub</a></li>
+            </ul>
           </div>
-        </div>
-        <div class="footer-bottom">
-          <div class="row">
-            <div class="small-8 large-8 columns">Foo</div>
-            <div class="small-4 large-4 columns">Bar</div>
-          </div>
-        </div>
-      </section>
-
-    </div>
-  </div>
-  <script src="/components/jquery/jquery.min.js"></script>
-  <script src="/components/foundation/js/foundation.min.js"></script>
-  <script>$(document).foundation();</script>
-</body>
+        
+      </div>
+  </body>
 </html>

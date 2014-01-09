@@ -1,5 +1,6 @@
 ---
 layout: post
+type: article
 title: PHP fait n'importe quoi avec les closures
 date: 2013-07-31
 category: php

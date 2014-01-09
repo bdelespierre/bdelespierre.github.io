@@ -1,11 +1,11 @@
 ---
 layout: post
+type: article
 title: Bien plus qu'un simple jeton
 date: 2013-12-11
 category: php
 tags: php token pack unpack jeton sécurité web programmation développement
 ---
-# Bien plus qu'un simple jeton
 
 Il est souvent utile de générer des jetons (ou _token_ en anglais) afin de sécuriser une action utilisateur, par exemple pour un mail de réinitialisation de mot de passe, s'assurer qu'un formulaire est bien soumis par la même personne que celle qui l'a demandé, ou encore pour identifier un utilisateur à l'aide d'un cookie. Nous allons voir ensemble comment générer un jeton non-aléatoire et unique qui en plus pourra contenir des données intéressantes pour notre application. Les exemples de code fournis sont en langage PHP mais ces concepts sont applicables à n'importe quel langage.
 
@@ -31,19 +31,21 @@ Par convention, nous allons définir l'identifiant de l'action "réinitialisatio
 
 Nous allons donc partir avec le code suivant:
 
-    <?php
+{% highlight php linenos %}
+<?php
 
-    // nous vient d'une requête en base par exemple
-    $user = (object)array(
-        'id'       => 123456,
-        'name'     => 'Dupont',
-        'surname'  => 'Roger',
-        'email'    => 'roger.dupont@yopmail.com',
-        'password' => 'f4ca703804ff37f3153ce168bd24f066'
-    );
+// nous vient d'une requête en base par exemple
+$user = (object)array(
+    'id'       => 123456,
+    'name'     => 'Dupont',
+    'surname'  => 'Roger',
+    'email'    => 'roger.dupont@yopmail.com',
+    'password' => 'f4ca703804ff37f3153ce168bd24f066'
+);
 
-    // arbitraire
-    define('ACTION_RESET_PASSWORD', 4);
+// arbitraire
+define('ACTION_RESET_PASSWORD', 4);
+{% endhighlight %}
 
 ## Construire la représentation binaire du jeton
 

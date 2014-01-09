@@ -1,5 +1,6 @@
 ---
 layout: post
+type: article
 title: De l'usage correct des closures en PHP
 date: 2013-02-19
 category: php
