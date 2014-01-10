@@ -1,3 +1,7 @@
-name: Testing Jekyll (with Foundation)
+name: Benjamin Delespierre
+description: Ma vie mon oeuvre mon blog
+url: http://bdelespierre.github.io
 markdown: redcarpet
 pygments: true
+exclude: ['blog.sublime-project', 'blog.sublime-workspace']
+permalink: /article/:title

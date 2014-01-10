@@ -6,7 +6,8 @@ date: 2013-07-31
 category: php
 tags: php php.5.4 closures wtf bug static binding
 ---
-# PHP fait n'importe quoi avec les closures
+
+J'ai récemment découvert un comportement étrange avec les closures, après avoir un peu fouillé le problème, je partage avec vous mes découvertes. Accrochez-vous, c'est complêtement bizarre.
 
 ## Vous avez dit "closure" ?
 

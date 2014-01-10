@@ -6,7 +6,6 @@ date: 2013-11-26
 category: javascript
 tags: javascript oop angular backbone node jquery php web programmation development
 ---
-# JavaScript, le noeud du problème
 
 Dans l'histoire des langages, peu ont autant déchainés les passions que JavaScript. Ses détracteurs lui reprochent son manque de cohérence, son typage faible, son acessibilité qui permet de faire tout et n'importe quoi. Ses adeptes lui reconnaissent souplesse, performance et adaptabilité. On parle beaucoup de JavaScript, surtout aujourd'hui, mais plus qu'un débat d'idées c'est une bataille rangée qui fait rage dans la communauté; personne n'aime juste "un peu" JavaScript, on adore ou on déteste.
 

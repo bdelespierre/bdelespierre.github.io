@@ -6,7 +6,6 @@ date: 2013-08-02
 category: article
 tags: programmation oop convention développement web php javascript
 ---
-# Coder avec style
 
 Utiliser une convention de codage est indispensable pour faciliter la (re)lecture de vos codes source. Quand on est débutant on tâtone, on a tendance parfois à oublier l'indentation ou à dépasser largement la taille de l'écran. C'est généralement en déboguant son application et en fouillant méthodiquement son code qu'un développeur se rend compte que celui-ci n'est pas optimal en terme de lisibilité et donc de compréhension. On se  surprend donc souvent à refactorer le code afin de le rendre lisible, clair.
 
