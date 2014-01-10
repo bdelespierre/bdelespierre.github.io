@@ -6,18 +6,15 @@ title: Benjamin Delespierre
 <section id="top" class="one">
   <div class="container">
 
-    <a href="http://ineedchemicalx.deviantart.com/art/Moonscape-381829905" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
-
     <header>
       <h2 class="alt">Bonjour, je suis <strong>Benjamin Delespierre</strong> et je suis<br />développeur web</h2>
     </header>
 
-    <p>Mon métier est ma passion, ma philosophie s'exprime en deux mots: <strong>simplicité</strong> et <strong>cohérence</strong>. J'évangélise souvent en faveur des bonnes pratiques, du respect des conventions et j'écris parfois <a href="#articles">quelques articles</a> pour exprimer mon point de vue ou faire connaitre les technologies qui font mon quotidien.</p>
+    <p>Mon métier est ma passion, ma philosophie s'exprime en deux mots: <strong>simplicité</strong> et <strong>cohérence</strong>. J'évangélise souvent en faveur des bonnes pratiques, du respect des conventions et j'écris parfois <a href="#articles" class="scrolly">quelques articles</a> pour exprimer mon point de vue ou faire connaitre les technologies qui font mon quotidien.</p>
 
     <footer>
       <a href="#articles" class="button scrolly">Mes articles</a>
       <a href="#projects" class="button scrolly">Mes projets</a>
-      <span class="button" id="raptor">Mon ami Fred</span>
     </footer>
 
   </div>
@@ -184,6 +181,8 @@ title: Benjamin Delespierre
 <script src="/js/jquery.raptorize.1.0.js"></script>
 <script>
 $(function () {
+  $("#top footer").append('<span class="button" id="raptor">Mon ami Fred</span>');
+
   var raptorMessages = [
     "J'espère qu'il ne vous a pas fait peur",
     "Fred, arrête d'embêter les gens !",
@@ -197,6 +196,18 @@ $(function () {
   raptorMessages.reverse();
   $("#raptor").raptorize({ complete: function () {
     $('#raptor').html(raptorMessages.pop() || "Raaaawwwrrrr...");
-  }}); 
+  }});
+
+  $(window).resize(function () {
+    var winHeight = window.innerHeight,
+        $top = $('#top'),
+        $topContainer = $(".container", $top);
+
+      $top.css('min-height', winHeight);
+
+      if ($topContainer.height() < winHeight)
+        $topContainer.css('padding-top', ($top.height() - $topContainer.height()) / 2);
+  }).trigger('resize');
+
 });
 </script>

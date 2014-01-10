@@ -1220,3 +1220,8 @@
 		#article .content code .lineno {
 			margin-right: .8em;
 		}
+
+	#top header
+	{
+		margin-top: 2em;
+	}
