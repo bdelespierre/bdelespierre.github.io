@@ -29,14 +29,16 @@ L'objectif est de ne jamais dépasser cette limite de 120 caractères au delà d
 
 Autant que possible, j'essaie de ne pas utiliser les accolades. Par exemple, si un bloc `if` ou `foreach` ne contiens qu'une seule instruction je ne mets pas d'accolage (même s'ils sont imbriqués).
 
-    <?php
+{% highlight php linenos %}
+<?php
 
-    if (isset($_GET['a']))
-        $a = $_GET['a'];
+if (isset($_GET['a']))
+    $a = $_GET['a'];
 
-    if ($a)
-        foreach ($b as $c)
-            echo $c;
+if ($a)
+    foreach ($b as $c)
+        echo $c;
+{% endhighlight %}
 
 Pour ceux qui se poseraient la question: oui, c'est parfaitement valide en PHP. C'est une syntaxe assez proche de Python qui à le mérite d'aller droit à l'essentiel sans rajouter de caractères ou de sauts de lignes inutiles.
 
@@ -44,24 +46,26 @@ Quand les blocs de code sont plus conséquents (ou simplement obligatoires comme
 
 <center><img src="http://www.codinghorror.com/.a/6a0120a85dcdae970b016768a17a2a970b-800wi" alt="break dance chez Osiris ce soir !"><br>(merci à [Coding Horror](http://www.codinghorror.com/blog/2012/07/new-programming-jargon.html))</center>
 
-    <?php
+{% highlight php linenos %}
+<?php
 
-    if ($a) {
-        foreach ($b as $c) {
-            $a += $c;
+if ($a) {
+    foreach ($b as $c) {
+        $a += $c;
 
-            echo $a;
-        }
+        echo $a;
     }
-    else {
-        echo "null (ou false, allez savoir!)";
-    }
+}
+else {
+    echo "null (ou false, allez savoir!)";
+}
 
-    function foo ($bar) {
-        echo $bar;
-    }
+function foo ($bar) {
+    echo $bar;
+}
 
-    foo("hello!");
+foo("hello!");
+{% endhighlight %}
 
 J'utilise cette convention car le caractère fermant du bloc se retrouve au même niveau que la structure de contrôle elle-même. Il est donc plus facile lors de la lecture de retrouver la structure de contrôle depuis la fin de bloc, surtout quand les blocs ont tendance à jouer aux poupées russes.
 
@@ -71,39 +75,43 @@ En fait, j'ai tendance à considérer le parcours de mon regard sur mes sources 
 
 J'utilise la règle suivante pour espacer les lignes et aérer le code: devant toute structure de contrôle j'ajoute une nouvelle ligne sauf si elle est directement précédée d'une autre strucrure de contrôle. Dans la mesure du possible, au sein d'un bloc, je regroupe les instructions qui partagent une nature commune (comme les affectations de variables ou des appels sucessifs de fonction).
 
-    <?php
+{% highlight php linenos %}
+<?php
 
-    $a = 0;
-    $b = [1,2,3];
+$a = 0;
+$b = [1,2,3];
 
-    if ($a === 0) {
-        foreach ($b as $c) {
-            echo $c;
-            $a += $c;
-        }
-
-        while ($d = array_shift($b)) {
-            $a -= $d / 2;
-        }
+if ($a === 0) {
+    foreach ($b as $c) {
+        echo $c;
+        $a += $c;
     }
 
-    if ($a >= max($b))
-        echo "A est supérieur à 3";
-    else
-        echo "A est inférieur à 3";
+    while ($d = array_shift($b)) {
+        $a -= $d / 2;
+    }
+}
+
+if ($a >= max($b))
+    echo "A est supérieur à 3";
+else
+    echo "A est inférieur à 3";
+{% endhighlight %}
 
 
 Cela permet de garder des structures de blocs bien groupées.
 
 Je suis également un aficionado de l'opérateur ternaire (et d'une manière générale tout ce qui peut réduire le nombre de lignes de code). Comme l'usage de cet opérateur à tendance à produire des lignes un peu longues, je l'aère en ajoutant des sauts de lignes. J'adore tout particulièrement sa forme contractée `?:` qui se comporte comme l'opérateur `||` de JavaScript.
 
-    <?php
+{% highlight php linenos %}
+<?php
 
-    $foo = isset($_GET['foo'])
-        ? $_GET['foo']
-        : "valeur par défaut";
+$foo = isset($_GET['foo'])
+    ? $_GET['foo']
+    : "valeur par défaut";
 
-    $bar = $foo ?: "une autre valeur";
+$bar = $foo ?: "une autre valeur";
+{% endhighlight %}
 
 ## Nommage
 
@@ -111,65 +119,71 @@ Je n'ai jamais été un grand fan des conventions de nommage strictes vis-à-vis
 
 J'applique la conventions [snake_case](http://en.wikipedia.org/wiki/Snake_case) pour les noms de variables: toujours en minuscules (y compris les acronymes) et les mots qui les constituent sont séparés par des underscores (_). L'emploi de caractères spéciaux et/ou accentués est bien entendu prohibé.
 
-    var la_variable_qui_va_bien = "la valeur qui va avec",
-        les_qte_c_est_sympa = "tu l'as dit gros!";
+{% highlight js linenos %}
+var la_variable_qui_va_bien = "la valeur qui va avec",
+    les_qte_c_est_sympa = "tu l'as dit gros!";
 
-    for (position in collection) {
-        var current = collection[position];
+for (position in collection) {
+    var current = collection[position];
 
-        console.log(position, current);
-    }
+    console.log(position, current);
+}
+{% endhighlight %}
 
 J'essaie de toujours donner un sens au nom de mes variables et d'éviter les `$i` ou `$toto` qu'on trouve régulièrement. Quitte à leur donner un nom un peu trop long parfois.
 
 Le nommage de mes fonctions suit la même convention que mes variables, à ceci près qu'un nom de fonction __doit__ contenir au moins un verbe qui caractérise l'action effectuée par la fonction.
 
-    <?php
+{% highlight php linenos %}
+<?php
 
-    function executer_traitement ($traitement, $valeur) {
-        if ($traitement == "afficher")
-            echo $valeur;
-        elseif ($traitement == "incrémenter")
-            return $valeur +1;
-        else
-            return $valeur;
-    }
+function executer_traitement ($traitement, $valeur) {
+    if ($traitement == "afficher")
+        echo $valeur;
+    elseif ($traitement == "incrémenter")
+        return $valeur +1;
+    else
+        return $valeur;
+}
 
-    function aller_chercher_contenu ($fichier) {
-        if (!is_file($fichier))
-            return false;
+function aller_chercher_contenu ($fichier) {
+    if (!is_file($fichier))
+        return false;
 
-        return file_get_contents($fichier);
-    }
+    return file_get_contents($fichier);
+}
+{% endhighlight %}
 
 En ce qui concerne l'orienté objet, j'utilise un formalisme bien connu que je ne vais pas trop détailler car il est plus que largement utilisé: c'est le même que celui employé par PHP et Java.
 
 Pour mes classe c'est donc la convention [CamelCase](http://en.wikipedia.org/wiki/CamelCase) et pour les membres (attributs et méthodes) la conventions mixedCase. Les constantes suivent les règles des variables mais sont en majuscules.
 
-    <?php
+{% highlight php linenos %}
+<?php
 
-    class MaClasseConcrete extends BaseMaClasseAbstraite implements InterfaceMonInterface {
+class MaClasseConcrete extends BaseMaClasseAbstraite implements InterfaceMonInterface {
 
-        const UNE_CONSTANTE = "une valeur";
+    const UNE_CONSTANTE = "une valeur";
 
-        public $proprietePublique;
+    public $proprietePublique;
 
-        protected $_proprieteProtegee;
+    protected $_proprieteProtegee;
 
-        private $_proprietePrivee;
+    private $_proprietePrivee;
 
-        public function __construct () {
-            // ...
-        }
-
-        public static function getFoo () {
-            return "foo";
-        }
-
-        protected function _setBar ($b) {
-            $this->_bar = $b;
-        }
+    public function __construct () {
+        // ...
     }
+
+    public static function getFoo () {
+        return "foo";
+    }
+
+    protected function _setBar ($b) {
+        $this->_bar = $b;
+    }
+}
+{% endhighlight %}
 
 Les membres d'instance et de classe (donc statiques et non-statiques) suivent la même convention. Les membres protégés ou privés sont préfixés d'un underscore `_` afin de les identifier plus facilement. Je n'utilise __jamais__ le mot clé var, c'est déjà assez explicite avec le préfixe `$` en PHP, en revanche je définis __toujours__ la visibilité d'un membre.
 
@@ -196,64 +210,68 @@ J'emploie les commentaires de 2 façons:
 
 Dans le premier cas j'utilise le double slash `//`.
 
-    <?php
+{% highlight php linenos %}
+<?php
 
-    // convertis les saut de lignes \r\n en <br> HTML
-    $texte = implode('<br>', array_filter(preg_split('~(\r|\n)*~', $text)));
+// convertis les saut de lignes \r\n en <br> HTML
+$texte = implode('<br>', array_filter(preg_split('~(\r|\n)*~', $text)));
 
-    // heu.... je sais plus... disons un truc complexe
-    $a = ($b ? ($c === $d && $e << 1 ? $f) : null) && ($h = fopen('fichier.php')) && ($b = fread($h, 1024));
+// heu.... je sais plus... disons un truc complexe
+$a = ($b ? ($c === $d && $e << 1 ? $f) : null) && ($h = fopen('fichier.php')) && ($b = fread($h, 1024));
+{% endhighlight %}
 
 Dans le second j'utilise la syntaxe Doxygen.
 
-    <?php
+{% highlight php linenos %}
+<?php
+
+/**
+ * Classe Foo qui ne sert visiblement pas à grand-chose
+ *
+ * Description longue (et inutile)
+ * de ma classe qui peut s'étaler
+ * sur plusieurs lignes.
+ *
+ * @package libs
+ * @subpackage util
+ * @author Benjamin DELESPIERRE <benjamin.delespierre@gmail.com>
+ * @version 1.0.0
+ * @since 1.2
+ * @copyright 2013 Foo Corp.
+ */
+class Foo extends Bar implements Baz {
 
     /**
-     * Classe Foo qui ne sert visiblement pas à grand-chose
+     * Nom
+     * @var string
+     */
+    protected $_name;
+
+    /**
+     * Constructeur
      *
      * Description longue (et inutile)
-     * de ma classe qui peut s'étaler
-     * sur plusieurs lignes.
+     * de mon constructeur qui peut
+     * s'étaler sur plusieurs lignes
      *
-     * @package libs
-     * @subpackage util
-     * @author Benjamin DELESPIERRE <benjamin.delespierre@gmail.com>
-     * @version 1.0.0
-     * @since 1.2
-     * @copyright 2013 Foo Corp.
+     * @param string $name Le nom
+     *
+     * @throws InvalidArgumentException Si $name n'est pas une chaine
      */
-    class Foo extends Bar implements Baz {
-
-        /**
-         * Nom
-         * @var string
-         */
-        protected $_name;
-
-        /**
-         * Constructeur
-         *
-         * Description longue (et inutile)
-         * de mon constructeur qui peut
-         * s'étaler sur plusieurs lignes
-         *
-         * @param string $name Le nom
-         *
-         * @throws InvalidArgumentException Si $name n'est pas une chaine
-         */
-        public function __construct ($name) {
-            $this->_name = $name;
-        }
-
-        /**
-         * toString
-         *
-         * @return string
-         */
-        public function __toString () {
-            return "Je m'appelle $this->_name";
-        }
+    public function __construct ($name) {
+        $this->_name = $name;
     }
+
+    /**
+     * toString
+     *
+     * @return string
+     */
+    public function __toString () {
+        return "Je m'appelle $this->_name";
+    }
+}
+{% endhighlight %}
 
 Doxygen est extrêmement flexible et le formalisme change en fonction de la configuration de l'outil. Une convention se dégage néanmoins: il est d'usage de respecter l'ordre suivant dans vos blocs de commentaires:
 

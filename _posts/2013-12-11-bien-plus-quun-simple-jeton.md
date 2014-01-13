@@ -72,24 +72,26 @@ Pour rassembler toutes ces données dans un seul bitfield, nous allons nous serv
 
 Pack dispose d'un tas de codes pour le format mais nous allons uniquement nous servir de `I` et `S` (respectivement Int et Short pour entier non signé et entier court non signé). Conformément à la structure que nous voulons, notre format est donc `ISIS`. Référez-vous au manuel de la fonction pour les autre codes de formattage.
 
-    <?php
+{% highlight php linenos %}
+<?php
 
-    // en reprennant l'exemple précédent
-    
-    // identifiant de l'utilisateur sous forme d'entier
-    $id = (int)$user->id;
+// en reprennant l'exemple précédent
 
-    // code de l'action effectuée
-    $code_action = (int)ACTION_RESET_PASSWORD;
+// identifiant de l'utilisateur sous forme d'entier
+$id = (int)$user->id;
 
-    // date du jour sous forme d'entier
-    $date = (int)date('ymd');
+// code de l'action effectuée
+$code_action = (int)ACTION_RESET_PASSWORD;
 
-    // nombre aléatoire pour l'entropie
-    $entropy = mt_rand();
+// date du jour sous forme d'entier
+$date = (int)date('ymd');
 
-    // représentation binaire de notre jeton
-    $binary_token = pack('ISIS', $id, $code_action, $date, $entropy);
+// nombre aléatoire pour l'entropie
+$entropy = mt_rand();
+
+// représentation binaire de notre jeton
+$binary_token = pack('ISIS', $id, $code_action, $date, $entropy);
+{% endhighlight %}
 
 En PHP il nous est impossible de spécifier la taille des structures qu'on utilise car le langage est faiblement typé. Tout ce qu'on peut faire c'est caster nos valeurs en entier avec `(int)$valeur` avant de les passer à la fonction pack. Vous pouvez ensuite contrôler avec `echo strlen($binary_token);` que le jeton binaire fait au maximum 10 caractères (ou 10 octets si vous préférez).
 
@@ -99,58 +101,64 @@ A ce stade, le jeton est sous forme binaire, il n'est pas exploitable en tant qu
 
 Le plus simple est de se servir de la fonction [base64_encode](http://php.net/manual/en/function.base64-encode.php) qui va passer tous les octets de notre chaine en base 64, c'est à dire uniquement avec des caractères alphanumériques et quelques caractères spéciaux ce qui permet de les faire transiter sur un autre support sans perte d'information et sans se soucier de l'encodage. Si le processus mathématique de changement de base vous intéresse, je vous recommande d'aller voir sur [Wikipedia](http://fr.wikipedia.org/wiki/Base).
 
-    <?php
+{% highlight php linenos %}
+<?php
 
-    // représentation alphanumérique de notre jeton
-    $token = base64_encode(binary_token);
+// représentation alphanumérique de notre jeton
+$token = base64_encode(binary_token);
+{% endhighlight %}
 
 Evidement, on passe les "caractères" de notre jeton d'une base 256 (un octet) à 64, il faut s'attendre à ce que la chaine produite par la fonction base64_encode soit plus longue que la représentation binaire de départ. On peut donc à nouveau vérifier la longueur du jeton avec `echo strlen($token);` pour constater cette fois que le jeton fait toujours 16 caractères. Ma foi, il n'a pas trop grossi.
 
 L'un des problèmes de la fonction base64_encode c'est qu'elle génère des chaines contenant les caractères `+/=` qui vont nous gêner dans l'URL. Vous pouvez choisir d'encoder ces caractères avec [url_encode](http://www.php.net/urlencode) ou les remplacer par des caractères "inoffensifs" pour l'URL à l'aide des fonctions suivantes:
 
-    <?php
+{% highlight php linenos %}
+<?php
 
-    // voir: http://php.net/manual/en/function.base64-encode.php#103849
+// voir: http://php.net/manual/en/function.base64-encode.php#103849
 
-    function base64url_encode($data) { 
-      return rtrim(strtr(base64_encode($data), '+/', '-_'), '='); 
-    } 
+function base64url_encode($data) { 
+  return rtrim(strtr(base64_encode($data), '+/', '-_'), '='); 
+} 
 
-    function base64url_decode($data) { 
-      return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT)); 
-    }
+function base64url_decode($data) { 
+  return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT)); 
+}
 
-    // créer une version URL-SAFE de notre jeton binaire
-    $urlsafe_token = base64url_encode($binary_token);
+// créer une version URL-SAFE de notre jeton binaire
+$urlsafe_token = base64url_encode($binary_token);
+{% endhighlight %}
 
 __Note:__ si vous choisissez d'encoder avec base64url\_encode vous devrez bien sûr décoder avec base64url\_decode de l'autre coté.
 
 A l'issue de cette procédure, vous vous retrouvez avec un token qui devrait reseembler à ça: `QOIBAAQAigACAB0i`, c'est plutôt court malgré toutes les informations qu'il renferme non ? Il ne vous reste qu'a mettre ce jeton dans le lien que vous enverrez par mail à votre utilisateur, par exemple:
 
-    <?php
+{% highlight php linenos %}
+<?php
 
-    // en reprennant l'exemple précédent
+// en reprennant l'exemple précédent
 
-    // lien vers la page de réinitialisation du mot de passe
-    $link = "http://mon.site.com/auth/reset?t=" . $urlsafe_token;
+// lien vers la page de réinitialisation du mot de passe
+$link = "http://mon.site.com/auth/reset?t=" . $urlsafe_token;
 
-    // en reprennant les exemples précédents
-    $message = <<< MSG
-    <p>
-        Veuillez suivre ce lien pour réinitialiser votre mot de passe:<br />
-        <br />
-        <a href="$link">$link</a>
-    </p>
-    MSG;
+// en reprennant les exemples précédents
+$message = <<< MSG
+<p>
+    Veuillez suivre ce lien pour réinitialiser votre mot de passe:<br />
+    <br />
+    <a href="$link">$link</a>
+</p>
+MSG;
 
-    mail(
-        $user->email,
-        'Réinitialisation de votre mot de passe',
-        $message,
-        'From: webmaster@mon.site.com' . "\r\n" .
-        'ReplyTo: webmaster@mon.site.com' . "\r\n" .
-        'Content-type: text/html; charset=utf-8' . "\r\n"
-    );
+mail(
+    $user->email,
+    'Réinitialisation de votre mot de passe',
+    $message,
+    'From: webmaster@mon.site.com' . "\r\n" .
+    'ReplyTo: webmaster@mon.site.com' . "\r\n" .
+    'Content-type: text/html; charset=utf-8' . "\r\n"
+);
+{% endhighlight %}
 
 ## Décoder le jeton et extraire ses données
 
@@ -160,36 +168,38 @@ Unpack fonctionne différement de pack, vous devez mettre dans son premier param
 
 Unpack à également la désagréable habitude de lancer des warnings quand le bitfield à décoder ne correspond pas au format. Dans la mesure où on ne peut pas à priori contrôler le format du jeton avant de l'avoir décodé, on ne peut pas se prémunir contre cette erreur: il faut empêcher qu'elle survienne en préfixant l'appel d'unpack avec l'opérateur de désactivation d'erreur @ (je n'aime pas spécialement faire ça mais cet opérateur existe pour ces cas précis). De toute façon, si la déconstruction du bitfield échoue, unpack renverra false et nous pourrons traiter l'erreur.
 
-    <?php
+{% highlight php linenos %}
+<?php
 
-    // nous sommes sur la page /auth/reset
+// nous sommes sur la page /auth/reset
 
-    // récuppérer le jeton
-    $token = isset($_GET['t']) ? $_GET['t'] : null;
+// récuppérer le jeton
+$token = isset($_GET['t']) ? $_GET['t'] : null;
 
-    if (!$token) {
-        // erreur: pas de jeton fourni
-    }
+if (!$token) {
+    // erreur: pas de jeton fourni
+}
 
-    // retrouver la version binaire du jeton
-    $binary_token = base64_decode($token); // ou base64url_decode
+// retrouver la version binaire du jeton
+$binary_token = base64_decode($token); // ou base64url_decode
 
-    if (!$binary_token) {
-        // erreur: mal encodé
-    }
+if (!$binary_token) {
+    // erreur: mal encodé
+}
 
-    // extraire les informations du bitfield
-    $data = @unpack('Iid/Scode_action/Idate/Sentropy', $binary_token);
+// extraire les informations du bitfield
+$data = @unpack('Iid/Scode_action/Idate/Sentropy', $binary_token);
 
-    if (!$data) {
-        // erreur: bitfield mal formé
-    }
+if (!$data) {
+    // erreur: bitfield mal formé
+}
 
-    // populer les variables correspondantes
-    $id          = $data['id'];
-    $code_action = $data['code_action'];
-    $date        = $data['date'];
-    $entropy     = $data['entropy'];
+// populer les variables correspondantes
+$id          = $data['id'];
+$code_action = $data['code_action'];
+$date        = $data['date'];
+$entropy     = $data['entropy'];
+{% endhighlight %}
 
 Plutôt sympa non ? Avec ces données à votre disposition vous pouvez maintenant faire toutes les vérifications que vous voulez et afficher à l'utilisateur un formulaire de réinitialisation du mot de passe.
 
@@ -199,18 +209,20 @@ La méthode démontrée ici est très pratique pour garantir l'unicité d'un jet
 
 Un moyen simple de sécuriser le jeton est d'y inclure une donnée que l'attaquant ne peut ni connaitre, ni calculer. On va pour cela se servir du mot de passe de l'utilisateur: on va tout simplement en calculer la somme de contrôle crc et l'ajouter au jeton (ce qui va modifier sa taille binaire de 4 octets).
 
-    <?php
+{% highlight php linenos %}
+<?php
 
-    // en reprennant les exemples précédents
+// en reprennant les exemples précédents
 
-    // somme de contrôle du mot de passe utilisateur
-    $password_crc32 = crc32($user->password);
+// somme de contrôle du mot de passe utilisateur
+$password_crc32 = crc32($user->password);
 
-    // représentation binaire de notre jeton 
-    $binary_token = pack('ISISI', $id, $code_action, $date, $entropy, $password_crc32);
+// représentation binaire de notre jeton 
+$binary_token = pack('ISISI', $id, $code_action, $date, $entropy, $password_crc32);
 
-    // créer une version URL-SAFE de notre jeton binaire
-    $urlsafe_token = base64url_encode($binary_token);
+// créer une version URL-SAFE de notre jeton binaire
+$urlsafe_token = base64url_encode($binary_token);
+{% endhighlight %}
 
 La taille de notre jeton passe à 16 octets (128 bits) et sa taille encodée passe à 22 caractères soit 6 caractères de plus (ça devrait ressembler à QOIBAAQAiwACANGuDSMaBA). C'est acceptable.
 

@@ -27,18 +27,22 @@ JavaScript est un langage interprêté qui tourne sur une machine virtuelle, il 
 
 Ce qu'on retient en général de JavaScript c'est ça:
 
-    <a class="button" onclick="ma_fonction_javascript()">Mon Button</a>
+{% highlight html linenos %}
+<a class="button" onclick="ma_fonction_javascript()">Mon Button</a>
+{% endhighlight %}
 
 Ah ce bon vieux mélange de HTML et de JS. En tant que développeur web, j'en boufferai jusqu'a ma mort je crois. On a aussi l'habitude de voir ça:
 
-    <script type="text/javascript" src="jquery.js"></script>
-    <script type="text/javascript">
-    $(function () {
-        $('.ma-classe').click(function () {
-            $(this).hide();
-        });
+{% highlight html linenos %}
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript">
+$(function () {
+    $('.ma-classe').click(function () {
+        $(this).hide();
     });
-    </script>
+});
+</script>
+{% endhighlight %}
 
 Et c'est souvent sous cette forme que vous le verrez, surtout si le code sur lequel vous opérez n'a pas été écrit par un développeur JavaScript.
 
@@ -62,20 +66,22 @@ Ou portée en français, il s'agit tout simplement d'un espace dans lequel on va
 
 Exemple:
 
-    var a = 1;
+{% highlight js linenos %}
+var a = 1;
 
-    function b () {
-        var b = 2;
+function b () {
+    var b = 2;
 
-        function c () {
-            var c = 3;
-            console.log(a,b,c); // affiche 1 2 3
-        }
-
-        c();
+    function c () {
+        var c = 3;
+        console.log(a,b,c); // affiche 1 2 3
     }
 
-    b();
+    c();
+}
+
+b();
+{% endhighlight %}
 
 En fait, lors de l'éxecution d'une expression, si la variable n'est pas trouvée dans le scope courant, JavaScript va regarder dans le scope du dessus et ainsi de suite jusqu'a trouver la variable. Cette mécanique n'existe que pour les variables locales (définie avec le mot clé `var`), les variables globales sont disponibles dans tous les scope (ce qui les rends d'ailleurs potentiellement dangereuses).
 
@@ -85,20 +91,22 @@ Le prototype d'un objet JavaScript, c'est comme son scope parent en quelque sort
 
 Exemple: 
 
-    function Type1 () {
-        this.a = 1;
-    }
+{% highlight js linenos %}
+function Type1 () {
+    this.a = 1;
+}
 
-    function Type2 () {
-        this.b = 2;
-    }
+function Type2 () {
+    this.b = 2;
+}
 
-    // Type2 "hérite" de Type1
-    Type2.prototype = new Type1();
+// Type2 "hérite" de Type1
+Type2.prototype = new Type1();
 
-    var t2 = new Type2;
+var t2 = new Type2;
 
-    console.log( t2.a, t2.b ); // affiche 1 2
+console.log( t2.a, t2.b ); // affiche 1 2
+{% endhighlight %}
 
 #### L'objet Fonction
 
@@ -113,22 +121,24 @@ Comme dans l'exemple ci-dessus, on remarque qu'une fonction peut se servir du mo
 
 Exemple:
 
-    var objet1 = {
-        str: "Hello",
-        afficher: function () {
-            console.log( this.str );
-        }
-    }:
+{% highlight js linenos %}
+var objet1 = {
+    str: "Hello",
+    afficher: function () {
+        console.log( this.str );
+    }
+}:
 
-    var objet2 = {
-        str: "World",
-    };
+var objet2 = {
+    str: "World",
+};
 
-    // appel direct de la méthode afficher
-    objet1.afficher(); // affiche "Hello"
+// appel direct de la méthode afficher
+objet1.afficher(); // affiche "Hello"
 
-    // appel de la méthode afficher dans le contexte de objet2
-    objet1.afficher.call(objet2); // affiche "World"
+// appel de la méthode afficher dans le contexte de objet2
+objet1.afficher.call(objet2); // affiche "World"
+{% endhighlight %}
 
 Si vous souhaitez aller plus loin, je vous recommande chaudement les articles de [Douglas Crockford](http://www.crockford.com/) pour bien saisir ces concepts.
 

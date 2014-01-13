@@ -57,60 +57,62 @@ L'injection de dépendances est un patron qui se marie à merveille avec un patr
 
 Je ne vais pas mettre l'intégralité des classes impliquées car l'implémentation du MVC à l'aide de composants n'est pas au chapitre de cet article. Si nécéssaire, j'écrirais un article dédié là dessus.
 
-    <?php
+{% highlight php linenos %}
+<?php
 
-    class Application extends Pimple {
+class Application extends Pimple {
 
-        public function __construct (array $values) {
+    public function __construct (array $values) {
 
-            $app = $this;
+        $app = $this;
 
-            $this['controllers'] = array(
-                'default' => 'DefaultController',
-            );
+        $this['controllers'] = array(
+            'default' => 'DefaultController',
+        );
 
-            $this['views_path'] = '/views';
-            $this['views'] = array(
-                'html' => $this->share(function () use ($app) {
-                    return new HTMLView($app['views_path']);
-                }),
-            );
+        $this['views_path'] = '/views';
+        $this['views'] = array(
+            'html' => $this->share(function () use ($app) {
+                return new HTMLView($app['views_path']);
+            }),
+        );
 
-            $this['models_path'] = '/models';
-            $this['models'] = array();
+        $this['models_path'] = '/models';
+        $this['models'] = array();
 
-            $this['router'] = $this->share(function () use ($app) {
-                return new Router($app['controllers']);
-            });
+        $this['router'] = $this->share(function () use ($app) {
+            return new Router($app['controllers']);
+        });
 
-            $this['request_class'] = 'HTTPRequest';
+        $this['request_class'] = 'HTTPRequest';
 
-            foreach ($values as $key => $value)
-                $this[$key] = $value;
-        }
-
-        public function addController ($name, $class) {
-            $this['controllers'][$name] = $class;
-            return $this;
-        }
-
-        public function addViewHandler ($name, $handler) {
-            $this['views'][$name] = $handler;
-            return $this;
-        }
-
-        public function addModel ($name, $model) {
-            $this['models'][$name] = $model;
-            return $this;
-        }
-
-        public function run (Request $request = null) {
-            if ($request === null)
-                $request = new $this['request_class']($this);
-
-            $this['router']->run($request);
-        }
+        foreach ($values as $key => $value)
+            $this[$key] = $value;
     }
+
+    public function addController ($name, $class) {
+        $this['controllers'][$name] = $class;
+        return $this;
+    }
+
+    public function addViewHandler ($name, $handler) {
+        $this['views'][$name] = $handler;
+        return $this;
+    }
+
+    public function addModel ($name, $model) {
+        $this['models'][$name] = $model;
+        return $this;
+    }
+
+    public function run (Request $request = null) {
+        if ($request === null)
+            $request = new $this['request_class']($this);
+
+        $this['router']->run($request);
+    }
+}
+{% endhighlight %}
 
 Cette classe est à la fois une façade qui nous simplifie grandement l'usage du MVC et un injecteur de dépendances. Son constructeur représente l'étape d'initialisation de l'application, c'est là que toute la définition des composants à utiliser prends place. Cette définition peut être surchargé directement en passant un tableau au constructeur ou bien par la suite en utilisant les différentes méthodes.
 
@@ -118,82 +120,86 @@ On notera au passage l'usage de la méthode `Pimple::share` qui permet de défin
 
 Voici un exemple d'utilisation:
 
-    <?php
+{% highlight php linenos %}
+<?php
 
-    // bla bla autoloader bla bla
+// bla bla autoloader bla bla
 
-    $app = new Application;
+$app = new Application;
 
-    // nos modèles sont des modèles MySQL
-    $app['models_path'] = 'models/MySQL';
+// nos modèles sont des modèles MySQL
+$app['models_path'] = 'models/MySQL';
 
-    // décommenter pour utiliser les mocks
-    // $app['models_path'] = 'models/mock';
+// décommenter pour utiliser les mocks
+// $app['models_path'] = 'models/mock';
 
-    // le modèle Articles est un itérateur
-    // qui s'initialise avec une instance
-    // vide de la classe article à utiliser
-    // pour l'itération.
-    $app->addModel('articles', function () use ($app) {
-        include_once $app['models_path'] . '/articles.php';
-        return new Articles($app['article']);
-    });
+// le modèle Articles est un itérateur
+// qui s'initialise avec une instance
+// vide de la classe article à utiliser
+// pour l'itération.
+$app->addModel('articles', function () use ($app) {
+    include_once $app['models_path'] . '/articles.php';
+    return new Articles($app['article']);
+});
 
-    // le modèle Article est le CRUD
-    // permettant d'obtenir les données
-    // d'un article.
-    $app->addModel('article', function ($id = null) use ($app) {
-        include_once $app['models_path'] . '/article.php';
-        return new Article($id);
-    });
+// le modèle Article est le CRUD
+// permettant d'obtenir les données
+// d'un article.
+$app->addModel('article', function ($id = null) use ($app) {
+    include_once $app['models_path'] . '/article.php';
+    return new Article($id);
+});
 
-    // enregistrer le contrôleur
-    // d'articles
-    $app->addController("article", "ArticleController");
+// enregistrer le contrôleur
+// d'articles
+$app->addController("article", "ArticleController");
 
-    // lancer l'application
-    $app->run();
+// lancer l'application
+$app->run();
+{% endhighlight %}
 
 Les modèles nous sont fournis par des fonctions annonymes qui sont en fait leurs fabriques. Cela permet à la fois de déterminer quelle famille de modèles utiliser (on inclut les classes en fonction du paramètre `models_path`) et de n'initialiser les modèles que lors que c'est utile: si les contrôleurs ne les utilisent pas, il n'y a pas d'instanciation.
 
 Voyons enfin le contrôleur `ArticleController`:
 
-    <?php
-    class ArticleController extends Controller {
+{% highlight php linenos %}
+<?php
+class ArticleController extends Controller {
 
-        public function index ($app, $q) {
-            // récupérer la liste des articles
-            // optionnellement filtrée par $q
-            $articles = $app['models']['articles']->get($q);
+    public function index ($app, $q) {
+        // récupérer la liste des articles
+        // optionnellement filtrée par $q
+        $articles = $app['models']['articles']->get($q);
 
-            //
-            return $app['views']['html']->load('article/articles.php', $articles);
-        }
-
-        public function article ($app, $id) {
-            // retourner sur l'index de la section
-            // article si l'id n'est pas fourni
-            if (!$id)
-                return $this->redirect($this, 'index');
-
-            $article = $app['models']['article']($id);
-
-            return $app['views']['html']->load('article/article.php', $article);
-        }
-
-        public function commenter ($app, $id) {
-            $author = filter_input(INPUT_POST, 'comment_author', FILTER_SANITIZE_STRING);
-            $body   = filter_input(INPUT_POST, 'comment_body',   FILTER_SANITIZE_STRING);
-
-            if (!$id || !$author || !$body)
-                return $this->redirect($this, 'index');
-
-            $article = $app['models']['article']($id);
-            $article->addComment($author, $body);
-
-            return $app['views']['html']->load('article/article.php', $article);
-        }
+        //
+        return $app['views']['html']->load('article/articles.php', $articles);
     }
+
+    public function article ($app, $id) {
+        // retourner sur l'index de la section
+        // article si l'id n'est pas fourni
+        if (!$id)
+            return $this->redirect($this, 'index');
+
+        $article = $app['models']['article']($id);
+
+        return $app['views']['html']->load('article/article.php', $article);
+    }
+
+    public function commenter ($app, $id) {
+        $author = filter_input(INPUT_POST, 'comment_author', FILTER_SANITIZE_STRING);
+        $body   = filter_input(INPUT_POST, 'comment_body',   FILTER_SANITIZE_STRING);
+
+        if (!$id || !$author || !$body)
+            return $this->redirect($this, 'index');
+
+        $article = $app['models']['article']($id);
+        $article->addComment($author, $body);
+
+        return $app['views']['html']->load('article/article.php', $article);
+    }
+}
+{% endhighlight %}
 
 Dans cet exemple, on suppose qu'il est de la responsabilité de la classe `Router` de déterminer pour chaque action de contrôleur quels sont les paramètres à passer (`$app` représente l'application et les autres paramètres sont des paramètres GET). Pour la petite histoire, il suffit d'utiliser les classes de réflexion pour obtenir les noms des paramètres d'un méthode ou fonction et les faire correspondre à des valeurs dans `$_GET` par exemple.
 

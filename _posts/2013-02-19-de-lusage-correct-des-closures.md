@@ -21,46 +21,54 @@ En PHP, la définition de comportements lors du runtime peut se faire de 3 faço
 
 ### créer une fonction anonyme à l'aide de create_function
 
-    <?php // version 4+
+{% highlight php linenos %}
+<?php // version 4+
 
-    $additionner = create_function('$a,$b', 'return $a + $b;');
-    $trois = $additionner(1,2);
+$additionner = create_function('$a,$b', 'return $a + $b;');
+$trois = $additionner(1,2);
+{% endhighlight %}
 
 ### instancier une classe dottée de la méthode magique __invoke
 
-    <?php // version 5.3+
+{% highlight php linenos %}
+<?php // version 5.3+
 
-    class Additionneur {
-        public function __invoke ($a, $b) {
-            return $a + $b;
-        }
+class Additionneur {
+    public function __invoke ($a, $b) {
+        return $a + $b;
     }
+}
 
-    $additioner = new Additionneur;
-    $trois = $additioner(1,2);
+$additioner = new Additionneur;
+$trois = $additioner(1,2);
+{% endhighlight %}
 
 ### créer une fermeture (closure)
 
-    <?php // version 5.3+
+{% highlight php linenos %}
+<?php // version 5.3+
 
-    $additionner = function ($a, $b) {
-        return $a + $b;
-    };
-    $trois = $additionner(1,2);
+$additionner = function ($a, $b) {
+    return $a + $b;
+};
+$trois = $additionner(1,2);
+{% endhighlight %}
 
 C'est sur cette dernière forme que nous allons nous pencher. Outre le fait que cette syntaxe est proche de celle de JavaScript et qu'elle est considérablement plus simple à mettre en place, elle présente une caractéristique unique: la possibilité de manipuler les variables dans sa portée.
 
 __NOTE__: Le manuel de PHP rassemble ces 3 concepts sous le terme générique de _Callback_ et, depuis PHP 5.4, il est possible dans les prototypes de fonction de spécifier le type `callable` pour un paramètre, ce qui évite d'avoir recours systématiquement à la fonction `is_callable`.
 
-    <?php // version 5.4
+{% highlight php linenos %}
+<?php // version 5.4
 
-    function executer_fonction (callable $fonction) {
-        return $fonction();
-    }
+function executer_fonction (callable $fonction) {
+    return $fonction();
+}
 
-    var_dump( executer_fonction(function () { echo "Salut!"; }) ); // Salut!
+var_dump( executer_fonction(function () { echo "Salut!"; }) ); // Salut!
 
-    var_dump( executer_fonction(123) ); // erreur: 123 n'est pas une fonction
+var_dump( executer_fonction(123) ); // erreur: 123 n'est pas une fonction
+{% endhighlight %}
 
 ## Manipulation du scope
 
@@ -73,22 +81,24 @@ __Note__: La documentation de PHP ne fait pas de distinction claire entre fermet
 
 Exemple:
 
-    <?php // version 5.3+
+{% highlight php linenos %}
+<?php // version 5.3+
 
-    function fabrique_closure () {
-        $a = 1;
-        return function ($b) use ($a) {
-            return $a + $b;
-        };
-    }
+function fabrique_closure () {
+    $a = 1;
+    return function ($b) use ($a) {
+        return $a + $b;
+    };
+}
 
-    function executer_closure ($f, $b) {
-        return $f($b); // additionner
-    }
+function executer_closure ($f, $b) {
+    return $f($b); // additionner
+}
 
-    $f = fabrique_closure();
+$f = fabrique_closure();
 
-    echo executer_closure($f, 2); // 3
+echo executer_closure($f, 2); // 3
+{% endhighlight %}
 
 Dans l'exemple ci dessus, on obtiens bien 3 car même si `$a` n'existe pas dans le scope de `executer_closure`, la closure se "souvient" de la référence originale.
 
@@ -98,25 +108,27 @@ Cela étant, si en JavaScript n'importe quelle variable du scope parent peut êt
 
 Exemple:
 
-    <?php // version 5.3+
+{% highlight php linenos %}
+<?php // version 5.3+
 
-    list($a,$b) = array(1,2);
+list($a,$b) = array(1,2);
 
-    $f = function () use (&$a, &$b) {
-        $a *= 2;
-        $b *= 3;
-    };
+$f = function () use (&$a, &$b) {
+    $a *= 2;
+    $b *= 3;
+};
 
+$f();
+var_dump($a,$b); // 2,6
+
+function executer_closure ($f) {
+    list($a,$b) = array(0,1);
     $f();
-    var_dump($a,$b); // 2,6
+    var_dump($a,$b);
+}
 
-    function executer_closure ($f) {
-        list($a,$b) = array(0,1);
-        $f();
-        var_dump($a,$b);
-    }
-
-    executer_closure($f); // 0,1
+executer_closure($f); // 0,1
+{% endhighlight %}
 
 Il est intéressant de remarquer dans cet exemple que le scope d'exécution de la closure n'influe pas sur les variables référencées. Dans le scope de `executer_closure`, ce sont toujours les variables du scope racine qui sont référencées par la closure et non les deux nouvelles définies dans `executer_closure`. Nous n'avons donc pas à nous soucier du scope dans lequel notre closure est exécutée, il n'y a pas de risque d'écrasement involontaire.
 
@@ -133,30 +145,32 @@ Pour que le mot clé `$this` soit utilisable dans le contexte d'une closure, cel
 
 Exemple:
 
-    <?php // version 5.4+
+{% highlight php linenos %}
+<?php // version 5.4+
 
-    class MaClasse {
+class MaClasse {
 
-        public $a = 1;
+    public $a = 1;
 
-        public function fabriqueClosure () {
-            return function ($b) {
-                return $this->a += $b;
-            }
+    public function fabriqueClosure () {
+        return function ($b) {
+            return $this->a += $b;
         }
     }
+}
 
-    $o = new MaClasse;
-    $f = $o->fabriqueClosure();
-    $r = $f(2);
+$o = new MaClasse;
+$f = $o->fabriqueClosure();
+$r = $f(2);
 
-    var_dump( $o->a ); // 3
+var_dump( $o->a ); // 3
 
-    $o2 = (object)['a'=>2];
-    $f2 = $f->bindTo($o2);
-    $r2 = $f2(2);
+$o2 = (object)['a'=>2];
+$f2 = $f->bindTo($o2);
+$r2 = $f2(2);
 
-    var_dump( $o2->a ); // 4
+var_dump( $o2->a ); // 4
+{% endhighlight %}
 
 Pour les habitués de JavaScript, la méthode `bindTo` représente en quelque sorte la méthode `call`: elle permet d'éxécuter notre closure dans un autre contexte que celui d'origine (au détail près qu'une nouvelle closure nous est renvoyée au lieu d'utiliser la closure existante mais vous l'aviez compris j'en suis sûr).
 
@@ -172,52 +186,54 @@ Si vous n'avez pas la possibilité d'utiliser PHP 5.4, vous pouvez injecter la r
 
 Exemple:
 
-    <?php // version 5.3+
+{% highlight php linenos %}
+<?php // version 5.3+
 
-    class SuperClosure {
+class SuperClosure {
 
-        protected $_closure;
-        protected $_object;
+    protected $_closure;
+    protected $_object;
 
-        public function __construct (Closure $closure, $object = null) {
-            $this->_closure = $closure;
+    public function __construct (Closure $closure, $object = null) {
+        $this->_closure = $closure;
 
-            if ($object) {
-                if (!is_object($object))
-                    throw new InvalidArgumentException("object is not object");
-
-                $this->_object = $object;
-            }
-        }
-
-        public function bindTo ($object) {
+        if ($object) {
             if (!is_object($object))
-                throw new InvalidArgumentException("object is expected to be a valid instance");
+                throw new InvalidArgumentException("object is not object");
 
-            return new static($this->_closure, $object);
-        }
-
-        public function __invoke () {
-            $args = array_merge(func_get_args(), array($this->_object));
-            return call_user_func_array($this->_closure, $args);
+            $this->_object = $object;
         }
     }
 
-    $f = new SuperClosure(function ($b, $that) {
-        return $that->a *= $b;
-    });
+    public function bindTo ($object) {
+        if (!is_object($object))
+            throw new InvalidArgumentException("object is expected to be a valid instance");
 
-    $obj1 = (object)array('a'=>1);
-    $obj2 = (object)array('a'=>2);
+        return new static($this->_closure, $object);
+    }
 
-    $f1 = $f->bindTo($obj1);
-    $f2 = $f->bindTo($obj2);
+    public function __invoke () {
+        $args = array_merge(func_get_args(), array($this->_object));
+        return call_user_func_array($this->_closure, $args);
+    }
+}
 
-    $f1(2);
-    $f2(2);
+$f = new SuperClosure(function ($b, $that) {
+    return $that->a *= $b;
+});
 
-    var_dump( $obj1->a ); // 2
-    var_dump( $obj2->a ); // 4
+$obj1 = (object)array('a'=>1);
+$obj2 = (object)array('a'=>2);
+
+$f1 = $f->bindTo($obj1);
+$f2 = $f->bindTo($obj2);
+
+$f1(2);
+$f2(2);
+
+var_dump( $obj1->a ); // 2
+var_dump( $obj2->a ); // 4
+{% endhighlight %}
 
 Le prix à payer est assez lourd en revanche:
 
@@ -236,26 +252,28 @@ Imaginons qu'on veuille filtrer un tableau pour ne conserver qu'un élément sur
 
 Exemple:
 
-    <?php // version 5.3+
+{% highlight php linenos %}
+<?php // version 5.3+
 
-    // soit un tableau de 20 entrées
-    $tableau = range(1,20);
+// soit un tableau de 20 entrées
+$tableau = range(1,20);
 
-    // soit la fonction de filtre qui utilise $n comme multiple
-    $filtre = function ($valeur) use (& $n) {
-        return (int)$valeur % $n == 0;
-    };
+// soit la fonction de filtre qui utilise $n comme multiple
+$filtre = function ($valeur) use (& $n) {
+    return (int)$valeur % $n == 0;
+};
 
-    // filtrer pour obtenir 1 élément sur 4
-    $n = 4;
-    $un_sur_quatre = array_filter($tableau, $filtre);
+// filtrer pour obtenir 1 élément sur 4
+$n = 4;
+$un_sur_quatre = array_filter($tableau, $filtre);
 
-    // filtrer pour obtenir 1 élément sur 10
-    $n = 10;
-    $un_sur_dix = array_filter($tableau, $filtre);
+// filtrer pour obtenir 1 élément sur 10
+$n = 10;
+$un_sur_dix = array_filter($tableau, $filtre);
 
-    var_dump( $un_sur_quatre ); // [4,8,12,16,20]
-    var_dump( $un_sur_dix );    // [10,20]
+var_dump( $un_sur_quatre ); // [4,8,12,16,20]
+var_dump( $un_sur_dix );    // [10,20]
+{% endhighlight %}
 
 ### Implémentation du pattern observer
 
@@ -263,72 +281,74 @@ Le pattern observer est extrêmement utile pour modéliser un mécanisme d'évè
 
 Exemple:
 
-    <?php // version 5.4+
+{% highlight php linenos %}
+<?php // version 5.4+
 
-    class SampleSubject implements SplSubject {
+class SampleSubject implements SplSubject {
 
-        protected $_name;
-        protected $_observers;
+    protected $_name;
+    protected $_observers;
 
-        public function __construct ($name = false) {
-            $this->_name = $name ?: uniqid(__CLASS__.'_');
-            $this->_observers = new SplObjectStorage;
-        }
-
-        public function attach (SplObserver $observer) {
-            $this->_observers->attach($observer);
-        }
-
-        public function detach (SplObserver $observer) {
-            $this->_observers->detach($observer);
-        }
-
-        public function notify () {
-            foreach ($this->_observers as $observer)
-                $observer->update($this);
-        }
-
-        public function __toString () {
-            return $this->_name;
-        }
+    public function __construct ($name = false) {
+        $this->_name = $name ?: uniqid(__CLASS__.'_');
+        $this->_observers = new SplObjectStorage;
     }
 
-    class GenericObserver extends SplObjectStorage implements SplObserver {
-
-        protected $_name;
-        protected $_closure;
-
-        public function __construct (Closure $closure, $name = false) {
-            $this->_name = $name ?: uniqid(__CLASS__.'_');
-            $this->_closure = $closure->bindTo($this, $this);
-        }
-
-        public function update (SplSubject $subject) {
-            $closure = $this->_closure;
-            $closure($subject);
-        }
-
-        public function __toString () {
-            return $this->_name;
-        }
+    public function attach (SplObserver $observer) {
+        $this->_observers->attach($observer);
     }
 
-    // soient deux instance distinctes de SampleSubject
-    $subject_1 = new SampleSubject;
-    $subject_2 = new SampleSubject;
+    public function detach (SplObserver $observer) {
+        $this->_observers->detach($observer);
+    }
 
-    // soit une méthode destinée aux observeurs
-    $observer_function = function (SplSubject $subject) {
-        echo "$this notifié par $subject\n";
-    };
+    public function notify () {
+        foreach ($this->_observers as $observer)
+            $observer->update($this);
+    }
 
-    // attachons les observateurs aux sujets...
-    $subject_1->attach(new GenericObserver($observer_function));
-    $subject_2->attach(new GenericObserver($observer_function));
+    public function __toString () {
+        return $this->_name;
+    }
+}
 
-    // ...et voyons ce qui se passe
-    $subject_1->notify();
-    $subject_2->notify();
+class GenericObserver extends SplObjectStorage implements SplObserver {
+
+    protected $_name;
+    protected $_closure;
+
+    public function __construct (Closure $closure, $name = false) {
+        $this->_name = $name ?: uniqid(__CLASS__.'_');
+        $this->_closure = $closure->bindTo($this, $this);
+    }
+
+    public function update (SplSubject $subject) {
+        $closure = $this->_closure;
+        $closure($subject);
+    }
+
+    public function __toString () {
+        return $this->_name;
+    }
+}
+
+// soient deux instance distinctes de SampleSubject
+$subject_1 = new SampleSubject;
+$subject_2 = new SampleSubject;
+
+// soit une méthode destinée aux observeurs
+$observer_function = function (SplSubject $subject) {
+    echo "$this notifié par $subject\n";
+};
+
+// attachons les observateurs aux sujets...
+$subject_1->attach(new GenericObserver($observer_function));
+$subject_2->attach(new GenericObserver($observer_function));
+
+// ...et voyons ce qui se passe
+$subject_1->notify();
+$subject_2->notify();
+{% endhighlight %}
 
 Dans l'exemple ci-dessus, nous avons utilisé la même closure pour définir deux observateurs différents. On aurait aussi bien plus utiliser le meme observateur pour différents sujets ou encore définir plusieurs observateurs pour chaque sujet.
 
@@ -340,46 +360,48 @@ Pour ceux qui ont déjà utilisé les itérateurs de la SPL, vous avez sûrement
 
 Exemple:
 
-    <?php // version 5.4+
+{% highlight php linenos %}
+<?php // version 5.4+
 
-    class GenericFilterIterator extends FilterIterator {
+class GenericFilterIterator extends FilterIterator {
 
-        protected $_closure;
+    protected $_closure;
 
-        public function __construct (Iterator $iterator, Closure $closure) {
-            $this->_closure = $closure->bindTo($this, $this);
-            parent::__construct($iterator);
-        }
-
-        public function accept () {
-            $closure = $this->_closure;
-            return $closure();
-        }
+    public function __construct (Iterator $iterator, Closure $closure) {
+        $this->_closure = $closure->bindTo($this, $this);
+        parent::__construct($iterator);
     }
 
-    // soit une séquence de 20 entrées
-    $it = new ArrayIterator(range(1,20));
+    public function accept () {
+        $closure = $this->_closure;
+        return $closure();
+    }
+}
 
-    // soit un filtre qui ne laisse passer
-    // que les nombres pairs
-    $filtre_1 = new GenericFilterIterator($it, function () {
-        return !($this->current() & 1);
-    });
+// soit une séquence de 20 entrées
+$it = new ArrayIterator(range(1,20));
 
-    echo "Nombres pairs de 1 à 20:\n"
-    foreach ($filtre_1 as $nombre)
-        echo "> $nombre\n";
+// soit un filtre qui ne laisse passer
+// que les nombres pairs
+$filtre_1 = new GenericFilterIterator($it, function () {
+    return !($this->current() & 1);
+});
 
-    // soit un filtre qui s'ajoute au
-    // précédent pour ne laisser passer
-    // que les multiples de 5
-    $filtre_2 = new GenericFilterITerator($filtre_1, function () {
-        return $this->current() % 5 == 0;
-    });
+echo "Nombres pairs de 1 à 20:\n"
+foreach ($filtre_1 as $nombre)
+    echo "> $nombre\n";
 
-    echo "Nombres pairs multiples de 5 de 1 à 20:\n";
-    foreach ($filtre_2 as $nombre)
-        echo "> $nombre\n";
+// soit un filtre qui s'ajoute au
+// précédent pour ne laisser passer
+// que les multiples de 5
+$filtre_2 = new GenericFilterITerator($filtre_1, function () {
+    return $this->current() % 5 == 0;
+});
+
+echo "Nombres pairs multiples de 5 de 1 à 20:\n";
+foreach ($filtre_2 as $nombre)
+    echo "> $nombre\n";
+{% endhighlight %}
 
 Cet exemple nous montre combien il est facile d'appliquer un comportement identique à `array_filter` pour des itérateurs en utilisant des closures. On peut en plus enchaîner les filtres à l'infini, ce qui peut être pratique pour des moteurs de recherches multi-critères par exemple.
 
@@ -391,51 +413,53 @@ Les afficionados du pattern strategy ont dû être aux anges à l'annonce de la 
 
 Exemple:
 
-    <?php // version 5.4+
+{% highlight php linenos %}
+<?php // version 5.4+
 
-    trait DynamicObject {
+trait DynamicObject {
 
-        protected $_customMethods = [];
+    protected $_customMethods = [];
 
-        public function method ($name, Closure $closure = null) {
-            if (!$closure)
-                return isset($this->_customMethods[$name]) ? $this->_customMethods[$name] : null;
-            else
-                $this->_customMethods[$name] = $closure->bindTo($this, $this);
-        }
-
-        public function __call ($method, $args = []) {
-            if (!$custom_method = $this->method($method))
-                throw new BadMethodCallException("no such method $method");
-
-            return call_user_func_array($custom_method, $args);
-        }
+    public function method ($name, Closure $closure = null) {
+        if (!$closure)
+            return isset($this->_customMethods[$name]) ? $this->_customMethods[$name] : null;
+        else
+            $this->_customMethods[$name] = $closure->bindTo($this, $this);
     }
 
-    class MyClass {
-        use DynamicObject;
+    public function __call ($method, $args = []) {
+        if (!$custom_method = $this->method($method))
+            throw new BadMethodCallException("no such method $method");
 
-        protected $_a;
-        protected $_b;
-
-        public function __construct ($a, $b) {
-            $this->_a = $a;
-            $this->_b = $b;
-        }
+        return call_user_func_array($custom_method, $args);
     }
+}
 
-    $f = function () {
-        return $this->_a + $this->_b;
-    };
+class MyClass {
+    use DynamicObject;
 
-    $obj1 = new MyClass(1,2);
-    $obj1->method('add', $f);
+    protected $_a;
+    protected $_b;
 
-    $obj2 = new MyClass(4,8);
-    $obj2->method('add', $f);
+    public function __construct ($a, $b) {
+        $this->_a = $a;
+        $this->_b = $b;
+    }
+}
 
-    var_dump( $obj1->add() ); // 3
-    var_dump( $obj2->add() ); // 12
+$f = function () {
+    return $this->_a + $this->_b;
+};
+
+$obj1 = new MyClass(1,2);
+$obj1->method('add', $f);
+
+$obj2 = new MyClass(4,8);
+$obj2->method('add', $f);
+
+var_dump( $obj1->add() ); // 3
+var_dump( $obj2->add() ); // 12
+{% endhighlight %}
 
 Dans l'exemple ci-dessus, nous crééons un trait qui une fois équipé sur une classe lui permet de se voir doter de nouvelles méthodes dynamiquement. Ce genre de concept est exrêmement pratique pour injecter de nouveaux comportements à des types existants, ce qui réduit la nécéssité du sous-typage. Imaginez que vous disposiez d'une classe `Collection` qui représente une séquence (un tableau si vous préférez) et vous voulez une méthode qui trouve des informations dedans mais cette dernière est simple et ne justifie pas que vous sous-typiez `Collection` inutilement. Vous pouvez grâce à ce trait ajouter là où ça vous intéresse le comportement qui vous intéresse et l'affaire est dans le sac: pas de nouvelle classe à créer, pas de nouveau fichier, on reste simple, cohérent et lisible.
 
@@ -449,28 +473,30 @@ Il est parfois utile d'exécuter la closure dans son propre corp afin, par exemp
 
 Exemple:
 
-    <?php // version 5.3+
+{% highlight php linenos %}
+<?php // version 5.3+
 
-    $explorer = function (array $tableau, $profondeur = 0) use (& $explorer) {
-        foreach ($tableau as $valeur) {
-            if (is_array($valeur))
-                $explorer($valeur, $profondeur +1);
-            else
-                echo str_repeat('  ', $profondeur) . "> $valeur\n";
-        }
-    };
+$explorer = function (array $tableau, $profondeur = 0) use (& $explorer) {
+    foreach ($tableau as $valeur) {
+        if (is_array($valeur))
+            $explorer($valeur, $profondeur +1);
+        else
+            echo str_repeat('  ', $profondeur) . "> $valeur\n";
+    }
+};
 
-    $arbre = array(
-        1,2,3,
+$arbre = array(
+    1,2,3,
+    array(
+        4,5,6,
         array(
-            4,5,6,
-            array(
-                7,8,9,
-            )
+            7,8,9,
         )
-    );
+    )
+);
 
-    $explorer($arbre);
+$explorer($arbre);
+{% endhighlight %}
 
 ### Tricher avec la syntaxe nowdoc
 
@@ -478,21 +504,23 @@ Comme vous le savez, grâce à la syntaxe nowdow (et heredoc aussi) vous pouvez 
 
 Exemple:
 
-    <?php // version 5.3+
+{% highlight php linenos %}
+<?php // version 5.3+
 
-    $_ = function ($v) { return $v; };
+$_ = function ($v) { return $v; };
 
-    define('FOO', 'bar');
-    $a = 1;
+define('FOO', 'bar');
+$a = 1;
 
-    // fonctionne
-    echo "{$_(FOO)} - {$_($a+$a)}";
+// fonctionne
+echo "{$_(FOO)} - {$_($a+$a)}";
 
-    //fonctionne aussi
-    echo <<< EOF
-    Une expression: {$_($a+1)}
-    Une constante : {$_(FOO)}
-    EOF;
+//fonctionne aussi
+echo <<< EOF
+Une expression: {$_($a+1)}
+Une constante : {$_(FOO)}
+EOF;
+{% endhighlight %}
 
 ### Un autoloader plus malin
 
@@ -500,30 +528,32 @@ Il arrive qu'on doive configurer des paramètre statique d'une classe juste apr�
 
 Exemple:
 
-    <?php // version 5.3+
+{% highlight php linenos %}
+<?php // version 5.3+
 
-    spl_autoload_register(function ($classe) use (&$autoload_before, &$autoload_after) {
-        isset($autoload_before[$classe]) && $autoload_before[$classe]($classe);
-        $r = include $classe . '.class.php';
-        $r && isset($autoload_after[$classe]) && $autoload_after[$classe]($classe);
-    });
+spl_autoload_register(function ($classe) use (&$autoload_before, &$autoload_after) {
+    isset($autoload_before[$classe]) && $autoload_before[$classe]($classe);
+    $r = include $classe . '.class.php';
+    $r && isset($autoload_after[$classe]) && $autoload_after[$classe]($classe);
+});
 
-    // configurer automatiquement un singleton
-    $autoload_after['MonSingleton'] = function () use (& $config) {
-        if (!isset($config))
-            throw new RuntimeException("you must setup configuration first");
+// configurer automatiquement un singleton
+$autoload_after['MonSingleton'] = function () use (& $config) {
+    if (!isset($config))
+        throw new RuntimeException("you must setup configuration first");
 
-        MonSingleton::setConfig($config);
-    };
+    MonSingleton::setConfig($config);
+};
 
-    // créer dynamiquement un alias
-    $autoload_before['MonAlias'] = function (& $vrai_nom) {
-        $vrai_nom = 'MaClasse';
-    };
+// créer dynamiquement un alias
+$autoload_before['MonAlias'] = function (& $vrai_nom) {
+    $vrai_nom = 'MaClasse';
+};
 
-    $autoload_after['MaClass'] = function () {
-        class_alias('MonAlias', 'MaClasse');
-    }
+$autoload_after['MaClass'] = function () {
+    class_alias('MonAlias', 'MaClasse');
+}
+{% endhighlight %}
 
 ### Un injecteur de dépendances
 
@@ -531,39 +561,41 @@ L'injection de dépendances est un patron d'architecture proche de l'inversion d
 
 Voici un exemple d'implémentation qui repose sur les paramètres des closures pour déterminer les dépendances entre les composants. Il s'agit ici d'une résolution par nom où le chargement et l'initialisation d'un composant sont modélisés par une closure, les noms de ses paramètres sont ceux des dépendances du composants à charger.
 
-    <?php // version 5.3+
+{% highlight php linenos %}
+<?php // version 5.3+
 
-    class IoC {
+class IoC {
 
-        protected static $_registry = array();
+    protected static $_registry = array();
 
-        public static function register ($name, Closure $fct) {
-            static::$_registry[(string)$name] = $fct;
-        }
-
-        public static function resolve ($name) {
-            $fct = static::$_registry[(string)$name];
-            return inject($fct);
-        }
+    public static function register ($name, Closure $fct) {
+        static::$_registry[(string)$name] = $fct;
     }
 
-    function inject (Closure $fct) {
-        $reflect = new ReflectionFunction($fct);
-        foreach ($reflect->getParameters() as $parameter) {
-            $name = $parameter->name;
-            $context[$name] = IoC::resolve($name);
-        }
-        return !empty($context) ? $reflect->invokeArgs($context) : $reflect->invoke();
+    public static function resolve ($name) {
+        $fct = static::$_registry[(string)$name];
+        return inject($fct);
     }
+}
 
-    IoC::register('Composant_A', function ()             { echo "Composant A initialisé\n"; });
-    IoC::register('Composant_B', function ($Composant_A) { echo "Composant B initialisé\n"; });
-    IoC::register('Composant_C', function ($Composant_B) { echo "Composant C initialisé\n"; });
+function inject (Closure $fct) {
+    $reflect = new ReflectionFunction($fct);
+    foreach ($reflect->getParameters() as $parameter) {
+        $name = $parameter->name;
+        $context[$name] = IoC::resolve($name);
+    }
+    return !empty($context) ? $reflect->invokeArgs($context) : $reflect->invoke();
+}
 
-    inject(function ($Composant_C) {
-        // ici, on dispose du composant C qui dépends de B qui dépends de A
-        // la chaîne de dépendance à été résolue récursivement par IoC
-    });
+IoC::register('Composant_A', function ()             { echo "Composant A initialisé\n"; });
+IoC::register('Composant_B', function ($Composant_A) { echo "Composant B initialisé\n"; });
+IoC::register('Composant_C', function ($Composant_B) { echo "Composant C initialisé\n"; });
+
+inject(function ($Composant_C) {
+    // ici, on dispose du composant C qui dépends de B qui dépends de A
+    // la chaîne de dépendance à été résolue récursivement par IoC
+});
+{% endhighlight %}
 
 On peut sans grand effort effectuer une résolution par type en utilisant des interface (ce qui est bien mieux en termes de sécurité), je suis sûr que vous saurez adapter l'exemple ci-dessous en conséquence.
 

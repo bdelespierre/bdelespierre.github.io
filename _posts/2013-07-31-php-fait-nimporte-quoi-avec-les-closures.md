@@ -15,12 +15,14 @@ Rappel pour ceux qui dormaient au fond. L'une des avancées majeures de PHP 5.3 
 
 L'avantage marteau de la closure par rapport aux fonctions annonymes et aux objets invoquables (voir [la méthode magique __invoke](http://www.php.net/manual/en/language.oop5.magic.php#object.invoke)) c'est qu'elle est capable de conserver des références de la porté dans laquelle elle est définie.
 
-    <?php
-    $a = "Robert";
-    $f = function () use ($a) {
-        echo "Bonjour $a";
-    };
-    $f(); // affiche "Bonjour Robert"
+{% highlight php linenos %}
+<?php
+$a = "Robert";
+$f = function () use ($a) {
+    echo "Bonjour $a";
+};
+$f(); // affiche "Bonjour Robert"
+{% endhighlight %}
 
 La seule chose qui manquait, c'était le support du mot clé `$this` au sein d'une closure afin de pouvoir l'utiliser dans le contexte d'un objet, c'est de l'or pour ceux qui aiment la délégation ! C'est justement ce qu'apporte PHP 5.4.
 
@@ -30,20 +32,22 @@ En fait quand on utilise la syntaxe `function () {}`, le moteur de PHP utilise c
 
 PHP 5.4 introduit la mécanique suivante: si une closure est définie dans une méthode de classe ou d'instance, alors sa portée par défaut devient l'objet ou la classe de cette méthode.
 
-    <?php
+{% highlight php linenos %}
+<?php
 
-    class Foo {
-        protected $_bar = "Hello";
-        public function bar () {
-            return function () {
-                return $this->_bar;
-            };
-        }
+class Foo {
+    protected $_bar = "Hello";
+    public function bar () {
+        return function () {
+            return $this->_bar;
+        };
     }
+}
 
-    $o = new Foo;
-    $f = $o->bar();
-    echo $f(); // affiche "Hello"
+$o = new Foo;
+$f = $o->bar();
+echo $f(); // affiche "Hello"
+{% endhighlight %}
 
 Coté statique, c'est la même chose: on peut utiliser les mots clés `self` et `static` dans une closure. Il est d'ailleurs possible de manipuler le contexte d'éxécution de notre closure avec `Closure::bind` et `Closure::bindTo` afin "d'accrocher" la closure à un contexte personnalisé. Et ça, c'est __super__ pratique... En théorie.
 
@@ -51,31 +55,35 @@ Là où ça se corse, c'est qu'implicitement, une closure définie dans un conte
 
 En somme, si je créée une méthode qui travaille avec une closure et qu'il me prends le goût d'attacher cette closure à mon objet pour permettre à la closure d'utiliser ses propriétés itnernes, je m'expose sans le savoir à une erreur fatale __qu'il m'est impossible d'anticiper__ !
 
-    <?php
+{% highlight php linenos %}
+<?php
 
-    class Foo {
-        protected $str = "Hello";
-        public function doGreet (Closure $f) {
-            $f = $f->bindTo($this, $this); // Warning: Cannot bind an instance to a static closure
-            $f();
-        }
+class Foo {
+    protected $str = "Hello";
+    public function doGreet (Closure $f) {
+        $f = $f->bindTo($this, $this); // Warning: Cannot bind an instance to a static closure
+        $f();
     }
+}
 
-    class Bar {
-        public static function getGreet () {
-            return function () { echo $this->str . " World!"; };
-        }
+class Bar {
+    public static function getGreet () {
+        return function () { echo $this->str . " World!"; };
     }
+}
 
-    $o = new Foo;
-    $f = Bar::getGreet();
-    $o->doGreet($f); // Fatal error: Using $this when not in object context
+$o = new Foo;
+$f = Bar::getGreet();
+$o->doGreet($f); // Fatal error: Using $this when not in object context
+{% endhighlight %}
 
 C'est quand même un comble non ? Là où c'est tordu, c'est que cet exemple fonctionne parfaitement avec une closure définie dans la portée racine, indépendament de tout objet:
 
-    $o = new Foo;
-    $f = function () { echo $this->str . " World!"; };
-    $o->doGreet($f); // affiche "Hello World!"
+{% highlight php linenos %}
+$o = new Foo;
+$f = function () { echo $this->str . " World!"; };
+$o->doGreet($f); // affiche "Hello World!"
+{% endhighlight %}
 
 Bien que le manuel prétende qu'on peut passer d'une closure statique à une closure non statique et vice-versa, je n'ai jamais réussi à rendre une closure statique utilisable dans un contexte d'objet.
 
