@@ -531,6 +531,64 @@
 				}
 
 /*********************************************************************************/
+/* Transitions                                                                   */
+/* Powered by Hover                                                              */
+/* Licensed under the SIL OFL 1.1 (font), MIT (CSS)                              */
+/*********************************************************************************/
+
+	/* 2D TRANSITIONS */
+
+	/* Float Shadow */
+
+	.float-shadow {
+	  display: inline-block;
+	  position: relative;
+	  -webkit-transition-duration: 0.3s;
+	  transition-duration: 0.3s;
+	  -webkit-transition-property: -webkit-transform;
+	  transition-property: transform;
+	  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	  -webkit-transform: translateZ(0);
+	  -ms-transform: translateZ(0);
+	  transform: translateZ(0);
+	  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+	}
+
+		.float-shadow:before {
+		  pointer-events: none;
+		  position: absolute;
+		  z-index: -1;
+		  content: '';
+		  top: 100%;
+		  left: 5%;
+		  height: 10px;
+		  width: 90%;
+		  opacity: 0;
+		  background: -webkit-radial-gradient(center, ellipse, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 80%);
+		  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 80%);
+		  /* W3C */
+		  -webkit-transition-duration: 0.3s;
+		  transition-duration: 0.3s;
+		  -webkit-transition-property: -webkit-transform, opacity;
+		  transition-property: transform, opacity;
+		}
+
+		.float-shadow:hover {
+		  -webkit-transform: translateY(-5px);
+		  -ms-transform: translateY(-5px);
+		  transform: translateY(-5px);
+		  /* move the element up by 5px */
+		}
+
+		.float-shadow:hover:before {
+		  opacity: 1;
+		  -webkit-transform: translateY(5px);
+		  -ms-transform: translateY(5px);
+		  transform: translateY(5px);
+		  /* move the element down by 5px (it will stay in place because it's attached to the element that also moves up 5px) */
+		}
+
+/*********************************************************************************/
 /* Icons                                                                         */
 /* Powered by Font Awesome by Dave Gandy | http://fontawesome.io                 */
 /* Licensed under the SIL OFL 1.1 (font), MIT (CSS)                              */
@@ -1225,3 +1283,32 @@
 	{
 		margin-top: 2em;
 	}
+
+	#projects .row > div > p
+	{
+		min-height: 3.5em;
+	}
+
+	#about
+	{
+
+	}
+
+		#about .image
+		{
+			text-align: center;
+			margin-bottom: 2em;
+		}
+
+		#about .image > img
+		{
+			-webkit-border-radius: 999px;
+			-moz-border-radius: 999px;
+			border-radius: 999px;
+			max-width: 255px;
+			border: .4em solid white;
+		}
+
+		#about .row ul li {
+			text-align: left;
+		}

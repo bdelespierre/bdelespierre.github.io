@@ -1,0 +1,14 @@
+{
+  "name": "Hover",
+  "homepage": "https://github.com/IanLunn/Hover",
+  "_release": "9639abbe4d",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "9639abbe4da03bdae4e7a6de8f547da884c3f1cd"
+  },
+  "_source": "git://github.com/IanLunn/Hover.git",
+  "_target": "*",
+  "_originalSource": "IanLunn/Hover",
+  "_direct": true
+}
