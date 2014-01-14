@@ -1308,9 +1308,9 @@
 		{
 			display: block;
 			content: "";
-			width: 11.2em;
+			margin-left: 11em;
 			height: 1.5em;
-			border-right: .2em dotted #93bfbe;
+			border-left: .2em dotted #93bfbe;
 		}
 
 			#roadmap ul li
