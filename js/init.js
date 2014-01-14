@@ -230,7 +230,7 @@
 			jQuery('.scrolly').n33_scrolly();
 
 		// Initialize nav
-			var $nav_a = jQuery('#nav a');
+			var $nav_a = jQuery('#nav a:not(.no-scrolly)');
 			
 			// Scrollyfy links
 				$nav_a
@@ -256,5 +256,20 @@
 				});
 				
 				jQuery.n33_scrollzer(ids, { pad: 200, lastHack: true });
+
+		// mailto
+			$('a.mailto').attr('href', 'mailto:benjamin.delespierre@gmail.com');
+
+		// resize the #top
+			$('#top').length && $(window).resize(function () {
+				var winHeight = window.innerHeight,
+					$top = $('#top'),
+					$topContainer = $(".container", $top);
+
+				$top.css('min-height', winHeight);
+
+				if ($topContainer.height() < winHeight)
+					$topContainer.css('padding-top', ($top.height() - $topContainer.height()) / 2);
+			}).trigger('resize');
 
 	});

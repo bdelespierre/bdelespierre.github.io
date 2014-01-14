@@ -124,6 +124,7 @@
 	{
 		border: 0;
 		border-top: solid 1px #ddd;
+		margin-top: 2em;
 	}
 	
 	blockquote
@@ -486,7 +487,6 @@
 			background-color: #8ebebc;
 			border: 0;
 			cursor: pointer;
-			margin: 0 2.5em 2.5em 0;
 			background-image: -moz-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.15)), url('images/overlay.png');
 			background-image: -webkit-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.15)), url('images/overlay.png');
 			background-image: -o-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.15)), url('images/overlay.png');
@@ -530,62 +530,20 @@
 					font-size: 1em;
 				}
 
-/*********************************************************************************/
-/* Transitions                                                                   */
-/* Powered by Hover                                                              */
-/* Licensed under the SIL OFL 1.1 (font), MIT (CSS)                              */
-/*********************************************************************************/
+	/* Image */
 
-	/* 2D TRANSITIONS */
-
-	/* Float Shadow */
-
-	.float-shadow {
-	  display: inline-block;
-	  position: relative;
-	  -webkit-transition-duration: 0.3s;
-	  transition-duration: 0.3s;
-	  -webkit-transition-property: -webkit-transform;
-	  transition-property: transform;
-	  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-	  -webkit-transform: translateZ(0);
-	  -ms-transform: translateZ(0);
-	  transform: translateZ(0);
-	  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-	}
-
-		.float-shadow:before {
-		  pointer-events: none;
-		  position: absolute;
-		  z-index: -1;
-		  content: '';
-		  top: 100%;
-		  left: 5%;
-		  height: 10px;
-		  width: 90%;
-		  opacity: 0;
-		  background: -webkit-radial-gradient(center, ellipse, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 80%);
-		  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 80%);
-		  /* W3C */
-		  -webkit-transition-duration: 0.3s;
-		  transition-duration: 0.3s;
-		  -webkit-transition-property: -webkit-transform, opacity;
-		  transition-property: transform, opacity;
+		img.round
+		{
+			-webkit-border-radius: 999px;
+			-moz-border-radius: 999px;
+			border-radius: 999px;
 		}
 
-		.float-shadow:hover {
-		  -webkit-transform: translateY(-5px);
-		  -ms-transform: translateY(-5px);
-		  transform: translateY(-5px);
-		  /* move the element up by 5px */
-		}
-
-		.float-shadow:hover:before {
-		  opacity: 1;
-		  -webkit-transform: translateY(5px);
-		  -ms-transform: translateY(5px);
-		  transform: translateY(5px);
-		  /* move the element down by 5px (it will stay in place because it's attached to the element that also moves up 5px) */
+		img.polaroid
+		{
+			border: .4em solid white;
+			-webkit-box-shadow: 3px 3px 3px 2px #D9D9D9;
+			box-shadow: 3px 3px 3px 2px #D9D9D9;
 		}
 
 /*********************************************************************************/
@@ -1289,26 +1247,186 @@
 		min-height: 3.5em;
 	}
 
-	#about
+	#about .image
 	{
-
+		text-align: center;
+		margin-bottom: 2em;
 	}
 
-		#about .image
+	#about .image > img
+	{
+		max-width: 255px;
+	}
+
+	#skills ul li
+	{
+		display: inline-block;
+		padding: .5em;
+	}
+
+	#top .presentation td
+	{
+		line-height: 2em;
+		text-align: left;
+	}
+
+		#top .presentation td.title
 		{
-			text-align: center;
-			margin-bottom: 2em;
+			width: 8em;
+			font-style: italic;
+			color: #e7768a;
+			text-align: right;
+			padding-right: 1em;
 		}
 
-		#about .image > img
+		#top .presentation img
 		{
-			-webkit-border-radius: 999px;
-			-moz-border-radius: 999px;
-			border-radius: 999px;
-			max-width: 255px;
-			border: .4em solid white;
+			max-height: 10em;
 		}
 
-		#about .row ul li {
-			text-align: left;
+	#skills table caption
+	{
+		line-height: 2em;
+		border-bottom: 1px dotted #ccc;
+		margin-bottom: 1em;
+	}
+
+		#skills table td.title
+		{
+			text-align: right;
+			padding-right: 1em;
 		}
+
+	#roadmap ul
+	{
+		text-align: left;
+	}
+
+		#roadmap ul:before,
+		#roadmap ul:after
+		{
+			display: block;
+			content: "";
+			width: 11.2em;
+			height: 1.5em;
+			border-right: .2em dotted #93bfbe;
+		}
+
+			#roadmap ul li
+			{
+				display: block;
+				text-align: left;
+			}
+
+				#roadmap ul li.head span
+				{
+					display: inline-block;
+					width: 10em;
+					text-align: right;
+					line-height: 5em;
+				}
+
+				#roadmap ul li.head a
+				{
+					position: relative;
+					display: inline-block;
+					border-left: .2em solid #93bfbe;
+					border-bottom: none;
+					padding-left: 1em;
+					margin-left: 1em;
+					line-height: 5em;
+				}
+
+				#roadmap ul li.head a:before
+				{
+					content: "";
+					display: block;
+					position: absolute;
+					top: 50%;
+					left: -0.5em;
+					margin-top: -.5em;
+					margin-left: -.1em;
+					width: 1em;
+					height: 1em;
+					background-color: #93bfbe;
+					border: .2em solid #e7eded;
+					-webkit-border-radius: 1em;
+					-moz-border-radius: 1em;
+					border-radius: 1em;
+				}
+
+				#roadmap ul li.content p
+				{
+					margin-left: 11em;
+					margin-bottom: 0;
+					border-left: .2em solid #93bfbe;
+					padding-left: 1em;
+					font-style: italic;
+				}
+
+/*********************************************************************************/
+/* Animations                                                                    */
+/*********************************************************************************/
+
+	#top h2.animated
+	{
+		-moz-animation-delay: 0s;
+		-webkit-animation-delay: 0s;
+		-o-animation-delay: 0s;
+	}
+
+	#top p.animated
+	{
+		-moz-animation-delay: .7s;
+		-webkit-animation-delay: .7s;
+		-o-animation-delay: .7s;
+	}
+
+	#top .button.animated:nth-child(1)
+	{
+		-moz-animation-delay: 1.4s;
+		-webkit-animation-delay: 1.4s;
+		-o-animation-delay: 1.4s;
+	}
+
+	#top .button.animated:nth-child(2)
+	{
+		-moz-animation-delay: 1.6s;
+		-webkit-animation-delay: 1.6s;
+		-o-animation-delay: 1.6s;
+	}
+
+	#top .button.animated:nth-child(3)
+	{
+		-moz-animation-delay: 1.8s;
+		-webkit-animation-delay: 1.8s;
+		-o-animation-delay: 1.8s;
+	}
+
+	#about .image img.animated
+	{
+		-moz-animation-delay: .4s;
+		-webkit-animation-delay: .4s;
+		-o-animation-delay: .4s;
+	}
+
+	#about .button.animated:nth-child(1)
+	{
+		-moz-animation-delay: .2s;
+		-webkit-animation-delay: .2s;
+		-o-animation-delay: .2s;
+	}
+
+	#about .button.animated:nth-child(2)
+	{
+		-moz-animation-delay: .4s;
+		-webkit-animation-delay: .4s;
+		-o-animation-delay: .4s;
+	}
+
+	#top .presentation .animated
+	{
+		-moz-animation-delay: .7s;
+		-webkit-animation-delay: .7s;
+		-o-animation-delay: .7s;
+	}
