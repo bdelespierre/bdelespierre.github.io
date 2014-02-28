@@ -45,6 +45,7 @@ $user = (object)array(
 
 // arbitraire
 define('ACTION_RESET_PASSWORD', 4);
+?>
 {% endhighlight %}
 
 ## Construire la représentation binaire du jeton
@@ -57,20 +58,20 @@ L'email est un bon identifiant car il est unique dans notre modèle, mais il est
 
 On va également supposer que, n'ayant pas plus de 16 code actions différents, on peut encoder l'action sur 2 octets (16 bits). Dans la pratique, vous aurez rarement besoin de plus d'une dizaine de codes actions différents pour vos emails ou alors c'est que vous devriez utiliser du _identifiant action_ au lieu d'un _code action_ (en termes de terminologie, un code n'est pas supposé être identifiant).
 
-La date va nous poser un problème car la réprésentation d'une date au format US (YYYY-MM-DD HH:II:SS) est un peu trop lourde: 19 octets (152 bits). Mais ce qui nous intéresse c'est uniquement le jour auquel l'action à été émise donc on peut réduire à YYMMDD ce qui nous permet d'encoder la date sur une valeur entière comprise entre 000101 et 991231 (de toute façon je doute que vous souhaitiez laisser courrir la validité de votre jeton jusqu'au siècle prochain). On est donc passé de 19 octets à 4 octets (32 bits). On pourrait d'ailleurs descendre plus bas si on considère que les jetons ne sont valides que quelques jours mais ça deviendrait complexe à cause des fins d'années et on ne gagnerait que 2 octets, donc faisons simple.
+La date va nous poser un problème car la réprésentation d'une date au format US (YYYY-MM-DD HH:II:SS) est un peu trop lourde: 19 octets (152 bits). Mais ce qui nous intéresse c'est uniquement le jour auquel l'action à été émise donc on peut réduire à YYMMDD ce qui nous permet d'encoder la date sur une valeur entière comprise entre 000101 et 991231 (de toute façon je doute que vous souhaitiez laisser courrir la validité de votre jeton jusqu'au siècle prochain). On utilisera la fonction `date16_encode` telle que décrite dans mon article (Compacter une date sur 2 octets)[http://bdelespierre.fr/article/compacter-une-date-sur-2-octets/] pour passer de 19 à 2 octets (16 bits).
 
 Par sécurité on va également rajouter quelques bits d'entropie, c'est à dire une séquence aléatoire de bits qui va nous servir à générer des jetons différents si l'utilisateur réinitialise plusieurs fois son mail dans la même journée. Avec 16 bits d'entropie pour un utilisateur donné, une action donnée et une date donnée, on a donc une chance sur 65535 de générer 2x le même jeton, c'est acceptable. Pour générer ces bits on va tout simplement se servir de la fonction `mt_rand` de PHP, elle va nous générer un entier de 32 bits aléatoire qu'on va réduire sur 16 bits.
 
 Notre structure, en termes de bits, devrait donc avoir cette forme:
 
     [identifiant utilisateur] [code action] [date du jour] [bits d'entropie]
-             32 bits             16 bits        32 bits         16 bits
+             32 bits             16 bits        16 bits         16 bits
 
-Ce qui nous fait un total de 96 bits soit 12 octets. Si on avait encodé toutes ces informations délimitées par un séparateur sur une chaine de caractères sans se casser la tête, on se serait retrouvé avec une chaine de 48 caractères (384 octets) soit exactement 4x plus pour la même information. De plus, il aurait été aisé d'en comprendre la structure ce qui n'est pas forcément une bonne chose en termes de sécurité alors qu'avec un bitfield binaire, vous seul connaissez la structure et savez comment déconstruire le bitfield, mais on y reviendra.
+Ce qui nous fait un total de 80 bits soit 10 octets. Si on avait encodé toutes ces informations délimitées par un séparateur sur une chaine de caractères sans se casser la tête, on se serait retrouvé avec une chaine de 48 caractères (384 octets) soit presque 5x plus pour la même information. De plus, il aurait été aisé d'en comprendre la structure ce qui n'est pas forcément une bonne chose en termes de sécurité alors qu'avec un bitfield binaire, vous seul connaissez la structure et savez comment déconstruire le bitfield, mais on y reviendra.
 
 Pour rassembler toutes ces données dans un seul bitfield, nous allons nous servir de la fonction PHP [pack](http://php.net/pack). Cette fonction prends comme premier paramètre un format (la structure de notre champ de bits) et tous les paramètres suivants seront nos valeur. Elle se comporte un peu comme la fonction [date](http://php.net/manual/fr/function.date.php) en fait mais elle sert à générer du binaire.
 
-Pack dispose d'un tas de codes pour le format mais nous allons uniquement nous servir de `I` et `S` (respectivement Int et Short pour entier non signé et entier court non signé). Conformément à la structure que nous voulons, notre format est donc `ISIS`. Référez-vous au manuel de la fonction pour les autre codes de formattage.
+Pack dispose d'un tas de codes pour le format mais nous allons uniquement nous servir de `I` et `S` (respectivement Int et Short pour entier non signé et entier court non signé). Conformément à la structure que nous voulons, notre format est donc `ISSS`. Référez-vous au manuel de la fonction pour les autre codes de formattage.
 
 {% highlight php linenos %}
 <?php
@@ -84,13 +85,14 @@ $id = (int)$user->id;
 $code_action = (int)ACTION_RESET_PASSWORD;
 
 // date du jour sous forme d'entier
-$date = (int)date('ymd');
+$date = date16_encode(date('Y'), date('m'), date('d'));
 
 // nombre aléatoire pour l'entropie
 $entropy = mt_rand();
 
 // représentation binaire de notre jeton
-$binary_token = pack('ISIS', $id, $code_action, $date, $entropy);
+$binary_token = pack('ISSS', $id, $code_action, $date, $entropy);
+?>
 {% endhighlight %}
 
 En PHP il nous est impossible de spécifier la taille des structures qu'on utilise car le langage est faiblement typé. Tout ce qu'on peut faire c'est caster nos valeurs en entier avec `(int)$valeur` avant de les passer à la fonction pack. Vous pouvez ensuite contrôler avec `echo strlen($binary_token);` que le jeton binaire fait au maximum 10 caractères (ou 10 octets si vous préférez).
@@ -106,9 +108,10 @@ Le plus simple est de se servir de la fonction [base64_encode](http://php.net/ma
 
 // représentation alphanumérique de notre jeton
 $token = base64_encode(binary_token);
+?>
 {% endhighlight %}
 
-Evidement, on passe les "caractères" de notre jeton d'une base 256 (un octet) à 64, il faut s'attendre à ce que la chaine produite par la fonction base64_encode soit plus longue que la représentation binaire de départ. On peut donc à nouveau vérifier la longueur du jeton avec `echo strlen($token);` pour constater cette fois que le jeton fait toujours 16 caractères. Ma foi, il n'a pas trop grossi.
+Evidement, on passe les "caractères" de notre jeton d'une base 256 (un octet) à 64, il faut s'attendre à ce que la chaine produite par la fonction base64_encode soit plus longue que la représentation binaire de départ. On peut donc à nouveau vérifier la longueur du jeton avec `echo strlen($token);` pour constater cette fois que le jeton fait toujours 16 caractères.
 
 L'un des problèmes de la fonction base64_encode c'est qu'elle génère des chaines contenant les caractères `+/=` qui vont nous gêner dans l'URL. Vous pouvez choisir d'encoder ces caractères avec [url_encode](http://www.php.net/urlencode) ou les remplacer par des caractères "inoffensifs" pour l'URL à l'aide des fonctions suivantes:
 
@@ -127,11 +130,12 @@ function base64url_decode($data) {
 
 // créer une version URL-SAFE de notre jeton binaire
 $urlsafe_token = base64url_encode($binary_token);
+?>
 {% endhighlight %}
 
 __Note:__ si vous choisissez d'encoder avec base64url\_encode vous devrez bien sûr décoder avec base64url\_decode de l'autre coté.
 
-A l'issue de cette procédure, vous vous retrouvez avec un token qui devrait reseembler à ça: `QOIBAAQAigACAB0i`, c'est plutôt court malgré toutes les informations qu'il renferme non ? Il ne vous reste qu'a mettre ce jeton dans le lien que vous enverrez par mail à votre utilisateur, par exemple:
+A l'issue de cette procédure, vous vous retrouvez avec un token qui devrait reseembler à ça: `QOIBAAQAXLyeVg`, c'est plutôt court malgré toutes les informations qu'il renferme non ? Il ne vous reste qu'a mettre ce jeton dans le lien que vous enverrez par mail à votre utilisateur, par exemple:
 
 {% highlight php linenos %}
 <?php
@@ -158,11 +162,14 @@ mail(
     'ReplyTo: webmaster@mon.site.com' . "\r\n" .
     'Content-type: text/html; charset=utf-8' . "\r\n"
 );
+?>
 {% endhighlight %}
 
 ## Décoder le jeton et extraire ses données
 
 C'est là que ça devient vraiment intéressant: tout ce qu'on a fait plus haut est reversif, c'est à dire que vous allez pouvoir déconstruire le jeton pour récupérer les données qu'il contiens. Nous allons pour cela faire exactement le même cheminement mais à l'envers. On va pour cela se servir des fonction [base64_decode](http://www.php.net/base64_decode) (ou [base64url_decode](http://php.net/manual/en/function.base64-encode.php#103849) si vous aviez utilisé base64url_encode) et [unpack](http://www.php.net/manual/fr/function.unpack.php).
+
+On va également utiliser la fonction `date16_decode` pour décoder notre date 16 bits (voir [Compacter une date sur 2 octets](http://bdelespierre.fr/article/compacter-une-date-sur-2-octets/)).
 
 Unpack fonctionne différement de pack, vous devez mettre dans son premier paramètre un format qui contiendra les noms des variables à remplir précédées du type de la donné et les séparer par des slash (/). Nous avions encodé id + action + date + entropie avec le format __ISIS__, nous allons donc décoder avec le format __I__id/__S__code_action/__I__date/__S__entropy.
 
@@ -188,17 +195,20 @@ if (!$binary_token) {
 }
 
 // extraire les informations du bitfield
-$data = @unpack('Iid/Scode_action/Idate/Sentropy', $binary_token);
+$data = @unpack('Iid/Scode_action/Sdate/Sentropy', $binary_token);
 
 if (!$data) {
     // erreur: bitfield mal formé
 }
 
+list($year, $month, $day) = date16_decode($data['date']);
+
 // populer les variables correspondantes
 $id          = $data['id'];
 $code_action = $data['code_action'];
-$date        = $data['date'];
+$date        = "{$year}-{$month}-{$day}";
 $entropy     = $data['entropy'];
+?>
 {% endhighlight %}
 
 Plutôt sympa non ? Avec ces données à votre disposition vous pouvez maintenant faire toutes les vérifications que vous voulez et afficher à l'utilisateur un formulaire de réinitialisation du mot de passe.
@@ -207,7 +217,7 @@ Plutôt sympa non ? Avec ces données à votre disposition vous pouvez maintenan
 
 La méthode démontrée ici est très pratique pour garantir l'unicité d'un jeton pour certains critères __mais cette unicité ne constitue pas pour autant une quelconque sécurité__. En effet, un pirate pourra facilement reconstruire un jeton parfaitement valide s'il arrive à comprendre de quelle façon il est construit et s'en servir pour duper votre application et se rendre par exemple propriétaire de comptes tiers.
 
-Un moyen simple de sécuriser le jeton est d'y inclure une donnée que l'attaquant ne peut ni connaitre, ni calculer. On va pour cela se servir du mot de passe de l'utilisateur: on va tout simplement en calculer la somme de contrôle crc et l'ajouter au jeton (ce qui va modifier sa taille binaire de 4 octets).
+Un moyen simple de sécuriser le jeton est d'y inclure une donnée que l'attaquant ne peut ni connaitre, ni calculer. On va pour cela se servir du mot de passe de l'utilisateur: on va tout simplement en calculer la somme de contrôle crc et ajouter les 16 premiers bits au jeton (ce qui va modifier sa taille binaire de 2 octets).
 
 {% highlight php linenos %}
 <?php
@@ -218,18 +228,19 @@ Un moyen simple de sécuriser le jeton est d'y inclure une donnée que l'attaqua
 $password_crc32 = crc32($user->password);
 
 // représentation binaire de notre jeton 
-$binary_token = pack('ISISI', $id, $code_action, $date, $entropy, $password_crc32);
+$binary_token = pack('ISSSS', $id, $code_action, $date, $entropy, $password_crc32);
 
 // créer une version URL-SAFE de notre jeton binaire
 $urlsafe_token = base64url_encode($binary_token);
+?>
 {% endhighlight %}
 
-La taille de notre jeton passe à 16 octets (128 bits) et sa taille encodée passe à 22 caractères soit 6 caractères de plus (ça devrait ressembler à QOIBAAQAiwACANGuDSMaBA). C'est acceptable.
+La taille de notre jeton passe à 12 octets (96 bits) mais sa taille encodée reste 16 caractères (car base64_encode fonctionne par blocs de 16 bits et il nous manquait justement 16 bits pour faire un compte rond, ajouter le crc du mot de passe ne change donc rien à la taille du jeton).
 
 De l'autre coté, il nous suffira de comparer la somme de contrôle du jeton avec celle du mot de passe utilisateur connu, si elles ne sont pas identiques, alors soit le jeton est bidon, soit l'utilisateur a changé son mot de passe. Dans tous les cas, inutile de continuer.
 
 ## Conclusion
 
-En termes de sécurité, les jetons ont une importance cruciale et sont courrament échangés entre le client et le serveur sur le web, il est donc important de savoir comment les générer et comment les sécuriser. C'est typiquement le cas avec la gestion des session par PHP qui provique la construction d'un jeton à partir de valeurs "identifiantes" pour un utilisateur, encore que cette sécurité puisse être contournée comme le montre [cette présentation](http://www.youtube.com/watch?v=fEmO7wQKCMw) de Samy Kamkar à la Defcon.
+En termes de sécurité, les jetons ont une importance cruciale et sont courrament échangés entre le client et le serveur sur le web, il est donc important de savoir comment les générer et comment les sécuriser. C'est typiquement le cas avec la gestion des session par PHP qui provoque la construction d'un jeton à partir de valeurs "identifiantes" pour un utilisateur, encore que cette sécurité puisse être contournée comme le montre [cette présentation](http://www.youtube.com/watch?v=fEmO7wQKCMw) de Samy Kamkar à la Defcon.
 
 Cet exercice nous a permis de voir comment construire et manipuler des données binaires en PHP et à quel point cela permet, dans certains cas, de réduire considérablement le volume de données à transmettre tout en conservant le même niveau d'information.
