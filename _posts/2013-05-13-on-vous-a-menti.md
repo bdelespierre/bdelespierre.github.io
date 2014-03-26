@@ -7,8 +7,6 @@ category: article
 tags: elearning web developpement tutorial
 ---
 
-<img src="https://m1.behance.net/rendition/modules/106424461/disp/62b1df5e61e226fd6edd8ea1c25d6208.png">
-
 La prolifération des sites d'e-learning autours des technologies web, bien qu'étant un formidable moteur d'intérêt pour ces technologies auprès du public, m'a toujours inquiété en raison de leur méthode d'aprentissage majoritairement didactique. On ne présente plus désormais des sites tels que [nettuts](http://net.tutsplus.com/) ou [Le Site du Zéro](http://www.siteduzero.com/) qui font du tutoriel un fond de commerce. Ces sites véhiculent selon moi une image biaisée de la programmation: celle d'une "recette de cuisine" réduisant la discipline à une série de problème connus et identifiés que quelques étapes apparemment toutes bêtes permettent de déjouer.
 
 Grâce à eux depuis environ dix ans, on croise ça et là au détours des forums ou des chats des amateurs, toujours plus nombreux, visiblement perdus lorsqu'il s'agit de sortir du cadre de ces tutoriels. Si vous êtes un habitué des communautés de développeurs, vous savez de quoi je parle.
