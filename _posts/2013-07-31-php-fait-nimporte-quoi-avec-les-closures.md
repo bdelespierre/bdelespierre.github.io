@@ -119,3 +119,5 @@ Julien Pauli à la rescousse avec [un patch](http://pastebin.com/QSEWQb8U):
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 Affaire à suivre !
+
+"Et mon cul c'est du teflon?"
