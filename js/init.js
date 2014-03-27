@@ -329,6 +329,7 @@
 			}).trigger('resize');
 
 		// float (only the first will float)
+		// don't forget to remove .css("backface-visibility","hidden") from skel panel js file
 			$('.float-container').length && (function (viewport) {
 				var $container = $('.float-container').first(),
 				    $float = $('.float', $container).first();
