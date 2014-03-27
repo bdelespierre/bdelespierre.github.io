@@ -51,6 +51,11 @@
 
 	};
 
+	var is_phone = function () { 
+		return navigator.userAgent.match(/(android|iphone|blackberry|symbian|symbianos|symbos|netfront|model-orange|javaplatform|iemobile|windows phone|samsung|htc|opera mobile|opera mobi|opera mini|presto|huawei|blazer|bolt|doris|fennec|gobrowser|iris|maemo browser|mib|cldc|minimo|semc-browser|skyfire|teashark|teleca|uzard|uzardweb|meego|nokia|bb10|playbook)/gi);
+	};
+
+
 /*********************************************************************************/
 /* Don't modify beyond this point unless you know what you're doing!             */
 /*********************************************************************************/
@@ -330,7 +335,7 @@
 
 		// float (only the first will float)
 		// don't forget to remove .css("backface-visibility","hidden") from skel panel js file
-			$('.float-container').length && (function (viewport) {
+			$('.float-container').length && !is_phone() && (function (viewport) {
 				var $container = $('.float-container').first(),
 				    $float = $('.float', $container).first();
 
