@@ -328,4 +328,17 @@
 					$topContainer.css('padding-top', ($top.height() - $topContainer.height()) / 2);
 			}).trigger('resize');
 
+		// float (only the first will float)
+			$('.float-container').length && (function (viewport) {
+				var $container = $('.float-container').first(),
+				    $float = $('.float', $container).first();
+
+				$float.css('width', $container.width());
+
+				$(viewport).scroll(function (event) {
+					$(this).scrollTop() > $container.offset().top
+						? $float.addClass('floating')
+						: $float.removeClass('floating');
+				});
+			})(window);
 	});

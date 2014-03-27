@@ -1040,6 +1040,33 @@
 		.highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
 
 /*********************************************************************************/
+/* Float                                                                         */
+/*********************************************************************************/
+
+	.float-container {
+		margin-bottom: 2em;
+		min-height: 3em;
+	}
+
+		.float-container .float {
+			overflow: hidden;
+			border-bottom: 1px solid #efefef;
+			z-index: 1;
+			background-color: white;
+			padding: .5em 0em;
+		}
+
+		.float-container .float.floating {
+			position: fixed;
+			top: -2em;
+		}
+
+		.addthis_toolbox a {
+			text-decoration: none;
+			border-bottom: none;
+		}
+
+/*********************************************************************************/
 /* Header                                                                        */
 /*********************************************************************************/
 	
