@@ -1,11 +1,11 @@
 ---
 layout: post
+type: article
 title: Quand le code devient toxique
 date: 2014-03-28
 category: article
 tags: toxicity,code,quality,qa,test,kiss,dry,yagni,software-development,architecture,best-practices
 ---
-# Quand le code devient Toxique
 
 Vous est-il déjà arrivé de débarquer sur un projet et vous rendre compte qu'il n'a pas (ou mal) été entretnu ? Avez-vous déjà vu une fonctionnalité pourtant simple peiner à arriver en production uniquement parce que le code n'était à la base pas prévu pour ? Vous êtes vous déjà arraché les cheveux à essayer de faire marcher une application sur une plateforme de production un vendredi soir à 23h ? Si c'est le cas, alors vous avez probablement été en contact avec du code toxique.
 
@@ -37,9 +37,9 @@ Il propose d'ailleurs une table des métriques et des seuils acceptables sur les
 <table>
     <thead>
         <tr>
-            <th>Métrique</th>
-            <th>Niveau</th>
-            <th>Seuil</th>            
+            <th style="font-weight: bold; text-align: left">Métrique</th>
+            <th style="font-weight: bold; text-align: left">Niveau</th>
+            <th style="font-weight: bold; text-align: left">Seuil</th>            
         </tr>
     </thead>
     <tbody>
@@ -129,9 +129,9 @@ Si toutefois il est impossible de faire propre (ça arrive) alors __isolez__ et 
 
 Inutile de s'essayer à la divination, __vous ne pouvez pas prévoir comment un projet va évoluer__. Pas plus que vous ne pourriez prévoir avec exactitude combien de pomme va vous donner un pommier dont vous venez de planter la graine. Donc rangez votre boule de cristal et passez a la [compatbilité descendante](http://blog.ircmaxell.com/2013/06/backwards-compatibility-is-for-suckers.html).
 
-Vous êtes probablement famillier avec le concept de compatibilité ascendante qui consiste a faire en sorte que le nouveau code produit soit toujours compatible avec l'ancien. La compatibilité descendante c'est exactement l'inverse: on essaie de faire en sorte que le code, au moment où on l'écrit, soit compatible avec le futur code. En somme, on va essayer d'anticiper les futurs besoin du code qu'on écrit aujourd'hui et on va les implémenter de façon suffisament adaptable pour que les futures implémentations puissent s'y glisser sans compromettre la compatibilité ascendante.
+Vous êtes probablement famillier avec le concept de compatibilité ascendante qui consiste a faire en sorte que le nouveau code produit soit toujours compatible avec l'ancien. La compatibilité descendante c'est exactement l'inverse: on essaie de faire en sorte que le code, au moment où on l'écrit, soit compatible avec le futur code. En somme, on va essayer d'anticiper les futurs usages du code qu'on écrit aujourd'hui et on va les implémenter de façon suffisament adaptable pour que les futures implémentations puissent s'y glisser sans compromettre la compatibilité ascendante.
 
-Il faut garder à l'esprit que le code va évoluer qu'on le veuille ou non et le construire d'une façon suffisament adaptable pour qu'il reste valide, même pour des besoins futurs. On ne cherches pas ici à correspondre à la perfection à ces besoin (c'est par définition impossible sans une Dolorean et 2.21 GW) mais simplement à penser et influencer nos développements en fonction des futurs besoin et pas seulement les besoins actuels.
+Il faut garder à l'esprit que le code va évoluer qu'on le veuille ou non et le construire d'une façon suffisament adaptable pour qu'il reste valide, même pour des besoins futurs. On ne cherches pas ici à correspondre à la perfection à ces besoin (c'est par définition impossible sans une Dolorean et 2.21 GW) mais simplement à penser et influencer nos développements en fonction des futurs usages et pas seulement les usages actuels.
 
 Concrêtement, on peut par exemple équiper une fonction d'un paramètre "options" afin de pouvoir lui passer autre chose que les paramètres qu'on lui avait attribué à la base, évitant ainsi de devoir modifier son prototype dans le futur. De la même façon, on pourra mettre en place des architectures modulaires ou [orientées composants](http://bdelespierre.fr/article/php-injection-de-dependances-et-composants) qui permettront davantage de flexibilité pour les futurs changements. Ce sont autant des choix architecturaux que des choix d'implémentation qu'il faudra penser en vue des usages futurs.
 
