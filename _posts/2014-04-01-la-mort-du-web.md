@@ -7,9 +7,9 @@ category: article
 tags: easter egg,poisson d'avril
 ---
 
-<img src="http://2.vsr.vz.tl/assets/images/cached/GGw8XDM-360.jpg" alt="Tim Cocks fait vraiment la tronche..." title="Oh God, what have I done..." style="float: right; margin: .5em 0 0 .5em">C'est officiel, avec [l'annonce ce matin](http://goo.gl/czmzFq) de la démission conjoint de Satya Naddela (CEO de Microsauft) et Tim Cocks (CEO de Appel Inc), le secteur IT est sous le choc. Les deux grands patrons ont de concert reconnu leur échec en ce qui concerne la migration vers le web et en assument les conséquences.
+<img src="http://2.vsr.vz.tl/assets/images/cached/GGw8XDM-360.jpg" alt="Tim Cocks fait vraiment la tronche..." title="Oh God, what have I done..." style="float: right; margin: .5em 0 0 .5em">C'est officiel, avec [l'annonce ce matin](http://goo.gl/czmzFq) de la démission conjointe de Satya Naddela (CEO de Microsauft) et Tim Cocks (CEO de Appel Inc), le secteur IT est sous le choc. Les deux grands patrons ont de concert reconnu leur échec en ce qui concerne la migration vers le web et déclarent en assumer les conséquences.
 
-_"Jamais nous n'aurions pensé que le web prendrait autant d'ampleur."_ nous confie Dean Hamachovitch, l'ancien chef de l'équipe Internat Explorar chez Microsauft. _"Notre équipe à pourtant tout fait pour freiner l'expansion de la toile en fournissant un navigateur de mauvaise qualité afin d'orienter le public vers nos solution desktop payantes et lourdes. Mais Modzilla (la société qui commercialie Fifox) et Gougoule ont tout foutu par terre..."_
+_"Jamais nous n'aurions pensé que le web prendrait autant d'ampleur."_ nous confie Dean Hamachovitch, l'ancien chef de l'équipe Internat Explorar chez Microsauft. _"Notre équipe à pourtant tout fait pour freiner l'expansion de la toile en fournissant un navigateur de mauvaise qualité afin d'orienter le public vers nos solution desktop payantes et lourdes. Mais Modzilla (la société qui commercialise Fifox) et Gougoule ont tout foutu par terre..."_
 
 A cause des mauvaises recettes qu'essuient ces deux sociétés en raison de la perte de vitesse de leurs ventes software et hardware, ce sont des milliers d'emplois qui sont menacés.
 
