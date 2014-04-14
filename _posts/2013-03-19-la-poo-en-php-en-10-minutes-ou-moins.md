@@ -19,13 +19,42 @@ __Important__: Cet article couvre le paradigme objet en PHP mais pas les petites
 
 ## L'encapsulation
 
-Le principe fondamental de la programmation orienté objet est la notion de _classe_. Vous savez déjà manier des tableaux et des variables (qui sont des structures de données) et des fonctions (qui sont des structures de comportements). La classe vous permet de les rassembler dans un strucrure commune.
+Le principe fondamental de la programmation orienté objet est la notion de _classe_. Vous savez déjà manier des tableaux et des variables (qui sont des structures de données) et des fonctions (qui sont des structures de comportements). La classe vous permet de les rassembler dans un structure commune.
 
 On appelle classe tout regroupement _cohérent_ de données (ou _propriétés_) et de comportemnts (ou _méthodes_). Les proprétés et méthodes d'une classe sont égalements appelés membres. En fait, on peut penser à une classe comme à un _"moule"_ destiné à la fabrication d'_objets_ (ou _instances de classes_).
 
-Pour créer un nouvel objet, on utilise le mot clé `new` suivi du nom de la classe à instancier. Une fois l'objet crée, son état interne (les valeurs de ses propriétés) sera préservé jusqu'a sa destruction explicite (avec la fonction `unset`) ou jusqu'a la fin du script.
+Pour créer un nouvel objet, on utilise le mot clé `new` suivi du nom de la classe à instancier. Une fois l'objet crée, son état interne (les valeurs de ses propriétés) sera préservé jusqu'a sa destruction explicite avec la fonction `unset` ou jusqu'a la fin du script.
 
 __Note__: une propriété peut avoir une valeur par défaut mais cette valeur ne peut pas être une expression (comme 1+2 par exemple). Si vous avez besoin d'initialiser une propriété à l'aide d'une expression, utilisez le constructeur comme montré ci-dessous.
+
+On accède aux membres par l'intermédiaire de l'opérateur flèche (->). Au sein d'une classe, le mot clé [b]$this[/b] permet d'accéder au membres d'instance en cours ($this représente en fait l'objet).
+
+Exemple d'instanciation:
+
+{% highlight php linenos %}
+<?php
+
+class MaClasse
+{
+    // propriété
+    var $a = 1;
+
+    // méthode
+    function afficher ()
+    {
+        echo $this->a;
+    }
+}
+
+$mon_instance = new MaClasse;
+$mon_instance->afficher(); // affiche 1
+$mon_instance->a = 2;
+$mon_instance->afficher(); // affiche 2
+
+?>
+{% endhighlight %}
+
+### Visibilité d'un membre
 
 Au sein d'une classe, un membre peut également avoir une _visibilité_:
 
@@ -37,29 +66,40 @@ La notion de visibilité d'un membre est intimement liée à la notion d'état. 
 
 Définir la visibilité d'un membre n'est pas obligatoire, en l'absence de visibilité un membre sera public (les propriétés doivent au moins être déclarées avec le mot clé var). Je vous recommande d'utiliser efficacement la visibilité afin de protéger le fonctionnement et les données internes de la classe (qui n'ont pas besoin d'être exposés). Dans la pratique, il vaut mieux définir les propriétés comme protégées par défaut afin qu'on ne puisse pas les modifier depuis l'extérieur de la classe et de définir des accesseur (des méthode d'accès à ces propriétés) au besoin.
 
-On accède aux membres par l'intermédiaire de l'opérateur flèche (->). Au sein d'une classe, le mot clé [b]$this[/b] permet d'accéder au membres d'instance en cours ($this représente en fait l'objet).
-
-Exemple d'instanciation:
+Démonstration:
 
 {% highlight php linenos %}
 <?php
 
-class MaClasse {
+class MaClasse
+{
+    public $proprietePublique;
 
-    // propriété
-    var $a = 1;
+    protected $_proprieteProtegee;
 
-    // méthode
-    function afficher () {
-        echo $this->a;
-    }
+    private $_proprietePrivee;
+
+    public function methodePublique() {}
+
+    protected function _methodProtegee() {}
+
+    private function _methodePrivee() {}
 }
 
-$mon_instance = new MaClasse;
-$mon_instance->afficher(); // affiche 1
-$mon_instance->a = 2;
-$mon_instance->afficher(); // affiche 2
+$objet = new MaClasse;
+
+$objet->proprietePublique = 1;  // ok
+$objet->_proprieteProtegee = 2; // FATAL_ERROR
+$objet->_proprietePrivee = 3;   // FATAL_ERROR
+
+$objet->methodePublique();      // ok
+$objet->methodProtegee();       // FATAL_ERROR
+$objet->methodePrivee();        // FATAL_ERROR
+
+?>
 {% endhighlight %}
+
+Par convention, les membres protégés et privés sont préfixés d'un caractère '_' afin de les identifier plus facilement à la lecture du code.
 
 ### Le constructeur
 
@@ -88,6 +128,8 @@ class MaClasse {
 
 $mon_instance = new MaClasse("hello");
 $mon_instance->afficher(); // affiche hello
+
+?>
 {% endhighlight %}
 
 ### Le destructeur
@@ -121,17 +163,17 @@ $mon_instance = new MaClasse('fichier.txt');
 echo $mon_instance->lireUneLigne(); // lit la première ligne
 echo $mon_instance->lireUneLigne(); // lit la seconde ligne
 unset($mon_instance); // le destructeur est appellé, le fichier est fermé
+
+?>
 {% endhighlight %}
 
 ### Membres de classes et membres d'instances
 
-Un membre peut être lié à l'instance de la classe (on parle alors de _membre d'instance_), c'est le cas par défaut. Pour qu'un tel membre existe et soit utilisable on doit impérativement disposer d'une instance.
+Un membre peut être lié à l'instance de la classe (on parle alors de _membre d'instance_), c'est le cas dans tous les exemples ci-dessus, et ne peut en aucun cas être utilisé en l'absence d'une instance, ce n'est pas le cas d'un membre de classe.
 
-Mais un membre peut également être lié à la classe elle-même (on parle alors de _membre de classe_ ou de _membre statique_), il est pour cela précédé du mot clé `static`. Un membre statique est accessible par l'intermédiaire de l'opérateur de résolution de porté (`::`). Au sein d'une classe le mot clé `self` permet d'accéder aux membres statiques (`self` représent la classe en cours, par opposition à `$this` qui représente l'instance en cours).
+Un membre peut également être lié à la classe elle-même plutôt qu'a l'instance; on parle alors de _membre de classe_ ou de _membre statique_. Il est pour cela précédé du mot clé `static`. Un membre statique est accessible par l'intermédiaire de l'opérateur de résolution de portée `::`. Au sein d'une classe le mot clé `self` permet d'accéder aux membres statiques, `self` représente la classe en cours tout comme `$this` qui représente l'instance en cours (`$this` n'est bien entendu pas disponible au sein d'un membre statique).
 
 La visibilité s'applique de la même façon sur les membres d'instances et sur les membres de classes, leurs effets sont basiquement les mêmes sauf dans le cas de l'héritage de méthodes statiques que nous détaillerons plus bas.
-
-__Notez__: il est possible d'utiliser un membre de classe avec l'opérateur flèche (`->`) si on dispose d'une instance de cette classe (exemple `$objet->maMethodeDeClasse()`), l'inverse, c'est à dire l'utilisation de membres d'instance dans un contexte statique, est plus que déconseillé car votre script plantera s'il rencontre un `$this`. Dans la pratique, on évite généralement de se livrer à ce genre d'exercice hasardeux, on préférera utiliser les membres dans le contexte (statique ou d'instance) d'origine.
 
 Exemple de classe disposant de membres statiques:
 
@@ -170,6 +212,8 @@ MaClasse::definirPrefixe("strange");
 $obj2 = new MaClasse("word");
 $obj2->afficher(); // affiche strange world
 $obj1->afficher(); // affiche strange world également
+
+?>
 {% endhighlight %}
 
 ## L'héritage
@@ -178,7 +222,7 @@ Avec l'héritage, on entre dans la vraie plus-value des langages objets par rapp
 
 L'héritage va permettre une réutilisation verticale du code, c'est à dire que nos classes vont former une hiérarchie dans laquelle les enfants (les _classes filles_) pourront réutiliser les comportements et les données de leur(s) parent(s) (les _classes mères_).
 
-__Important__: l'héritage entre deux classes caractérise la relation _"est un espèce de..."_ Par exemple: une voiture est une espèce de véhicule, un chien est une espèce d'animal. L'héritage doit être sémantiquement valide afin d'éviter les dérives comme l'héritage fonctionnel. Comme le disait mon prof de Java: _"ce n'est pas parce que le chien pisse sur le poteau que le chien est un espèce de poteau"_... Donc ce n'est pas parce que le chien _utilise_ le poteau qu'il doit _hériter_ de poteau (on préférera dans ce cas utiliser une _délégation_ ou encore une _composition_).
+__Important__: l'héritage entre deux classes caractérise la relation _"est un espèce de..."_ Par exemple: une voiture est une espèce de véhicule, un chien est une espèce d'animal. L'héritage doit être sémantiquement valide afin d'éviter les dérives comme l'héritage fonctionnel. Comme le disait mon prof de Java: _"ce n'est pas parce que le chien pisse sur le poteau que le chien est un espèce de poteau"_... Donc ce n'est pas parce que le chien _utilise_ le poteau qu'il doit _hériter_ de poteau.
 
 Concrêtement, lors qu'une classe B (la _fille_) hérite d'une classe A (la _mère_), elle dispose alors
 de tous les membres publics ___et protégés___ de sa mère (d'ou l'importance de cette différentiation entre membre protégé et privé). On réalise un héritage quand il y a lieu d'effectuer une _spécialisation_, c'est à dire que la classe fille va _redéfinir_ (on parle aussi de _surcharge_) ou _ajouter_ des comportements.
@@ -222,6 +266,8 @@ echo "Ma voiture a " . $ma_voiture->nombreDeRoues() . " roues"; // Ma voiture a 
 
 $ma_moto = new Moto;
 echo "Ma moto a " . $ma_moto->nombreDeRoues() . " roues"; // Ma moto a 2 roues
+
+?>
 {% endhighlight %}
 
 __Important__: En PHP, l'héritage multiple __n'existe pas__. Ce qui signifie que vous ne pouvez par déclarer une classe qui hérite de deux autre classes. En somme, `class A extends B, C` c'est interdit. Vous pouvez en revanche _réaliser_ plusieurs interfaces (voir le chapitre sur le polymorphisme ci-dessous).
@@ -260,24 +306,27 @@ var_dump( $object instanceOf Apple );  // true
 var_dump( $object instanceOf Fruit );  // true
 var_dump( $object instanceOf Vegetal); // true
 // ... etc.
+
+?>
 {% endhighlight %}
 
-Il est d'ailleurs possible de sépcifier sur un prototype quel type d'objet est attendu. Vous l'aviez peut-être déjà fait avec les tableaux, sachez simplement que c'est possible avec les objets.
-
-En reprennant l'exemple précédent:
+Il est d'ailleurs possible de spécifier sur un prototype quel type d'objet est attendu pour un paramètre donné:
 
 {% highlight php linenos %}
 <?php
 
-function manger (Fruit $fruit) {
+function manger (Fruit $fruit)
+{
     echo "I'm eating " . get_class($fruit);
 }
 
 $object = new Apple;
 manger($object); // I'm eating Apple
+
+?>
 {% endhighlight %}
 
-On appelle ce syntaxe de paramètres le _type-hinting_, c'est à dire qu'on demande explicitement des objets du type (ou super-type) spécifié. N'importe quoi d'autre provoquera une erreur. Si on avait passé un type natif comme un entier ou encore une instance qui hérite de la classe `Vegetal` mais qui n'est pas un fruit, on se serait fait jeter.
+On appelle cette syntaxe de paramètres le _type-hinting_, c'est à dire qu'on demande explicitement des objets du type (ou super-type) spécifié. N'importe quoi d'autre provoquera une erreur. Si on avait passé un type natif comme un entier ou encore une instance qui hérite de la classe `Vegetal` mais qui n'est pas un fruit, on se serait fait jeter.
 
 Le type-hinting est extrèmement pratique pour sécuriser vos fonctions et vos méthode en empêchant le développeur d'y mettre n'importe quoi.
 
@@ -293,7 +342,7 @@ Comme dans la plupart des langages objet, le polymorphisme en PHP est un polymor
 
 ### Abstraction
 
-En programmtion objet, il est possible de déclarer des méthodes dont la définition n'est pas encore connue dans la classe mère mais devront être décrites dans une classe fille. On parle alors de _méthodes abstraites_. Une classe qui contiend au moins une méthode abstraite doit elle aussi être déclarée abstraite et ne peut plus être instanciée - vu que tout son code n'est pas implémenté. On parle alors de _classe abstraite_.
+En programmtion objet, il est possible de déclarer des méthodes dont la définition n'est pas encore connue dans la classe mère mais le seront dans une classe fille. On parle alors de _méthodes abstraites_. Une classe qui contiend au moins une méthode abstraite doit elle aussi être déclarée abstraite et ne peut plus être instanciée - vu que tout son code n'est pas implémenté. On parle alors de _classe abstraite_.
 
 Une méthode abstraite est précédée du mot clé `abstract` (idem pour la classe qui la porte) et ne peut pas avoir de corp.
 
@@ -332,7 +381,11 @@ $chien->parler(); // affiche Rex: Wouf Wouf
 
 $chat  = new Chat("Sac-a-puces");
 $chat->parler();  // affichie Sac-a-puces: Miaou
+
+?>
 {% endhighlight %}
+
+Par opposition, une classe qui définit l'intégralité de ses comportements est souvent appellé classe concrête.
 
 ### Interfaces
 
@@ -410,9 +463,11 @@ class Cercle implements Forme2D {
         return M_PI * ($this->_rayon * 2);
     }
 }
+
+?>
 {% endhighlight %}
 
-Dans l'exemple ci-dessous, connaissant les méthodes déclarées par `Forme2D`, nous pouvons décrire des objet qui travaillent avec n'importe quelle instance de `Forme2D`. C'est ça la généricité !
+Dans l'exemple ci-dessous, connaissant les méthodes déclarées par `Forme2D`, nous pouvons décrire des classes qui travaillent avec n'importe quelle instance de `Forme2D`. C'est ça la généricité !
 
 Exemple d'utilisation générique d'une forme:
 
@@ -444,11 +499,13 @@ $figure->ajouter(new Carre(4));
 $figure->ajouter(new Rectangle(5,6));
 
 echo "Ces trois figures ont une surface totale de " . $figure->surfaceTotale(); // 74.27...
+
+?>
 {% endhighlight %}
 
 On voit rapidement l'intérêt du polymorphisme dans ce cas: grâce à l'interface `Forme2D`, on peut créer autant de type de formes qu'on veut, par exemple le triangle, le losange, le polygone etc. Et tous ces objets, aussi longtemps qu'ils hériteront de `Forme2D`, seront utilisables avec la classe `Figure2D`.
 
-__Note__: Il est également possible d'hériter des interfaces entre elles à l'aide du mot clé `extends`.
+Contrairement aux classes, une interface peut étendre plusieurs interfaces avec le mot clé `extends`. On notera également que les cas qui justifient un héritage d'interfaces sont assez rares, il est peu probable que vous en ayez besoin un jour.
 
 Exemple d'héritage d'interfaces:
 
@@ -466,9 +523,9 @@ interface Forme2D extends Forme {
 interface Forme3D extends Forme {
     // ...
 }
-{% endhighlight %}
 
-__Note__: Contrairement aux classes, une interface peut étendre plusieurs interfaces avec le mot clé `extends`. On notera également que les cas qui justifient un héritage d'interfaces sont assez rares, il est peu probable que vous en ayez besoin un jour.
+?>
+{% endhighlight %}
 
 ## Conclusion
 
