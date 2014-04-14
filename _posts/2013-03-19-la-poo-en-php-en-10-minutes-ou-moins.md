@@ -4,7 +4,8 @@ type: article
 title: La POO en PHP en 10 minutes (ou moins)
 date: 2013-03-19
 category: php
-tags: php oop object héritage encapsulation polymorphisme programmation-orientée-objet objet programmation
+tags: [php, oop, object, héritage, encapsulation, polymorphisme, programmation orientée-objet, programmation]
+description: Maîtrisez les bases de la programmation orientée objet avec PHP en quelques minutes
 ---
 
 Si vous avez vécu sous un rocher dans une grotte sous une montagne au fin fond du Jura ces 40 dernière années et n'avez jamais entendu parler de programmation orientée objet, je vais tenter de vous faire un rapide résumé.

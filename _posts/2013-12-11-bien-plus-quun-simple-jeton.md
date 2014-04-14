@@ -4,7 +4,8 @@ type: article
 title: Bien plus qu'un simple jeton
 date: 2013-12-11
 category: php
-tags: php token pack unpack jeton sécurité web programmation développement
+tags: [php, token, pack, unpack, jeton, sécurité, web, programmation, développement]
+description: Apprennez à générer des jetons uniques, non-aléatoires et porteurs d'information simplement et efficacement avec PHP
 ---
 
 Il est souvent utile de générer des jetons (ou _token_ en anglais) afin de sécuriser une action utilisateur, par exemple pour un mail de réinitialisation de mot de passe, s'assurer qu'un formulaire est bien soumis par la même personne que celle qui l'a demandé, ou encore pour identifier un utilisateur à l'aide d'un cookie. Nous allons voir ensemble comment générer un jeton non-aléatoire et unique qui en plus pourra contenir des données intéressantes pour notre application. Les exemples de code fournis sont en langage PHP mais ces concepts sont applicables à n'importe quel langage.

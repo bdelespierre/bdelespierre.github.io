@@ -4,7 +4,8 @@ type: article
 title: Quand le code devient toxique
 date: 2014-03-28
 category: article
-tags: toxicity,code,quality,qa,test,kiss,dry,yagni,software-development,architecture,best-practices
+tags: [toxicity,code,quality,qa,test,kiss,dry,yagni,software-development,architecture,best-practices]
+description: A partir de quand peut-on dire qu'un code est toxique ? Quelques clés pour comprendre comment un projet peut devenir un cauchemard pour les développeurs
 ---
 
 Vous est-il déjà arrivé de débarquer sur un projet et vous rendre compte qu'il n'a pas (ou mal) été entretnu ? Avez-vous déjà vu une fonctionnalité pourtant simple peiner à arriver en production uniquement parce que le code n'était à la base pas prévu pour ? Vous êtes vous déjà arraché les cheveux à essayer de faire marcher une application sur une plateforme de production un vendredi soir à 23h ? Si c'est le cas, alors vous avez probablement été en contact avec du code toxique.

@@ -4,7 +4,8 @@ type: article
 title: La fin du PC et l'avènement du Web
 date: 2014-04-01
 category: article
-tags: easter egg,poisson d'avril
+tags: [easter egg,poisson d'avril]
+description: Aujourd'hui premier avril, séisme dans l'industrie informatique !
 ---
 
 <img src="http://2.vsr.vz.tl/assets/images/cached/GGw8XDM-360.jpg" alt="Tim Cocks fait vraiment la tronche..." title="Oh God, what have I done..." style="float: right; margin: .5em 0 0 .5em">C'est officiel, avec [l'annonce ce matin](http://goo.gl/czmzFq) de la démission conjointe de Satya Naddela (CEO de Microsauft) et Tim Cocks (CEO de Appel Inc), le secteur IT est sous le choc. Les deux grands patrons ont de concert reconnu leur échec en ce qui concerne la migration vers le web et déclarent en assumer les conséquences.

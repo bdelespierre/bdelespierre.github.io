@@ -4,7 +4,8 @@ type: article
 title: PHP fait n'importe quoi avec les closures
 date: 2013-07-31
 category: php
-tags: php php.5.4 closures wtf bug static binding
+tags: [php, php.5.4, closures, wtf, bug, static binding]
+description: Comprendre le problème de design induit par les closures statiques en PHP 5.4
 ---
 
 J'ai récemment découvert un comportement étrange avec les closures, après avoir un peu fouillé le problème, je partage avec vous mes découvertes. Accrochez-vous, c'est complêtement bizarre.
