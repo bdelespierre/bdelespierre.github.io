@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	
+	<title>Spritz JavaScript SDK</title>
+	
+	<!--  We depend on jquery -->
+	<script type="text/javascript" src="//sdk.spritzinc.com/jQuery/jquery-2.1.0.min.js"></script>
+
+    <script type="text/javascript">
+        var SpritzSettings = {
+            clientId: "4524122930975538943",
+            redirectUri: "http://sdk.spritzinc.com/js/1.0/examples/login_success.html",
+            
+        };
+    </script>
+    
+	<script type="text/javascript" src="//sdk.spritzinc.com/js/1.0/js/spritz.min.js"></script>
+  	
+    <script type="text/javascript" src="js/testApp2.js"></script>
+    
+    <style type="text/css">
+       body {
+           background-color: #A9D0F5;
+           margin-left: 20px;           
+        }
+    </style>
+    
+</head>
+
+<body>
+	<div><a href="Example1.html">Previous</a>&emsp;<a href="Example3.html">Next</a></div><br><br>	
+	<H2>
+	Lesson 2 - Spritzer Controller Instance
+	</H2>
+
+	<br><br>
+  	<div id="spritzer"></div>
+  	<br><br>
+  	
+  	<button id="startSpritz" data-url="http://sdk.spritzinc.com/sampleText/HelloWorld.html">Spritz!</button>
+  	  	
+  	<br>
+  	<br>  	
+  	<h3>Supporting files to download for Example 2</h3>
+	<div>
+	<a href="Example2.html" download>Example2.html</a> (this file) 
+	<br>
+	<a href="login_success.html" download>login_success.html</a> (this is a required file to download and host on your website). 
+	<br>
+	<br>
+	In order for your login success file to work, please ensure that your redirectUri parameter points to the location of your login_success.html file and that you include the full protocol and path to this file.  For example your redirectUri setting should look something like: <br>
+	<br>
+	<code>
+	redirectUri: &quot;http://mysite.com/login_success.html&quot; 
+	</code>
+	<br>
+	<br>
+	Please also ensure that your callback uri matches the originating domain.  Make sure that if your website visitor is visiting www.mysite.com/somepage.html that your redirect uri includes www. and that if your visitor is coming from mysite.com/somepage.html that the redirect uri does not include www.
+	</div>
+</body>
+</html>

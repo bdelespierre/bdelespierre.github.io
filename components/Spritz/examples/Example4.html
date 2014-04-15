@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	
+	<title>Spritz JavaScript SDK</title>
+
+	<!--  We depend on jquery -->
+	<script type="text/javascript" src="//sdk.spritzinc.com/jQuery/jquery-2.1.0.min.js"></script>
+
+    <script type="text/javascript">
+        var SpritzSettings = {
+            clientId: "4524122930975538943",
+            redirectUri: "http://sdk.spritzinc.com/js/1.0/examples/login_success.html",
+            
+        };
+    </script>
+    
+  	<script type="text/javascript" src="//sdk.spritzinc.com/js/1.0/js/spritz.min.js"></script>
+  	
+    <script type="text/javascript" src="js/testApp4.js"></script>
+
+    <style type="text/css">
+       body {
+           background-color: #A9D0F5;
+           margin-left: 20px;           
+        }
+    </style>
+    
+</head>
+
+<body>
+	<div><a href="Example3.html">Previous</a>&emsp;<a href="Example5.html">Next</a></div><br><br>	
+	<h2>Lesson 4 - Multiple Texts in a Single Redicle</h2>
+
+	<br><br>
+  	<div id="spritzer"></div>
+  	<br><br>
+  	
+  	<div>
+  	    <input id="autoStartOption" type="checkbox" checked/> Auto-Start
+  	</div>
+  	
+	<select id="textList" size="1">
+    	<option value="">Select Text</option>
+    	<option value="text1">Hello World</option>
+    	<option value="text2">Wilbur Wright</option>
+ 	</select>
+ 	
+ 	<p>
+ 	  Please see <a href="Example9.html">Lesson 9</a> for an another way to accomplish Sprtizing multiple sources in a single redicle.
+ 	</p>
+  	<h3>Supporting files to download for Example 4</h3>
+	<div>
+	<a href="Example4.html" download>Example4.html</a> (this file) 
+	<br>
+	<a href="js/testApp4.js" download>testApp4.js</a> 
+	<br>
+	<a href="login_success.html" download>login_success.html</a> (this is a required file to download and host on your website). 
+	<br>
+	<br>
+	In order for your login success file to work, please ensure that your redirectUri parameter points to the location of your login_success.html file and that you include the full protocol and path to this file.  For example your redirectUri setting should look something like: <br>
+	<br>
+	<code>
+	redirectUri: &quot;http://mysite.com/login_success.html&quot; 
+	</code>
+	<br>
+	<br>
+	Please also ensure that your callback uri matches the originating domain.  Make sure that if your website visitor is visiting www.mysite.com/somepage.html that your redirect uri includes www. and that if your visitor is coming from mysite.com/somepage.html that the redirect uri does not include www.
+	</div> 	
+</body>
+ 
+</html>
