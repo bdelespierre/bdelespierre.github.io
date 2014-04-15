@@ -23,6 +23,9 @@ layout: main
                 <div class="echo">
                     <h3>{{ page.title }}</h3>
                 </div>
+                {% if page.spritzable %}
+                <div data-role="spritzer"></div>
+                {% endif %}
             </div>
         </div>
 

@@ -97,6 +97,19 @@
     -->
     <!--[if lte IE 9]><link rel="stylesheet" href="/css/ie9.css" /><![endif]-->
     <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie8.css" /><![endif]-->
+
+    <!-- spritz -->
+    {% if page.spritzable %}
+    <link rel="stylesheet" href="/components/Spritz/css/spritz.css" media="screen">
+    <script src="/components/Spritz/js/spritz.min.js"></script>
+    <script type="text/javascript">
+    var SpritzSettings = {
+      clientId: "ad4a1454094fd9748",
+      redirectUri: "{{ site.url }}/spritz_login_success.html"
+    };
+    </script>
+    {% endif %}
+    <!-- endspritz -->
   </head>
   <body>
 
