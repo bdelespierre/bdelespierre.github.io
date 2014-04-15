@@ -335,16 +335,25 @@
 
 		// float (only the first will float)
 		// don't forget to remove .css("backface-visibility","hidden") from skel panel js file
-			$('.float-container').length && !is_phone() && (function (viewport) {
+			$('.float-container').length && !is_phone() && (function () {
 				var $container = $('.float-container').first(),
 				    $float = $('.float', $container).first();
 
-				$float.css('width', $container.width());
+				$(window).resize(function () {
+					$float.css('width', $container.width());
+				}).trigger('resize');
 
-				$(viewport).scroll(function (event) {
+				$(window).scroll(function (event) {
 					$(this).scrollTop() > $container.offset().top
 						? $float.addClass('floating')
 						: $float.removeClass('floating');
 				});
-			})(window);
+			})();
+
+		// silly popups yay!
+			is_phone() || $('a.popup').click(function (event) {
+				event.preventDefault();
+				window.open($(this).attr('href'),$(this).attr('title') || 'Popup','menubar=no, scrollbars=no, top=100, left=100, width=500, height=300');
+				return false;
+			});
 	});

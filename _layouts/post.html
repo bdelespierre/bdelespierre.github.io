@@ -13,18 +13,16 @@ layout: main
         <!-- share float header -->
         <div class="float-container">
             <div class="float">
-                <!-- AddThis Button BEGIN -->
-                <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
-                <a class="addthis_button_facebook"></a>
-                <a class="addthis_button_twitter"></a>
-                <a class="addthis_button_google_plusone_share"></a>
-                <a class="addthis_button_linkedin"></a>
-                <a class="addthis_button_email"></a>
-                <a class="addthis_button_compact"></a><a class="addthis_counter addthis_bubble_style"></a>
+                <div class="social-buttons">
+                    <a class="popup facebook fa fa-facebook" title="Partager sur Facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ site.url | UrlEncode }}{{ page.url | UrlEncode }}"></a>
+                    <a class="popup twitter fa fa-twitter" title="Partager sur Twitter" href="http://twitter.com/home?status={{ page.description | UrlEncode }}%20{{ site.url | UrlEncode }}{{ page.url | UrlEncode }}%20par%20%40bdelespierre"></a>
+                    <a class="popup googleplus fa fa-google-plus" title="Partager sur Google+" href="https://plus.google.com/share?url={{ site.url | UrlEncode }}{{ page.url | UrlEncode }}"></a>
+                    <a class="popup linkedin fa fa-linkedin" title="Partager sur LinkedIn" href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{ site.url | UrlEncode }}{{ page.url | UrlEncode }}&amp;title={{ page.title | UrlEncode }}&amp;summary={{ page.description | UrlEncode }}"></a>
+                    <a class="email fa fa-envelope-o" title="Partager par mail" href="mailto:?subject={{ page.title | UrlEncode }}&amp;body={{ page.description | UrlEncode}}%20-%20%{{ site.url | UrlEncode }}{{ page.url | UrlEncode }}"></a>
                 </div>
-                <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
-                <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51fa37f82f19327f"></script>
-                <!-- AddThis Button END -->
+                <div class="echo">
+                    <h3>{{ page.title }}</h3>
+                </div>
             </div>
         </div>
 

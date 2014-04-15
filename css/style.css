@@ -1061,10 +1061,54 @@
 			top: 0;
 		}
 
-		.addthis_toolbox a {
-			text-decoration: none;
-			border-bottom: none;
+		.float-container .echo {
+			display: none;
+			float: right;
+			height: 44px;
 		}
+
+		.float-container .echo h3 {
+			font-size: 85%;
+			line-height: 44px;
+		}
+
+			.float-container .float.floating .echo {
+				display: inline-block;
+			}
+		
+/*********************************************************************************/
+/* Social Buttons                                                                */
+/*********************************************************************************/
+
+	.social-buttons {
+		display: inline-block;
+		height: 44px;
+	}
+
+		.social-buttons > a {
+			display: inline-block;
+			width: 44px;
+			height: 44px;
+			background-color: #ccc;
+			-webkit-border-radius: 3px;
+			border-radius: 3px;
+			line-height: 40px;
+			margin: 0px;
+			padding: 4px 0 0 0;
+			text-decoration: none;
+			border: none;
+			color: white;
+			font-size: 22px;
+			text-align: center;
+		}
+
+		.social-buttons .facebook   { background-color: #306199; }
+		.social-buttons .twitter    { background-color: #26c4f1; }
+		.social-buttons .googleplus { background-color: #e93f2e; }
+		.social-buttons .linkedin   { background-color: #007bb6; }
+		.social-buttons .email      { background-color: #0a88ff; }
+		.social-buttons .pinterest  { background-color: #b81621; }
+		.social-buttons .github     { background-color: #444444; }
 
 /*********************************************************************************/
 /* Header                                                                        */
