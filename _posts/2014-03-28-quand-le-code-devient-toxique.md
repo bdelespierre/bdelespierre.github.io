@@ -6,6 +6,7 @@ date: 2014-03-28
 category: article
 tags: [toxicity,code,quality,qa,test,kiss,dry,yagni,software-development,architecture,best-practices]
 description: A partir de quand peut-on dire qu'un code est toxique ? Quelques clés pour comprendre comment un projet peut devenir un cauchemard pour les développeurs
+spritzable: yes
 ---
 
 Vous est-il déjà arrivé de débarquer sur un projet et vous rendre compte qu'il n'a pas (ou mal) été entretnu ? Avez-vous déjà vu une fonctionnalité pourtant simple peiner à arriver en production uniquement parce que le code n'était à la base pas prévu pour ? Vous êtes vous déjà arraché les cheveux à essayer de faire marcher une application sur une plateforme de production un vendredi soir à 23h ? Si c'est le cas, alors vous avez probablement été en contact avec du code toxique.
@@ -127,6 +128,9 @@ En tant que développeur n'essayez pas de briller en proposant de la performance
 Si toutefois il est impossible de faire propre (ça arrive) alors __isolez__ et __balisez__ votre "sale code" afin d'éviter que sa toxicité ne se propage à tout le projet. Tout élément fix ou patch fait en urgence doit toujours être repris dans une logique de développement complète. Il faut transformer ce patch en régression puis en évolution produit et réfléchir avec tous les intervenants du projet à comment le réintégrer proprement et sans dommage. De cette façon, vous transformez quelque chose de toxique en quelque chose de bénéfique pour le projet.
 
 ### Anticiper le futur sans tenter de le prédire
+
+<div style="margin-top: 1em"><img src="http://imgs.xkcd.com/comics/the_general_problem.png" alt="The general problem"></div>
+_voir l'image sur [XKCD](http://xkcd.com/974/)_
 
 Inutile de s'essayer à la divination, __vous ne pouvez pas prévoir comment un projet va évoluer__. Pas plus que vous ne pourriez prévoir avec exactitude combien de pomme va vous donner un pommier dont vous venez de planter la graine. Donc rangez votre boule de cristal et passez a la [compatbilité descendante](http://blog.ircmaxell.com/2013/06/backwards-compatibility-is-for-suckers.html).
 
