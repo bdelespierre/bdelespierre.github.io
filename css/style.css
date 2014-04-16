@@ -1043,62 +1043,69 @@
 /* Float                                                                         */
 /*********************************************************************************/
 
-	.float-container {
+	.float-container
+	{
 		margin-bottom: 2em;
 		min-height: 3em;
 	}
 
-		.float-container .float {
+		.float-container .float
+		{
 			border-bottom: 1px solid #efefef;
 			z-index: 10;
 			background-color: white;
 			padding: .5em 0em;
 		}
 
-		.float-container .float.floating {
+		.float-container .float.floating
+		{
 			position: fixed;
 			top: 0;
 		}
 
-		.float-container .echo h3 {
+	.float-container .float .social-buttons,
+	.float-container .float .echo
+	{
+		display: inline-block;
+	}
+
+	.float-container .float .echo
+	{
+		float: right;
+		text-align: right;
+	}
+
+		.float-container .float .echo h3
+		{
 			font-size: 85%;
 			line-height: 44px;
+			display: none;
 		}
 
-			.float-container .float.floating .echo {
-				display: inline-block;
-			}
+		.float-container .float.floating .echo h3
+		{
+			display: inline-block;
+		}
 
-	.float-container .float .social-buttons,
-	.float-container .float .echo {
-		float: left;
-		width: 50%;
-	}
-
-	.float-container .float .echo {
-		text-align: right;	
-	}
-
-	.float-container .float:after {
+	.float-container .float:after
+	{
 		content: "";
 		height: 1px;
 		clear: both;
 		display: block;
 	}
 
-	.float-container .float .spritzer
-	{
-		clear: both;
-		margin-top: .5em;
-		margin-bottom: 0;
-		width: 100%;
-	}
-		
-		.float-container .float .spritzer .spritzer-container
+		.float-container .float .spritzer
 		{
-			width: 350px;
-			margin: auto;
+			clear: both;
+			width: 100%;
 		}
+			
+			.float-container .float .spritzer .spritzer-container
+			{
+				width: 350px;
+				margin: auto;
+			}
 		
 
 /*********************************************************************************/
@@ -1125,15 +1132,34 @@
 			color: white;
 			font-size: 22px;
 			text-align: center;
+			-webkit-box-sizing: border-box;
+			box-sizing: border-box;
+			vertical-align: top;
+			-moz-transition: background-color 0.35s ease-in-out;
+			-webkit-transition: background-color 0.35s ease-in-out;
+			-o-transition: background-color 0.35s ease-in-out;
+			-ms-transition: background-color 0.35s ease-in-out;
+			transition: background-color 0.35s ease-in-out;
 		}
 
-		.social-buttons .facebook   { background-color: #306199; }
-		.social-buttons .twitter    { background-color: #26c4f1; }
-		.social-buttons .googleplus { background-color: #e93f2e; }
-		.social-buttons .linkedin   { background-color: #007bb6; }
-		.social-buttons .email      { background-color: #0a88ff; }
-		.social-buttons .pinterest  { background-color: #b81621; }
-		.social-buttons .github     { background-color: #444444; }
+		.social-buttons .facebook         { background-color: #306199; }
+		.social-buttons .twitter          { background-color: #26c4f1; }
+		.social-buttons .googleplus       { background-color: #e93f2e; }
+		.social-buttons .linkedin         { background-color: #007bb6; }
+		.social-buttons .email            { background-color: #0a88ff; }
+		.social-buttons .pinterest        { background-color: #b81621; }
+		.social-buttons .github           { background-color: #444444; }
+
+		.social-buttons .facebook:hover   { background-color: #306199; }
+		.social-buttons .twitter:hover    { background-color: #26c4f1; }
+		.social-buttons .googleplus:hover { background-color: #e93f2e; }
+		.social-buttons .linkedin:hover   { background-color: #007bb6; }
+		.social-buttons .email:hover      { background-color: #0a88ff; }
+		.social-buttons .pinterest:hover  { background-color: #b81621; }
+		.social-buttons .github:hover     { background-color: #444444; }
+
+		.social-buttons [data-toggle]       { background-color: #8ebebc; width: auto; padding: 4px .35em; }
+		.social-buttons [data-toggle]:hover { background-color: #9ececc; }
 
 /*********************************************************************************/
 /* Header                                                                        */
@@ -1679,7 +1705,7 @@
 
 	.spritzer
 	{
-
+		display: none;
 	}
 
 		.spritzer .spritzer-container
@@ -1701,3 +1727,19 @@
 			-webkit-border-radius: 3px;
 			border-radius: 3px;
 		}
+
+	.spritz-control
+	{
+		cursor: pointer;
+		width: 67px;
+		height: 66px;
+		overflow: hidden;
+		position: relative;
+		background: url('http://www.spritzinc.com/wp-content/themes/spritz/assets/img/spritz-control.png') no-repeat;
+		display: inline-block;
+	}
+
+	.spritz-control:hover
+	{
+		background-position: 0 -66px;
+	}

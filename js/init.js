@@ -356,4 +356,17 @@
 				window.open($(this).attr('href'),$(this).attr('title') || 'Popup','menubar=no, scrollbars=no, top=100, left=100, width=500, height=300');
 				return false;
 			});
+
+		// spritz FTW !
+			$('[data-toggle]').click(function (event) {
+				event.preventDefault();
+
+				var $target = $($(this).attr('data-toggle'));
+
+				if (!$target.length)
+					return;
+
+				$('.fa', this).toggleClass('fa-toggle-down fa-toggle-up');
+				$target.slideToggle();
+			});
 	});
