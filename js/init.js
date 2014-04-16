@@ -357,7 +357,7 @@
 				return false;
 			});
 
-		// spritz FTW !
+		// basic toggler
 			$('[data-toggle]').click(function (event) {
 				event.preventDefault();
 
@@ -368,5 +368,36 @@
 
 				$('.fa', this).toggleClass('fa-toggle-down fa-toggle-up');
 				$target.slideToggle();
+			});
+
+		// spritz FTW !
+			var customOptions = {
+					"redicleWidth" : 	340,	// Specify Redicle width
+					"redicleHeight" : 	75		// Specify Redicle height
+			};
+
+			var spritzController = null;
+
+			window.SpritzSettings && $('[data-spritz]').one('click', function (event) {
+				event.preventDefault;
+
+				var $target = $($(this).attr('data-spritz-text')),
+					$spritz = $($(this).attr('data-spritz')),
+					locale  = $(this).attr('data-spritz-locale') || 'en_US',
+					text    = $target.text();
+
+				if (spritzController == null)
+					spritzController = new SPRITZ.spritzinc.SpritzerController(customOptions);
+
+				spritzController.attach($spritz);
+
+				SpritzClient.spritzify(text, locale, function (spritzText) {
+					setTimeout(function () {
+						spritzController.startSpritzing(spritzText);
+					}, 500);
+				}, 
+				function () {
+					console.error("Spritz Error");
+				});
 			});
 	});

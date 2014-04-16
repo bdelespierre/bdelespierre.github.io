@@ -20,14 +20,14 @@ layout: main
                     <a class="popup linkedin fa fa-linkedin" title="Partager sur LinkedIn" href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{ site.url | UrlEncode }}{{ page.url | UrlEncode }}&amp;title={{ page.title | UrlEncode }}&amp;summary={{ page.description | UrlEncode }}"></a>
                     <a class="email fa fa-envelope-o" title="Partager par mail" href="mailto:?subject={{ page.title | UrlEncode }}&amp;body={{ page.description | UrlEncode}}%20-%20%{{ site.url | UrlEncode }}{{ page.url | UrlEncode }}"></a>
                     {% if page.spritzable %}
-                    <a data-toggle="#spritzer" href="#"><i class="fa fa-toggle-down"></i> Lecture Rapide</a>
+                    <a href="#" data-toggle="#spritzer" data-spritz="#spritzer" data-spritz-text="#article .content" data-spritz-locale="fr"><i class="fa fa-toggle-down"></i> Lecture Rapide</a>
                     {% endif %}
                 </div>
                 <div class="echo">
                     <h3>{{ page.title }}</h3>
                 </div>
                 {% if page.spritzable %}
-                <div id="spritzer" data-role="spritzer" style="display: none"></div>
+                <div id="spritzer" style="display: none;"></div>
                 {% endif %}
             </div>
         </div>
