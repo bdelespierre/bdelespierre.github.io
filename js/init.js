@@ -391,13 +391,12 @@
 
 				spritzController.attach($spritz);
 
+				console.log(text);
+
 				SpritzClient.spritzify(text, locale, function (spritzText) {
 					setTimeout(function () {
 						spritzController.startSpritzing(spritzText);
 					}, 500);
-				}, 
-				function () {
-					console.error("Spritz Error");
-				});
+				}, console.error);
 			});
 	});
