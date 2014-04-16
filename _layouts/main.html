@@ -3,6 +3,24 @@
   Prologue 1.1 by HTML5 UP
   html5up.net | @n33co
   Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+
+                               <\              _                
+                                \\          _/{                  
+                         _       \\       _-   -_                
+                       /{        / `\   _-     - -_              
+                     _~  =      ( @  \ -        -  -_            
+                   _- -   ~-_   \( =\ \           -  -_          
+                 _~  -       ~_ | 1 :\ \      _-~-_ -  -_        
+               _-   -          ~  |V: \ \  _-~     ~-_-  -_      
+            _-~   -            /  | :  \ \            ~-_- -_    
+         _-~    -   _.._      {   | : _-``               ~- _-_  
+      _-~   -__..- ~    ~-_  {   : \:}                           
+    =~__.- ~~              ~-_\  :  /                            
+                               \ : /__                      Death to Internet Explorer !     
+                              //`Y'- \\                          
+                             <+       \\                         
+                              \\      WWW                       
+                              MMM                                    
 -->
 <html>
   <head>
@@ -70,46 +88,27 @@
     <script src="/js/init.js"></script>
     <!--[if lte IE 8]><script src="/js/html5shiv.js"></script><![endif]-->
 
+    <!-- spritz -->
+    {% if page.spritzable %}
+    <script src="http://sdk.spritzinc.com/js/1.0/js/spritz.min.js"></script>
+    <script>
+      var SpritzSettings = {
+        clientId: "ad4a1454094fd9748",
+        redirectUri: "{{ site.url }}/spritz_login_success.html"
+      };
+    </script>
+    {% endif %}
+    <!-- endspritz -->
+
     <noscript>
       <link rel="stylesheet" href="/css/skel-noscript.css" />
       <link rel="stylesheet" href="/css/style.css" />
       <link rel="stylesheet" href="/css/style-wide.css" />
     </noscript>
 
-    <!--
-                               <\              _                
-                                \\          _/{                  
-                         _       \\       _-   -_                
-                       /{        / `\   _-     - -_              
-                     _~  =      ( @  \ -        -  -_            
-                   _- -   ~-_   \( =\ \           -  -_          
-                 _~  -       ~_ | 1 :\ \      _-~-_ -  -_        
-               _-   -          ~  |V: \ \  _-~     ~-_-  -_      
-            _-~   -            /  | :  \ \            ~-_- -_    
-         _-~    -   _.._      {   | : _-``               ~- _-_  
-      _-~   -__..- ~    ~-_  {   : \:}                           
-    =~__.- ~~              ~-_\  :  /                            
-                               \ : /__                      Death to Internet Explorer !     
-                              //`Y'- \\                          
-                             <+       \\                         
-                              \\      WWW                       
-                              MMM                                    
-    -->
     <!--[if lte IE 9]><link rel="stylesheet" href="/css/ie9.css" /><![endif]-->
     <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie8.css" /><![endif]-->
 
-    <!-- spritz -->
-    {% if page.spritzable %}
-    <link rel="stylesheet" href="/components/Spritz/css/spritz.css" media="screen">
-    <script src="/components/Spritz/js/spritz.min.js"></script>
-    <script type="text/javascript">
-    var SpritzSettings = {
-      clientId: "ad4a1454094fd9748",
-      redirectUri: "{{ site.url }}/spritz_login_success.html"
-    };
-    </script>
-    {% endif %}
-    <!-- endspritz -->
   </head>
   <body>
 
