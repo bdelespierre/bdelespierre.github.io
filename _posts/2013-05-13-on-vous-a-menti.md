@@ -6,6 +6,7 @@ date: 2013-05-13
 category: article
 tags: [e-learning, web, developpement, tutorial, site du zéro, nettuts, php, programmation]
 description: Les sites d'e-learning vous mentent ils ? Comment ne pas tomber dans le piège de l'apprentissage facile
+spritzable: yes
 ---
 
 La prolifération des sites d'e-learning autours des technologies web, bien qu'étant un formidable moteur d'intérêt pour ces technologies auprès du public, m'a toujours inquiété en raison de leur méthode d'aprentissage majoritairement didactique. On ne présente plus désormais des sites tels que [nettuts](http://net.tutsplus.com/) ou [Le Site du Zéro](http://www.siteduzero.com/) qui font du tutoriel un fond de commerce. Ces sites véhiculent selon moi une image biaisée de la programmation: celle d'une "recette de cuisine" réduisant la discipline à une série de problème connus et identifiés que quelques étapes apparemment toutes bêtes permettent de déjouer.
