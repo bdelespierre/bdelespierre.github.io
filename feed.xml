@@ -1,5 +1,7 @@
 ---
 layout: none
+sitemap:
+  exclude: "yes"
 ---
 <?xml version="1.0" ?>
 <rss version="2.0">
