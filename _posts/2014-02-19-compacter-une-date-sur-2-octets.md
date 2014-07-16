@@ -24,21 +24,21 @@ La question qu'il faut alors se poser c'est combien de bits me faut-il pour chaq
 
 	0 0	1 0 1 0 1 0 = 42
 	| | | | | | | |
-	| | | | | | | +-- 2<sup>0</sup> = 1
-	| | | | | | +---- 2<sup>1</sup> = 2
-	| | | | | +------ 2<sup>2</sup> = 4
-	| | | | +-------- 2<sup>3</sup> = 8
-	| | | +---------- 2<sup>4</sup> = 16
-	| | +------------ 2<sup>5</sup> = 32
-	| +-------------- 2<sup>6</sup> = 64
-	+---------------- 2<sup>7</sup> = 128
+	| | | | | | | +-- 2^0 = 1
+	| | | | | | +---- 2^1 = 2
+	| | | | | +------ 2^2 = 4
+	| | | | +-------- 2^3 = 8
+	| | | +---------- 2^4 = 16
+	| | +------------ 2^5 = 32
+	| +-------------- 2^6 = 64
+	+---------------- 2^7 = 128
 
 Car, décomposé en puissances de 2, 42 = 2<sup>5</sup> + 2<sup>3</sup> + 2<sup>1</sup> soit 32 + 8 + 2 (comme montré ci-dessus). En fait pour passer du binaire à la base 10 et vice versa, écrivez sur une feuille les puissances de 2 en partant de la droite (c'est facile ça double à chaque fois) puis placez vos 1 et vos 0 dessous (toujours en partant de la droite) et additionnez partout où il y a des 1. C'est aussi simple que ça.
 
-Une autre règle intéressante c'est que la valeur maximale d'un entier sur n bits est 2<sup>n-1</sup>. Par exemple, la valeur maximale qu'on peut faire tenir sur 4 bits c'est 2<sup>4</sup> -1 = 15. Démonstration sur 8 bits:
+Une autre règle intéressante c'est que la valeur maximale d'un entier sur n bits est 2<sup>n</sup>-1. Par exemple, la valeur maximale qu'on peut faire tenir sur 4 bits c'est 2<sup>4</sup>-1 = 15. Démonstration sur 8 bits:
 
 	0 0 0 0 1 1 1 1 = 15 (1+2+4+8)
-	0 0 0 1 0 0 0 0 = 16 (2<sup>4</sup>)
+	0 0 0 1 0 0 0 0 = 16 (2^4)
 
 Donc combien faut-il de bits pour faire tenir les jours, mois et années ?
 
