@@ -45,7 +45,7 @@ Pour ceux qui se poseraient la question: oui, c'est parfaitement valide en PHP. 
 
 Quand les blocs de code sont plus conséquents (ou simplement obligatoires comme pour les fonctions et les classes), j'utilise les _accolades égyptiennes_. Ce nom s'explique simplement avec ce hiéroglyphe:
 
-<center><img src="http://www.codinghorror.com/.a/6a0120a85dcdae970b016768a17a2a970b-800wi" alt="break dance chez Osiris ce soir !"><br>(merci à [Coding Horror](http://www.codinghorror.com/blog/2012/07/new-programming-jargon.html))</center>
+<center><img src="/images/articles/egyptian.jpg" alt="break dance chez Osiris ce soir !"><br>(merci à [Coding Horror](http://www.codinghorror.com/blog/2012/07/new-programming-jargon.html))</center>
 
 {% highlight php linenos %}
 <?php
