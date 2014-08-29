@@ -6,6 +6,13 @@ date: 2014-05-02
 category: article
 tags: [php, poo, late static binding, resolution statique à la volée, php5, orienté objet, statique, objet, class, méthode, héritage, abstraction]
 description: Comprendre le fonctionnement de la résolution statique à la volée en PHP
+related:
+- title: La POO en PHP en 10 minutes (ou moins)
+  url: la-poo-en-php-en-10-minutes-ou-moins
+- title: Injections de dépendances et composants en PHP
+  url: injection-de-dependances-et-composants-en-php
+- title: De l'usage correct des closures en PHP
+  url: de-lusage-correct-des-closures
 ---
 
 Si vous vous souvennez de mon article [La poo en PHP en 10 minutes (ou moins)](http://bdelespierre.fr/article/la-poo-en-php-en-10-minutes-ou-moins/), vous vous rappellerez sans doute que je n'ai pas souhaité parler des spécificités de PHP en matière de programmation orientée objet. C'est justement le sujet qui nous intéresse aujourd'hui; nous allons nous pencher sur une fonctionnalité relativement complexe mais puissante qu'est la _résolution statique à la volée_ ou en anglais _late static binding_ (LSB). Cette fonctionnalité fait partie des évolutions de la version 5.3 de PHP, les version antérieures étant à ce jour dépreciées depuis longtemps vous devriez pouvoir l'utiliser sans risque sur votre environnement.
@@ -14,7 +21,7 @@ Si vous vous souvennez de mon article [La poo en PHP en 10 minutes (ou moins)](h
 
 J'avoue que le nom est un peu barbare mais c'est tout à fait cohérent (*troll* ce qui est rare dans le monde PHP *endtroll*). Il désigne en fait la capacité du moteur à déterminer dans quel contexte exécuter une méthode statique, en d'autres termes effectuer la résolution du contexte d'éxécution lors du déroulement du script.
 
-Vous vous souvennez que vous pouvez utiliser le mot-clé `$this` pour faire référence à l'instance en cours d'utilisation et à `self` pour faire référence à la classe. Le late static binding vous permet d'utiliser le mot-clé `static` en lieu et place du mot clé `self`. 
+Vous vous souvennez que vous pouvez utiliser le mot-clé `$this` pour faire référence à l'instance en cours d'utilisation et à `self` pour faire référence à la classe. Le late static binding vous permet d'utiliser le mot-clé `static` en lieu et place du mot clé `self`.
 
 ## D'accord mais à quoi ça sert ?
 

@@ -6,6 +6,9 @@ date: 2013-12-11
 category: php
 tags: [php, token, pack, unpack, jeton, sécurité, web, programmation, développement]
 description: Apprennez à générer des jetons uniques, non-aléatoires et porteurs d'information simplement et efficacement avec PHP
+related:
+- title: Compacter une date sur 2 octets
+  url: compacter-une-date-sur-2-octets
 ---
 
 Il est souvent utile de générer des jetons (ou _token_ en anglais) afin de sécuriser une action utilisateur, par exemple pour un mail de réinitialisation de mot de passe, s'assurer qu'un formulaire est bien soumis par la même personne que celle qui l'a demandé, ou encore pour identifier un utilisateur à l'aide d'un cookie. Nous allons voir ensemble comment générer un jeton non-aléatoire et unique qui en plus pourra contenir des données intéressantes pour notre application. Les exemples de code fournis sont en langage PHP mais ces concepts sont applicables à n'importe quel langage.
@@ -121,12 +124,12 @@ L'un des problèmes de la fonction base64_encode c'est qu'elle génère des chai
 
 // voir: http://php.net/manual/en/function.base64-encode.php#103849
 
-function base64url_encode($data) { 
-  return rtrim(strtr(base64_encode($data), '+/', '-_'), '='); 
-} 
+function base64url_encode($data) {
+  return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
+}
 
-function base64url_decode($data) { 
-  return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT)); 
+function base64url_decode($data) {
+  return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT));
 }
 
 // créer une version URL-SAFE de notre jeton binaire
@@ -228,7 +231,7 @@ Un moyen simple de sécuriser le jeton est d'y inclure une donnée que l'attaqua
 // somme de contrôle du mot de passe utilisateur
 $password_crc32 = crc32($user->password);
 
-// représentation binaire de notre jeton 
+// représentation binaire de notre jeton
 $binary_token = pack('ISSSS', $id, $code_action, $date, $entropy, $password_crc32);
 
 // créer une version URL-SAFE de notre jeton binaire

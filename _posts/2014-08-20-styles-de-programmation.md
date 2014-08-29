@@ -6,6 +6,13 @@ date: 2014-08-20
 category: article
 tags: [programmation, humour, developpeur, développement, fusil-a-pompe, accident]
 spritzable: yes
+related:
+- title: Codez avec style
+  url: codez-avec-style
+- title: On vous a menti !
+  url: on-vous-a-menti
+- title: Quand le code devient toxique
+  url: quand-le-code-devient-toxique
 ---
 
 Avec le temps, j'ai rencontré beaucoup de développeurs et connu bien des styles de programmation différents. Voici quelques un parmi les plus louches. Reconnaîtrez-vous quelqu'un ?

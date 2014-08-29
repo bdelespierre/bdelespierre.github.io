@@ -7,6 +7,13 @@ category: article
 tags: [toxicity,code,quality,qa,test,kiss,dry,yagni,software-development,architecture,best-practices]
 description: A partir de quand peut-on dire qu'un code est toxique ? Quelques clés pour comprendre comment un projet peut devenir un cauchemard pour les développeurs
 spritzable: yes
+related:
+- title: Les styles de programmation
+  url: styles-de-programmation
+- title: Codez avec style
+  url: codez-avec-style
+- title: On vous a menti !
+  url: on-vous-a-menti
 ---
 
 Vous est-il déjà arrivé de débarquer sur un projet et vous rendre compte qu'il n'a pas (ou mal) été entretnu ? Avez-vous déjà vu une fonctionnalité pourtant simple peiner à arriver en production uniquement parce que le code n'était à la base pas prévu pour ? Vous êtes vous déjà arraché les cheveux à essayer de faire marcher une application sur une plateforme de production un vendredi soir à 23h ? Si c'est le cas, alors vous avez probablement été en contact avec du code toxique.
@@ -17,7 +24,7 @@ Chaque projet est par nature différent. Que ce soit par son écosystème, sa pl
 
 Pour bien comprendre l'aspect corrosif que peuvent prendre les nombreux changements qui ponctuent le cycle de vie d'une application, je vais vous raconter une histoire vécue. Nous sommes en 2009, je sors de l'école, des idées préconçues bien angulaires plein la tête et une image assez carrée de la profession de développeur. Je fais face dans ma première boite à un applicatif vieillissant qui nécéssite beaucoup d'aspirine pour faire fonctionner le développeur qui la fait fonctionner. Je décide alors, en accord avec mes responsables, de changer la donne et de proposer une autre voie: faire du from-scratch (tout reprendre à zéro).
 
-J'entreprends alors de réécrire une nouvelle version, plus moderne et plus proche de l'idée que je me faisait d'un "bon code". Je me documente sur les patrons d'architecture, sur le langage et la plateforme que j'utilise, je regarde ce qui se fait ailleurs et je finis par accoucher d'une béta fonctionnelle qui ma foi m'avait l'air potable. C'est là que les ennuis ont commencés: jusqu'ici je n'ai fait qu'écrire un prototype qui n'a jamais eu à supporter une logique métier digne de ce nom et le premier projet implémenté à l'aide de mon outil a rapidement montré ses faiblesses. 
+J'entreprends alors de réécrire une nouvelle version, plus moderne et plus proche de l'idée que je me faisait d'un "bon code". Je me documente sur les patrons d'architecture, sur le langage et la plateforme que j'utilise, je regarde ce qui se fait ailleurs et je finis par accoucher d'une béta fonctionnelle qui ma foi m'avait l'air potable. C'est là que les ennuis ont commencés: jusqu'ici je n'ai fait qu'écrire un prototype qui n'a jamais eu à supporter une logique métier digne de ce nom et le premier projet implémenté à l'aide de mon outil a rapidement montré ses faiblesses.
 
 J'ai donc dû faire évoluer l'outil pour correspondre aux besoins du projet, ajoutant de nouvelles fonctionnalités, patchant des segments de code non testés. A chaque commit, le volume de code de l'outil augmentait de même que sa complexité. Puis, une fois le projet fini, la mise en production et les retours d'expérience utilisateur ont déclenché l'avalanche de rapports de bugs qu'il a fallu patcher en urgence, augmentant encore le volume et la complexité du code. Quand je me suis rendu compte que tous ces changements avaient tendance à se marcher dessus et qu'on était rentré dans la dynamique malsaine de devoir changer un outil générique pour correspondre à des besoins fonctionnels, il était déjà trop tard. Nous étions partis dans le cycle des projets et nous n'avions plus le temps pour réécrire proprement ce qui n'allait pas.
 
@@ -41,7 +48,7 @@ Il propose d'ailleurs une table des métriques et des seuils acceptables sur les
         <tr>
             <th style="font-weight: bold; text-align: left">Métrique</th>
             <th style="font-weight: bold; text-align: left">Niveau</th>
-            <th style="font-weight: bold; text-align: left">Seuil</th>            
+            <th style="font-weight: bold; text-align: left">Seuil</th>
         </tr>
     </thead>
     <tbody>

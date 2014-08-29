@@ -7,6 +7,13 @@ category: article
 tags: [web, internet, questions, qualité, site, critique]
 description: Quelques question qu'on devrait tous se poser avant de se lancer sur Internet
 spritzable: yes
+related:
+- title: Les styles de programmation
+  url: styles-de-programmation
+- title: On vous a menti !
+  url: on-vous-a-menti
+- title: JavaScript, le noeud du problème
+  url: javascript-le-noeud-du-probleme
 ---
 
 En me prommenant tranquillement sur Internet&#0153;, je suis tombé par hasard sur [Les 50 question critiques concernant votre site web](http://blog.frivolousmotion.com/2007/12/critical-questions-about-your-website.html). Ces question, énoncées par [Kevin M. Keating](http://www.blogger.com/profile/09726133592431977513), sont selon moi très pertinentes, même si beaucoup d'entre-elles on l'air d'aller de soi. J'ai remarqué en les lisant que je suis passé à coté de pas mal de chose importantes - pourtant évidentes - lors de la conception de mon site personnel.

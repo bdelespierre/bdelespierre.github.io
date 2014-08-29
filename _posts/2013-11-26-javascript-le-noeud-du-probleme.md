@@ -90,7 +90,7 @@ En fait, lors de l'éxecution d'une expression, si la variable n'est pas trouvé
 
 Le prototype d'un objet JavaScript, c'est comme son scope parent en quelque sorte. Il s'agit d'un objet qui sert de "base" à un autre objet. De la même façon que pour les variables, si on demande une propriété qui n'existe pas sur l'objet courant, JavaScript va regarder dans le prototype de l'objet et ainsi de suite jusqu'a trouver la propriété demandée.
 
-Exemple: 
+Exemple:
 
 {% highlight js linenos %}
 function Type1 () {

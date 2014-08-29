@@ -6,6 +6,13 @@ date: 2013-02-19
 category: php
 tags: [php5.3, php5.4, closures, lambda-functions, php, fermetures, development]
 description: Cet article a pour objet de vous verser dans l'art d'utiliser les closures, l'une des nouveautés les plus utiles de PHP 5.3
+related:
+- title: PHP fait n'importe quoi avec les closures
+  url: php-fait-nimporte-quoi-avec-les-closures
+- title: Bien plus qu'un simple jeton
+  url: bien-plus-quun-simple-jeton
+- title: Compacter une date sur 2 octets
+  url: compacter-une-date-sur-2-octets
 ---
 
 Cet article a pour objet de vous verser dans l'art d'utiliser les closures, l'une des nouveautés les plus utiles de PHP 5.3. Il s'adresse à des développeurs chevronnés, au fait de la programmation orientée objet en PHP.

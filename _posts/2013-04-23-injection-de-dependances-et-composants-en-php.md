@@ -6,6 +6,13 @@ date: 2013-04-23
 category: php
 tags: [php, dependency injection, injection, dépendances, components oriented development, développement orienté composants, composants]
 description: Comprennez rapidement les enjeux de la programmation orientée composants et des bénéfices qu'elle apporte
+related:
+- title: La POO en PHP en 10 minutes (ou moins)
+  url: la-poo-en-php-en-10-minutes-ou-moins
+- title: La resolution statique a la volée
+  url: la-resolution-statique-a-la-volee
+- title: Quand le code devient toxique
+  url: quand-le-code-devient-toxique
 ---
 
 Les développeurs sont par nature assez paresseux, s'ils peuvent réutiliser des fonctionnalités existantes pour se simplifier la vie ils le font en règle générale. C'est encore mieux si ces fonctionnalités leurs sont fournies directement par des librairies ou par l'API du langage. Ne pas réinventer la roue est un concept qui revient souvent en programmation, en effet, si la solution à un problème posé existe déjà, il est inutile voire absurde de dépenser du temps et de l'énergie à fournir une autre solution.

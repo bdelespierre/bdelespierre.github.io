@@ -6,6 +6,13 @@ date: 2013-07-31
 category: php
 tags: [php, php.5.4, closures, wtf, bug, static binding]
 description: Comprendre le problème de design induit par les closures statiques en PHP 5.4
+related:
+- title: De l'usage correct des closures
+  url: de-lusage-correct-des-closures
+- title: La POO en PHP en 10 minutes (ou moins)
+  url: la-poo-en-php-en-10-minutes-ou-moins
+- title: La resolution statique à la volée
+  url: la-resolution-statique-a-la-volee
 ---
 
 J'ai récemment découvert un comportement étrange avec les closures, après avoir un peu fouillé le problème, je partage avec vous mes découvertes. Accrochez-vous, c'est complêtement bizarre.

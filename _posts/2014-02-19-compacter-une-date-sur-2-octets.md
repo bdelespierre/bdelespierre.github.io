@@ -6,6 +6,9 @@ date: 2014-02-19
 category: php
 tags: [php, token, pack, unpack, date, octet]
 description: Apprennez à compacter une date sur seulement 2 octets de mémoire et découvrez au passage les rudiments des opérations de bits en PHP
+related:
+- title: Bien plus qu'un simple jeton
+  url: bien-plus-quun-simple-jeton
 ---
 
 J'espère que vous vous êtes bien amusés avec les concepts décrits dans mon article [bien plus qu'un simple jeton](http://bdelespierre.fr/article/bien-plus-quun-simple-jeton/), si vous ne l'avez pas encore lu c'est l'occasion de le découvrir. Je souhaitais cependant revenir sur le point de l'encodage de la date. Comme montré, on procède à une compression de la date afin de réduire son empreinte sur la taille du jeton. D'une date en chaîne sur plusieurs octets on passe à une chaîne binaire de seulement 2 octets. Cet article va vous expliquer plus en détail ce qui se passe dans les fonctions date16\_encode et date16\_decode ce qui nous permettra également d'aborder quelques uns des aspects de la manipulation de bits en PHP. Nous somme encore une fois sur la plateforme PHP mais ces concepts sont aussi applicables à d'autres langages (les opérateurs sont d'ailleurs les même à peu près partout).
@@ -97,7 +100,7 @@ function date16_encode ($annee, $mois, $jour)
 	$jour  &= 0b00011111; // ne garder que les 5 premiers bits
 	$mois  &= 0b00001111; // ne garder que les 4 premiers bits
 	$annee &= 0b01111111; // ne garder que les 7 premiers bits
-	
+
 	return ($annee << 9) | ($mois << 5) | $jour;
 }
 
@@ -139,7 +142,7 @@ function date16_decode ($date)
 	$annee = ($date >> 9) & 0b01111111;
 	$mois  = ($date >> 5) & 0b00001111;
 	$jour  = ($date)      & 0b00011111;
-	
+
 	return [$annee, $mois, $jour];
 }
 

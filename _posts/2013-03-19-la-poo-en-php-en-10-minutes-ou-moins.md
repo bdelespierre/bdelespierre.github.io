@@ -6,6 +6,13 @@ date: 2013-03-19
 category: php
 tags: [php, oop, object, héritage, encapsulation, polymorphisme, programmation orientée-objet, programmation]
 description: Maîtrisez les bases de la programmation orientée objet avec PHP en quelques minutes
+related:
+- title: De l'usage correct des closures
+  url: de-lusage-correct-des-closutres
+- title: Injection de dépendances et composants
+  url: injection-de-dependances-et-composants-en-php
+- title: La resolution statique à la volée
+  url: la-resolution-statique-a-la-volee
 ---
 
 Si vous avez vécu sous un rocher dans une grotte sous une montagne au fin fond du Jura ces 40 dernière années et n'avez jamais entendu parler de programmation orientée objet, je vais tenter de vous faire un rapide résumé.

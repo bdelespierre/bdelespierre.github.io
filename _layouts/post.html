@@ -3,7 +3,7 @@ layout: main
 ---
 <article id="article" class="one">
     <div class="container">
-        
+
         <!-- post header -->
         <header>
             <h2>{{ page.title }}</h2>
@@ -37,12 +37,24 @@ layout: main
             {{ content }}
         </div>
 
+        {% if page.related %}
+        <!-- related articles -->
+        <aside class="related-articles">
+            <h2>Dans le même esprit</h2>
+            <ul>
+                {% for post in page.related %}
+                <li><a href="/article/{{ post.url }}">{{ post.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </aside>
+        {% endif %}
+
     </div>
 </article>
 
 <section id="comments" class="two">
     <div class="container">
-        
+
         <header>
             <h2>Commentaires</h2>
         </header>
