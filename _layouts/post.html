@@ -34,6 +34,7 @@ layout: main
 
         <!-- post content -->
         <div class="content">
+            {% if page.image %}<img src="{{ page.image }}" alt="{{ page.title }}">{% endif %}
             {{ content }}
         </div>
 
