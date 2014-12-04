@@ -8,7 +8,7 @@ tags: [php, oop, object, héritage, encapsulation, polymorphisme, programmation 
 description: Maîtrisez les bases de la programmation orientée objet avec PHP en quelques minutes
 related:
 - title: De l'usage correct des closures
-  url: de-lusage-correct-des-closutres
+  url: de-lusage-correct-des-closures
 - title: Injection de dépendances et composants
   url: injection-de-dependances-et-composants-en-php
 - title: La resolution statique à la volée
@@ -27,9 +27,9 @@ __Important__: Cet article couvre le paradigme objet en PHP mais pas les petites
 
 ## L'encapsulation
 
-Le principe fondamental de la programmation orienté objet est la notion de _classe_. Vous savez déjà manier des tableaux et des variables (qui sont des structures de données) et des fonctions (qui sont des structures de comportements). La classe vous permet de les rassembler dans un structure commune.
+Le principe fondamental de la programmation orienté objet est la notion de _classe_. Vous savez déjà manier des tableaux et des variables (qui sont des structures de données) et des fonctions (qui sont des structures de comportements). La classe vous permet de les rassembler dans une structure commune.
 
-On appelle classe tout regroupement _cohérent_ de données (ou _propriétés_) et de comportemnts (ou _méthodes_). Les proprétés et méthodes d'une classe sont égalements appelés membres. En fait, on peut penser à une classe comme à un _"moule"_ destiné à la fabrication d'_objets_ (ou _instances de classes_).
+On appelle classe tout regroupement _cohérent_ de données (ou _propriétés_) et de comportements (ou _méthodes_). Les proprétés et méthodes d'une classe sont égalements appelés membres. En fait, on peut penser à une classe comme à un _"moule"_ destiné à la fabrication d'_objets_ (ou _instances de classes_).
 
 Pour créer un nouvel objet, on utilise le mot clé `new` suivi du nom de la classe à instancier. Une fois l'objet crée, son état interne (les valeurs de ses propriétés) sera préservé jusqu'a sa destruction explicite avec la fonction `unset` ou jusqu'a la fin du script.
 
@@ -72,7 +72,7 @@ Au sein d'une classe, un membre peut également avoir une _visibilité_:
 
 La notion de visibilité d'un membre est intimement liée à la notion d'état. En restreignant la visibilité d'un membre, l'objet est protégé contre les altérations de son état depuis l'exterieur qui pourraient nuire à son fonctionnement. Par exemple, si vous créez une classe de manipulation de fichier et que cette classe porte une propriété qui est la ressource du fichier, vous ne voulez pas qu'on puisse la fermer de l'exterieur avec `fclose` car cela perturberai l'éxécution de vos méthodes.
 
-Définir la visibilité d'un membre n'est pas obligatoire, en l'absence de visibilité un membre sera public (les propriétés doivent au moins être déclarées avec le mot clé var). Je vous recommande d'utiliser efficacement la visibilité afin de protéger le fonctionnement et les données internes de la classe (qui n'ont pas besoin d'être exposés). Dans la pratique, il vaut mieux définir les propriétés comme protégées par défaut afin qu'on ne puisse pas les modifier depuis l'extérieur de la classe et de définir des accesseur (des méthode d'accès à ces propriétés) au besoin.
+Définir la visibilité d'un membre n'est pas obligatoire, en l'absence de visibilité un membre sera public (les propriétés doivent au moins être déclarées avec le mot clé var). Je vous recommande d'utiliser efficacement la visibilité afin de protéger le fonctionnement et les données internes de la classe (qui n'ont pas besoin d'être exposés). Dans la pratique, il vaut mieux définir les propriétés comme protégées par défaut afin qu'on ne puisse pas les modifier depuis l'extérieur de la classe et de définir des accesseurs (des méthode d'accès à ces propriétés) au besoin.
 
 Démonstration:
 
@@ -235,7 +235,7 @@ __Important__: l'héritage entre deux classes caractérise la relation _"est un 
 Concrêtement, lors qu'une classe B (la _fille_) hérite d'une classe A (la _mère_), elle dispose alors
 de tous les membres publics ___et protégés___ de sa mère (d'ou l'importance de cette différentiation entre membre protégé et privé). On réalise un héritage quand il y a lieu d'effectuer une _spécialisation_, c'est à dire que la classe fille va _redéfinir_ (on parle aussi de _surcharge_) ou _ajouter_ des comportements.
 
-Pour que la classe B hérite de A, on utilise le mot clé `extends` comme montré ci-dessous. On peut, depuis une classe fille, faire explicitement appel au méthode de la classe parente à l'aide du mot clé `parent`, c'est pratique lors ce qu'il s'agit de réutiliser une partie du comportement de la classe parent sans pour autant devoir le réécrire.
+Pour que la classe B hérite de A, on utilise le mot clé `extends` comme montré ci-dessous. On peut, depuis une classe fille, faire explicitement appel au méthode de la classe parente à l'aide du mot clé `parent`, c'est pratique lorsqu'il s'agit de réutiliser une partie du comportement de la classe parent sans pour autant devoir le réécrire.
 
 {% highlight php linenos %}
 <?php
@@ -278,13 +278,13 @@ echo "Ma moto a " . $ma_moto->nombreDeRoues() . " roues"; // Ma moto a 2 roues
 ?>
 {% endhighlight %}
 
-__Important__: En PHP, l'héritage multiple __n'existe pas__. Ce qui signifie que vous ne pouvez par déclarer une classe qui hérite de deux autre classes. En somme, `class A extends B, C` c'est interdit. Vous pouvez en revanche _réaliser_ plusieurs interfaces (voir le chapitre sur le polymorphisme ci-dessous).
+__Important__: En PHP, l'héritage multiple __n'existe pas__. Ce qui signifie que vous ne pouvez par déclarer une classe qui hérite de deux autres classes. En somme, `class A extends B, C` c'est interdit. Vous pouvez en revanche _réaliser_ plusieurs interfaces (voir le chapitre sur le polymorphisme ci-dessous).
 
 ### Filliation, parents, enfants et arbre généalogique
 
 Une classe n'est pas seulement un moyen commode de rassembler des données et des comportements au sein d'une structure, c'est surtout un excellent moyen de créer de nouveaux _types_ de données, car en réalité, une classe peut être considérée comme un type au même sens qu'une chaine ou un entier.
 
-Quand on réalise une héritage, la classe fille caractérise un nouveau type mais est toujours du type de la mère. Par exemple une pomme est toujours considérée un fruit, qui est toujours considéré comme un végétal. En programmation orientée objet c'est le même concept, on parle alors de _hiérarchie de types_.
+Quand on réalise un héritage, la classe fille caractérise un nouveau type mais est toujours du type de la mère. Par exemple une pomme est toujours considérée un fruit, qui est toujours considéré comme un végétal. En programmation orientée objet c'est le même concept, on parle alors de _hiérarchie de types_.
 
 Comme tout bon langage objet, PHP dispose de l'opérateur `instanceOf` qui permet de savoir si une instance est d'un type donné. Cet opérateur renvoie `true` si l'objet est du type (ou _super-type_) spécifié.
 
@@ -336,7 +336,7 @@ manger($object); // I'm eating Apple
 
 On appelle cette syntaxe de paramètres le _type-hinting_, c'est à dire qu'on demande explicitement des objets du type (ou super-type) spécifié. N'importe quoi d'autre provoquera une erreur. Si on avait passé un type natif comme un entier ou encore une instance qui hérite de la classe `Vegetal` mais qui n'est pas un fruit, on se serait fait jeter.
 
-Le type-hinting est extrèmement pratique pour sécuriser vos fonctions et vos méthode en empêchant le développeur d'y mettre n'importe quoi.
+Le type-hinting est extrèmement pratique pour sécuriser vos fonctions et vos méthodes en empêchant le développeur d'y mettre n'importe quoi.
 
 __Note__: contrairement à d'autres langages objets comme Java, les objets n'héritent pas par défaut de la class `Object`, vous devez donc recourrir à `is_object` si vous voulez valider le type objet.
 
@@ -350,7 +350,7 @@ Comme dans la plupart des langages objet, le polymorphisme en PHP est un polymor
 
 ### Abstraction
 
-En programmtion objet, il est possible de déclarer des méthodes dont la définition n'est pas encore connue dans la classe mère mais le seront dans une classe fille. On parle alors de _méthodes abstraites_. Une classe qui contiend au moins une méthode abstraite doit elle aussi être déclarée abstraite et ne peut plus être instanciée - vu que tout son code n'est pas implémenté. On parle alors de _classe abstraite_.
+En programmtion objet, il est possible de déclarer des méthodes dont la définition n'est pas encore connue dans la classe mère mais le seront dans une classe fille. On parle alors de _méthodes abstraites_. Une classe qui contient au moins une méthode abstraite doit elle aussi être déclarée abstraite et ne peut plus être instanciée - vu que tout son code n'est pas implémenté. On parle alors de _classe abstraite_.
 
 Une méthode abstraite est précédée du mot clé `abstract` (idem pour la classe qui la porte) et ne peut pas avoir de corp.
 
