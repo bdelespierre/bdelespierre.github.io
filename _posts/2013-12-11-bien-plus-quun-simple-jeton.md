@@ -89,7 +89,7 @@ $id = (int)$user->id;
 $code_action = (int)ACTION_RESET_PASSWORD;
 
 // date du jour sous forme d'entier
-$date = date16_encode(date('Y'), date('m'), date('d'));
+$date = date16_encode(date('y'), date('m'), date('d'));
 
 // nombre aléatoire pour l'entropie
 $entropy = mt_rand();
