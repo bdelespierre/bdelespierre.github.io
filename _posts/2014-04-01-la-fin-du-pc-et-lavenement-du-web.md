@@ -16,7 +16,7 @@ _"Jamais nous n'aurions pensé que le web prendrait autant d'ampleur."_ nous con
 
 A cause des mauvaises recettes qu'essuient ces deux sociétés en raison de la perte de vitesse de leurs ventes software et hardware, ce sont des milliers d'emplois qui sont menacés.
 
-_"Si la tendance se confirme, c'est peut être tout un pan de l'industrie informatique qui pourrait disparaître."_ nous explique en interwiew depuis l'au-delà le fantôme de [Denis Richie](http://en.wikipedia.org/wiki/Dennis_Ritchie), fondateur du langage C et père de l'informatique moderne. _"Tous les emplois des développeurs C/C++, Java, et même .Net pourraient bien disparaître au profit de ces amateurs de developpeurs web."_
+_"Si la tendance se confirme, c'est peut être tout un pan de l'industrie informatique qui pourrait disparaître."_ nous explique en interwiew depuis l'au-delà le fantôme de [Denis Ritchie](http://en.wikipedia.org/wiki/Dennis_Ritchie), fondateur du langage C et père de l'informatique moderne. _"Tous les emplois des développeurs C/C++, Java, et même .Net pourraient bien disparaître au profit de ces amateurs de developpeurs web."_
 
 Car même si elle ne fait pas plaisir au quelques 100.000 employés de Microsauft, la nouvelle à de quoi réjouir chez les société tournées vers le web comme Gougoule, Amazonie, Truitteur et Facedebouc qui voient d'un très bon oeil la perte de vitesse de ces sociétés.
 

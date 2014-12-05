@@ -1430,6 +1430,8 @@
 		}
 
 		#article .content img {
+			max-width: 20%;
+			max-height: 300px;
 			float: right;
 			margin: 0 0 .5em .5em;
 		}

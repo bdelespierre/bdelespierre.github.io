@@ -6,6 +6,7 @@ date: 2014-02-19
 category: php
 tags: [php, token, pack, unpack, date, octet]
 description: Apprennez à compacter une date sur seulement 2 octets de mémoire et découvrez au passage les rudiments des opérations de bits en PHP
+image: /images/articles/compression.jpg
 related:
 - title: Bien plus qu'un simple jeton
   url: bien-plus-quun-simple-jeton

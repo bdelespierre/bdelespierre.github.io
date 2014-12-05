@@ -6,6 +6,7 @@ date: 2014-08-20
 category: article
 tags: [programmation, humour, developpeur, développement, fusil-a-pompe, accident]
 spritzable: yes
+image: /images/articles/code4food.jpg
 related:
 - title: Codez avec style
   url: codez-avec-style

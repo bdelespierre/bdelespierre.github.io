@@ -7,6 +7,7 @@ category: article
 tags: [toxicity,code,quality,qa,test,kiss,dry,yagni,software-development,architecture,best-practices]
 description: A partir de quand peut-on dire qu'un code est toxique ? Quelques clés pour comprendre comment un projet peut devenir un cauchemard pour les développeurs
 spritzable: yes
+image: /images/articles/skull.png
 related:
 - title: Les styles de programmation
   url: styles-de-programmation
