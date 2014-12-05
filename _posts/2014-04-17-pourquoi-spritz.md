@@ -10,8 +10,6 @@ spritzable: yes
 image: http://bdelespierre.fr/images/articles/glasses-guy.jpg
 ---
 
-<img src="{{ site.url }}/images/articles/glasses-guy.jpg" alt="Spritz" style="float: right; margin: .5em 0 0 .5em">
-
 Comme vous l'avez peut-être remarqué, il est désormais possible de lire plus rapidement quelques-uns de mes articles avec le boutton "Lecture Rapide". Cette fonctionnalité développée par [Spritz](http://www.spritzinc.com/) permet de lire un texte à une vitesse allant de 250 à 600 mots minutes, c'est à dire plus vite qu'une lecture "traditionnelle" d'environ 220 mots minute.
 
 Cette startup basée à Boston se concentre sur les technologies de lecture de texte en flux et leur intégration au sein des moyens de communication modernes. D'après [leurs recherches](http://www.spritzinc.com/the-science/), le cerveau humain passerait plus de temps à déplacer le regard de mots en mots qu'a réellement lire ces derniers. Pour chaque mot, l'oeil recherche le "point de reconnaissance optimal" avant que le cerveau ne puisse réellement en interprêter le sens. Quand l'oeil rencontre une ponctuation dans ou à la fin d'une phrase, le cerveau assemble alors tous les mots en une pensée cohérente.
