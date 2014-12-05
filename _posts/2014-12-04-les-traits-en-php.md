@@ -19,12 +19,12 @@ related:
 
 Comme nous l'avons vu dans l'article [La POO en PHP en 10 minutes (ou moins)](http://bdelespierre.fr/article/la-poo-en-php-en-10-minutes-ou-moins/), l'héritage est un moyen simple de réutiliser des comportements existants et donc d'éviter la dupplication de code. C'est d'ailleurs un pilier _fondamental_ de la programmation orientée objet.
 
-En revanche, la relation d'héritage est en fait une spécialisation. Ce qui signifie que la classe qui hérite doit partager une nature commune avec sa mère; par exemple, la classe Voiture peut être une spécialisation de la classe Vehicule mais certainement pas de la classe Canapé. Pourtant, dans le canapé comme dans la voiture on peut s'asseoir à plusieurs. Comment faire dans ce cas pour implémenter la méthode `faireAsseoir(Personne $personne)` dans deux classe qui ne partagent pas du tout les mêmes classes de bases et ne peuvent pas s'hériter entre-elles ?
+En revanche, la relation d'héritage est en fait une spécialisation. Ce qui signifie que la classe qui hérite doit partager une nature commune avec sa mère; par exemple, la classe Voiture peut être une spécialisation de la classe Vehicule mais certainement pas de la classe Canapé. Pourtant, dans le canapé comme dans la voiture on peut s'asseoir à plusieurs. Comment faire dans ce cas pour implémenter la méthode `faireAsseoir(Personne $personne)` dans deux classes qui ne partagent pas du tout les mêmes classes de base et ne peuvent pas s'hériter entre-elles ?
 
 Jusqu'ici, la solution à ce genre de problème était de soit:
 
 + duppliquer le code (et tant pis pour les bonnes pratiques)
-+ réaliser une composition (par exemple en injectant une instance de Fauteuil, ce qui introduit des couplages et de la complexité)
++ réaliser une composition (par exemple en injectant une instance de Fauteuil, ce qui introduit du couplage et de la complexité)
 
 L'un comme l'autre peut poser problème. C'est pourquoi il existe depuis PHP 5.4 la notion de [traits](http://php.net/manual/fr/language.oop5.traits.php).
 
@@ -62,7 +62,7 @@ trait EventEmitter
 		if (!isset($this->listeners[$event]))
 			return;
 
-		foreach ($this->listeners as $listener)
+		foreach ($this->listeners[$event] as $listener)
 			$listener($data);
 	}
 }
@@ -181,6 +181,44 @@ class Bar
 	public $a = true; // E_STRICT
 	public $b = true; // E_FATAL_ERROR !
 }
+
+?>
+{% endhighlight %}
+
+## Priorisation
+
+Les traits surchargent les méthodes de la classe parente mais les méthodes du trait sont surchargées par les méthodes déjà définies dans la classe. En fait c'est comme si le trait était "entre" la classe parente et la classe au niveau de la hiérarchie d'héritage.
+
+{% highlight php linenos %}
+<?php
+
+class A
+{
+	public function foo() { echo 1; }
+}
+
+trait B
+{
+	public function foo() { echo 2; }
+}
+
+class C extends A
+{
+	use B;
+}
+
+$c = new C;
+$c->foo(); // affiche 2 car A::foo est écrasée par B::foo
+
+class D extends A
+{
+	use B;
+
+	public function foo() { echo 3; }
+}
+
+$d = new D;
+$d->foo(); // affiche 3 car D::foo écrase B::foo (qui écrase A::foo)
 
 ?>
 {% endhighlight %}
