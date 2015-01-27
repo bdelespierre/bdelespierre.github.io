@@ -157,3 +157,70 @@ Je tiens au passage à rappeller que les opérations sur les bits sont HYPER rap
 ## Conclusion
 
 En PHP vous ne pouvez pas manipuler directement le type de données que vous utilisez. Même si nous avons réussi à générer une date sur 16 bits, celle-ci est toujours stockée sur 32 bits (ou 64 selon votre système) car PHP la traite comme un entier. C'est en revanche utile quand, comme dans l'article [Bien plus qu'un simple jeton](http://bdelespierre.fr/article/bien-plus-quun-simple-jeton/) vous insérez la donnée dans une chaine binaire avec [pack](), auquel cas vous devez connaître le binaire et les opération binaires pour l'utiliser efficacement.
+
+_mise à jour du 28/01/2015_
+
+## Aller plus loin
+
+Comme l'a très justement fait remarquer [Xavier Combelle](https://disqus.com/by/xaviercombelle/), les dates de 00 à 99 posent problème, surtout quand on utilise des dates antérieures à l'an 2000. Supposons que je veuille mettre ma date de naissance (23/09/1987) sur 16 bits; avec date16_encode j'aurais:
+
+```PHP
+<?php
+// 1987 = 2000 - 13
+list($y, $m, $d) = date16_decode( date16_encode(-13, 9, 23) );
+
+echo "$y-$m-$d"; // 13-9-23
+?>
+```
+
+Mais je ne peux pas savoir une fois la date décodée si l'année est 1987 (2000 - 13) ou 2013...
+
+Pour résoudre ce problème nous allons traiter notre année de façon _relative_ à une année de référence (qu'on définira par défaut à 1970 - ou [Epoch](http://fr.wikipedia.org/wiki/Epoch)). De cette façon, nous pourrons passer des dates au format 4 chiffres et avoir des dates "en négatif" par rapport à cette année de référence.
+
+Il va donc falloir stocker l'information "positif" ou "négatif" quelque part. La façon la plus simple est d'utiliser un bit de signature que nous allons mettre au tout début de notre bitfield, ce qui va réduire la date sur 6 bits au lieu de 7. Si ce bit vaut 1 alors la date est antérieure à l'année de référence, si le bit vaut 0 alors la date est postérieure à l'année de référence. En fait le bit de signature correspond à un - (minus).
+
+La construction du bitfield devient alors: `[signature:1b] [annee:6b] [mois:4b] [jour:5b] = [bitfield:16b]`
+
+```PHP
+<?php
+function date16_encode ($annee, $mois, $jour, $ref = 1970)
+{
+	// le bit de signature détermine si l'année est avant ou après l'année de référence
+	$sig = (int)($annee - $ref) < 0;
+
+	// l'année devient relative à l'année de référence (en valeur absolue)
+	$annee = abs($annee - $ref);
+
+	$jour  &= 0b00011111; // ne garder que les 5 premiers bits
+	$mois  &= 0b00001111; // ne garder que les 4 premiers bits
+	$annee &= 0b01111111; // ne garder que les 7 premiers bits
+
+	return ($sig << 15) | ($annee << 9) | ($mois << 5) | $jour;
+}
+
+function date16_decode ($date, $ref = 1970)
+{
+	$sig    = ($date >> 15) & 0b00000001;
+	$annee  = ($date >> 9)  & 0b00111111;
+	$mois   = ($date >> 5)  & 0b00001111;
+	$jour   = ($date)       & 0b00011111;
+
+	// on recalcule l'année en fonction de la date de référence
+	$annee = $sig ? $ref - $annee : $ref + $annee;
+
+	return [$annee, $mois, $jour];
+}
+
+$date16 = date16_encode(1987, 9, 23, 2000);
+
+// Pour que ça marche il faut bien entendu que l'année de référence soit la même des deux cotés !
+list($y,$m,$d) = date16_decode( $date16, 2000);
+
+echo "$y-$m-$d"; // 1987-9-23
+
+?>
+```
+
+Outre le fait que nous ayons désormais des années plus cohérentes (car sur 4 chiffres), on remarque qu'on dispose de plus d'un siècle de dates désormais puisque toutes les dates dans l'intervale `[$ref - 63, $ref + 63]` peuvent désormais être encodées sur 16 bits sans problèmes. Donc de 99 ans on est passe mainteant à 126 ans ! Par exemple, si on définit 2077 comme année de référence, on peut utiliser toutes les date entre 2014 et 2140. Si votre application tourne toujours à cette date, promis, je sors de ma tombe pour vous payer une bière !
+
+<center><img src="/images/articles/zombie-beer.png" alt="Bièèèère" style="float:none"></center>
