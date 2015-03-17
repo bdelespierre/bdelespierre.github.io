@@ -194,16 +194,16 @@ class MaClasse {
     public static $prefixe = "hello";
 
     // propriété d'instance
-    protected $_phrase;
+    protected $mot;
 
     // constructeur
     public function __construct ($mot) {
-        $this->_phrase = self::$prefixe . ' ' . $mot;
+        $this->mot = $mot;
     }
 
     // méthode d'instance
     public function afficher () {
-        echo $this->_phrase;
+        echo self::$prefixe . ' ' . $this->mot;
     }
 
     // méthode de classe
@@ -217,7 +217,7 @@ $obj1->afficher(); // affiche hello world
 
 MaClasse::definirPrefixe("strange");
 
-$obj2 = new MaClasse("word");
+$obj2 = new MaClasse("world");
 $obj2->afficher(); // affiche strange world
 $obj1->afficher(); // affiche strange world également
 
