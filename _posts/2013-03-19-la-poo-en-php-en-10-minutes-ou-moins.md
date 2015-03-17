@@ -48,7 +48,7 @@ class MaClasse
     var $a = 1;
 
     // méthode
-    function afficher ()
+    function afficher()
     {
         echo $this->a;
     }
@@ -87,11 +87,17 @@ class MaClasse
 
     private $_proprietePrivee;
 
-    public function methodePublique() {}
+    public function methodePublique()
+    {
+    }
 
-    protected function _methodProtegee() {}
+    protected function _methodProtegee()
+    {
+    }
 
-    private function _methodePrivee() {}
+    private function _methodePrivee()
+    {
+    }
 }
 
 $objet = new MaClasse;
@@ -118,18 +124,20 @@ Exemple d'utilisation du constructeur:
 {% highlight php linenos %}
 <?php
 
-class MaClasse {
-
+class MaClasse
+{
     // propriété protégée
     protected $a;
 
     // constructeur
-    function __construct ($valeur) {
+    function __construct($valeur)
+    {
         $this->a = $valeur;
     }
 
     // méthode
-    function afficher () {
+    function afficher()
+    {
         echo $this->a;
     }
 }
@@ -149,19 +157,22 @@ Exemple d'utilisation du destructeur:
 {% highlight php linenos %}
 <?php
 
-class MaClasse {
-
+class MaClasse
+{
     protected $ressource;
 
-    function __construct ($fichier) {
+    function __construct($fichier)
+    {
         $this->ressource = fopen($fichier, 'r');
     }
 
-    function lireUneLigne () {
+    function lireUneLigne()
+    {
         return fgets($this->ressource);
     }
 
-    function __destruct () {
+    function __destruct()
+    {
         // fermer proprement le fichier
         fclose($this->ressource);
     }
@@ -177,9 +188,9 @@ unset($mon_instance); // le destructeur est appellé, le fichier est fermé
 
 ### Membres de classes et membres d'instances
 
-Un membre peut être lié à l'instance de la classe (on parle alors de _membre d'instance_), c'est le cas dans tous les exemples ci-dessus, et ne peut en aucun cas être utilisé en l'absence d'une instance, ce n'est pas le cas d'un membre de classe.
+Un membre peut être lié à l'instance de la classe (on parle alors de _membre d'instance_), c'est le cas dans tous les exemples ci-dessus avec `$this->nomDeLaPropriete`. Un membre d'instance ne peut pas être utilisé sans l'objet (l'instance) qui va avec.
 
-Un membre peut également être lié à la classe elle-même plutôt qu'a l'instance; on parle alors de _membre de classe_ ou de _membre statique_. Il est pour cela précédé du mot clé `static`. Un membre statique est accessible par l'intermédiaire de l'opérateur de résolution de portée `::`. Au sein d'une classe le mot clé `self` permet d'accéder aux membres statiques, `self` représente la classe en cours tout comme `$this` qui représente l'instance en cours (`$this` n'est bien entendu pas disponible au sein d'un membre statique).
+Mais un membre peut également être directement lié à la classe elle-même plutôt qu'a ses instances; on parle alors de _membre de classe_ ou de _membre statique_. Il est pour cela précédé du mot clé `static` et on y accède à l'aide de l'opérateur de résolution de portée `::`. Au sein d'une classe le mot clé `self` permet d'accéder aux membres statiques, `self` représente la classe en cours de la même façon que `$this` représente l'instance en cours (le mot clé `$this` n'est pas disponible au sein d'un membre statique et son utilisation provoquera une erreur fatale).
 
 La visibilité s'applique de la même façon sur les membres d'instances et sur les membres de classes, leurs effets sont basiquement les mêmes sauf dans le cas de l'héritage de méthodes statiques que nous détaillerons plus bas.
 
@@ -188,8 +199,8 @@ Exemple de classe disposant de membres statiques:
 {% highlight php linenos %}
 <?php
 
-class MaClasse {
-
+class MaClasse
+{
     // propriété de classe
     public static $prefixe = "hello";
 
@@ -197,17 +208,20 @@ class MaClasse {
     protected $mot;
 
     // constructeur
-    public function __construct ($mot) {
+    public function __construct($mot)
+    {
         $this->mot = $mot;
     }
 
     // méthode d'instance
-    public function afficher () {
+    public function afficher()
+    {
         echo self::$prefixe . ' ' . $this->mot;
     }
 
     // méthode de classe
-    public static function definirPrefixe ($prefixe) {
+    public static function definirPrefixe($prefixe)
+    {
         self::$prefixe = $prefixe;
     }
 }
@@ -240,22 +254,25 @@ Pour que la classe B hérite de A, on utilise le mot clé `extends` comme montr�
 {% highlight php linenos %}
 <?php
 
-class Vehicule {
+class Vehicule
+{
+    protected $nombreDeRoues;
 
-    protected $nombre_de_roues;
-
-    public function __construct ($nombre_de_roues) {
-        $this->nombre_de_roues = $nombre_de_roues;
+    public function __construct($nombreDeRoues)
+    {
+        $this->nombreDeRoues = $nombreDeRoues;
     }
 
-    public function nombreDeRoues () {
-        return $this->nombre_de_roues;
+    public function nombreDeRoues()
+    {
+        return $this->nombreDeRoues;
     }
 }
 
-class Voiture extends Vehicule {
-
-    public function __construct () {
+class Voiture extends Vehicule
+{
+    public function __construct()
+    {
         // appel du constructeur parent
         parent::__construct(4);
     }
@@ -263,17 +280,18 @@ class Voiture extends Vehicule {
 
 class Moto extends Vehicule {
 
-    public function __construct () {
+    public function __construct()
+    {
         // appel du constructeur parent
         parent::__construct(2);
     }
 }
 
-$ma_voiture = new Voiture;
-echo "Ma voiture a " . $ma_voiture->nombreDeRoues() . " roues"; // Ma voiture a 4 roues
+$maVoiture = new Voiture;
+echo "Ma voiture a " . $maVoiture->nombreDeRoues() . " roues"; // Ma voiture a 4 roues
 
-$ma_moto = new Moto;
-echo "Ma moto a " . $ma_moto->nombreDeRoues() . " roues"; // Ma moto a 2 roues
+$maMoto = new Moto;
+echo "Ma moto a " . $maMoto->nombreDeRoues() . " roues"; // Ma moto a 2 roues
 
 ?>
 {% endhighlight %}
@@ -282,7 +300,7 @@ __Important__: En PHP, l'héritage multiple __n'existe pas__. Ce qui signifie qu
 
 ### Filliation, parents, enfants et arbre généalogique
 
-Une classe n'est pas seulement un moyen commode de rassembler des données et des comportements au sein d'une structure, c'est surtout un excellent moyen de créer de nouveaux _types_ de données, car en réalité, une classe peut être considérée comme un type au même sens qu'une chaine ou un entier.
+Une classe n'est pas seulement un moyen commode de rassembler des données et des comportements au sein d'une structure, c'est surtout un excellent moyen de créer de nouveaux _types_ de données, car en réalité une classe peut être considérée comme un type au même sens qu'une chaine ou un entier.
 
 Quand on réalise un héritage, la classe fille caractérise un nouveau type mais est toujours du type de la mère. Par exemple une pomme est toujours considérée un fruit, qui est toujours considéré comme un végétal. En programmation orientée objet c'est le même concept, on parle alors de _hiérarchie de types_.
 
@@ -293,19 +311,24 @@ Exemple de hiérarchie:
 {% highlight php linenos %}
 <?php
 
-class Vivant {
+class Vivant
+{
 }
 
-class Vegetal extends Vivant {
+class Vegetal extends Vivant
+{
 }
 
-class Fruit extends Vegetal {
+class Fruit extends Vegetal
+{
 }
 
-class Apple extends Fruit {
+class Apple extends Fruit
+{
 }
 
-class GoldenLady extends Apple {
+class GoldenLady extends Apple
+{
 }
 
 $object = new GoldenLady;
@@ -323,7 +346,7 @@ Il est d'ailleurs possible de spécifier sur un prototype quel type d'objet est 
 {% highlight php linenos %}
 <?php
 
-function manger (Fruit $fruit)
+function manger(Fruit $fruit)
 {
     echo "I'm eating " . get_class($fruit);
 }
@@ -334,7 +357,7 @@ manger($object); // I'm eating Apple
 ?>
 {% endhighlight %}
 
-On appelle cette syntaxe de paramètres le _type-hinting_, c'est à dire qu'on demande explicitement des objets du type (ou super-type) spécifié. N'importe quoi d'autre provoquera une erreur. Si on avait passé un type natif comme un entier ou encore une instance qui hérite de la classe `Vegetal` mais qui n'est pas un fruit, on se serait fait jeter.
+On appelle cette syntaxe de paramètres le _type-hinting_; c'est à dire qu'on demande explicitement des objets du type (ou super-type) spécifié. N'importe quoi d'autre provoquera une erreur. Si on avait passé un type natif comme un entier ou encore une instance qui hérite de la classe `Vegetal` mais qui n'est pas un fruit, on se serait fait jeter.
 
 Le type-hinting est extrèmement pratique pour sécuriser vos fonctions et vos méthodes en empêchant le développeur d'y mettre n'importe quoi.
 
@@ -359,36 +382,39 @@ Exemple de classe abstraite:
 {% highlight php linenos %}
 <?php
 
-abstract class Animal {
+abstract class Animal
+{
+    protected $nom;
 
-    protected $_nom;
-
-    public function __construct ($nom) {
-        $this->_nom = $nom;
+    public function __construct($nom)
+    {
+        $this->nom = $nom;
     }
 
-    abstract public function parler ();
+    abstract public function parler();
 }
 
-class Chien extends Animal {
-
-    public function parler () {
-        echo "$this->_nom: Wouf Wouf\n";
+class Chien extends Animal
+{
+    public function parler()
+    {
+        echo "$this->nom: Wouf Wouf\n";
     }
 }
 
-class Chat extends Animal {
-
-    public function parler () {
-        echo "$this->_nom: Miaou\n";
+class Chat extends Animal
+{
+    public function parler()
+    {
+        echo "$this->nom: Miaou\n";
     }
 }
 
 $chien = new Chien("Rex");
-$chien->parler(); // affiche Rex: Wouf Wouf
+$chien->parler(); // Rex: Wouf Wouf
 
-$chat  = new Chat("Sac-a-puces");
-$chat->parler();  // affichie Sac-a-puces: Miaou
+$chat = new Chat("Sac-a-puces");
+$chat->parler();  // Sac-a-puces: Miaou
 
 ?>
 {% endhighlight %}
@@ -410,8 +436,8 @@ Exemple d'interface:
 {% highlight php linenos %}
 <?php
 
-interface Forme2D {
-
+interface Forme2D
+{
     // toutes les formes en deux dimention ont une aire...
     public function obtenirAire ();
 
@@ -419,56 +445,65 @@ interface Forme2D {
     public function obtenirPerimetre ();
 }
 
-class Carre implements Forme2D {
+class Carre implements Forme2D
+{
+    protected $cote;
 
-    protected $_cote;
-
-    public function __construct ($cote) {
-        $this->_cote = $cote;
+    public function __construct($cote)
+    {
+        $this->cote = $cote;
     }
 
-    public function obtenirAire () {
-        return pow($this->_cote, 2);
+    public function obtenirAire()
+    {
+        return pow($this->cote, 2);
     }
 
-    public function obtenirPerimetre () {
-        return 4 * $this->_cote;
-    }
-}
-
-class Rectangle implements Forme2D {
-
-    protected $_longueur;
-    protected $_largeur;
-
-    public function __construct ($longueur, $largeur) {
-        $this->_longueur = $longueur;
-        $this->_largeur = $largeur;
-    }
-
-    public function obtenirAire () {
-        return $this->_longueur * $this->_largeur;
-    }
-
-    public function obtenirPerimetre () {
-        return 2 * ($this->_longueur + $this->_largeur);
+    public function obtenirPerimetre()
+    {
+        return 4 * $this->cote;
     }
 }
 
-class Cercle implements Forme2D {
+class Rectangle implements Forme2D
+{
+    protected $longueur;
+    protected $largeur;
 
-    protected $_rayon;
-
-    public function __construct ($rayon) {
-        $this->_rayon = $rayon;
+    public function __construct($longueur, $largeur)
+    {
+        $this->longueur = $longueur;
+        $this->largeur = $largeur;
     }
 
-    public function obtenirAire () {
-        return M_PI * pow($this->_rayon, 2);
+    public function obtenirAire()
+    {
+        return $this->longueur * $this->largeur;
     }
 
-    public function obtenirPerimetre () {
-        return M_PI * ($this->_rayon * 2);
+    public function obtenirPerimetre()
+    {
+        return 2 * ($this->longueur + $this->largeur);
+    }
+}
+
+class Cercle implements Forme2D
+{
+    protected $rayon;
+
+    public function __construct($rayon)
+    {
+        $this->rayon = $rayon;
+    }
+
+    public function obtenirAire()
+    {
+        return M_PI * pow($this->rayon, 2);
+    }
+
+    public function obtenirPerimetre()
+    {
+        return M_PI * ($this->rayon * 2);
     }
 }
 
@@ -484,17 +519,19 @@ Exemple d'utilisation générique d'une forme:
 
 // en reprennant l'exemple précédent
 
-class Figure2D {
+class Figure2D
+{
+    protected $formes;
 
-    protected $_formes;
-
-    public function ajouter (Forme2D $forme) {
-        $this->_formes[] = $forme;
+    public function ajouter(Forme2D $forme)
+    {
+        $this->formes[] = $forme;
     }
 
-    public function surfaceTotale () {
+    public function surfaceTotale()
+    {
         $surface = 0;
-        foreach ($this->_formes as $forme)
+        foreach ($this->formes as $forme)
             $surface += $forme->obtenirAire();
 
         return $surface;
@@ -520,15 +557,18 @@ Exemple d'héritage d'interfaces:
 {% highlight php linenos %}
 <?php
 
-interface Forme {
+interface Forme
+{
     // ...
 }
 
-interface Forme2D extends Forme {
+interface Forme2D extends Forme
+{
     // ...
 }
 
-interface Forme3D extends Forme {
+interface Forme3D extends Forme
+{
     // ...
 }
 
