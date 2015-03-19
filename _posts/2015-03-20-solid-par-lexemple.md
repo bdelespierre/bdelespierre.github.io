@@ -29,6 +29,18 @@ En conception orientée-objet, on fait souvent face à une problématique réccu
 
 Je parie mon chapeau que vous avez été (ou êtes encore) en contact avec du code présentant ce genre de problèmes. Un code STUPID (en général l'héritage de vos prédécesseurs) engendre <abbr title="Les changements se font en cascade">rigidité</abbr>, <abbr title="Des régressions apparaissent facilement">fragilité</abbr>, <abbr title="Il est impossible de réutiliser du code">immobilisme</abbr>, <abbr title="Il est plus facile de contourner les problèmes que de les résoudre correctement">viscosité</abbr> et <abbr title="Le code est illisible, voire incompréhensible">opacité</abbr>. En somme, le code devient intolérant aux changements et, comme je l'expliquais dans l'article [Quand le code devient toxique](/article/quand-le-code-devient-toxique), il devient urgent d'y remédier.
 
+> __boss__: Je t'ai demandé de passer le taux de TVA à 20% la semaine dernière, t'en es où ?
+
+> __dev__: Bah là je suis en train de revoir la gestion des utilisateurs
+
+> __boss__: Comment ça ?
+
+> __dev__: En fait la TVA est utilisée par la gestion-produits, qui est utilisée par la facturation, qui dépend de l'utilisateur, dont le profil indique le montant de TVA en fonction du pays qui se trouve en base et qu'on peut accéder qu'avec une jointure sur la table account_rights sinon ça casse l'authentification ce qui ne se produit qu'avec les comptes...
+
+> __boss__: Ok. Ok. Tu peux finir pour ce soir ? On doit livrer demain !
+
+> __dev__: ...
+
 ## J'ai besoin d'un code plus __SOLID__
 
 __SOLID__ est un acronyme mnémonique amusant qui rassemble les 5 principes de bases de la conception orientée-objet:
