@@ -133,6 +133,9 @@
               <ul>
                 <li><a href="/" class="no-scrolly"><span class="fa fa-home">Accueil</span></a></li>
                 <li><a href="#article" id="article-link" class="skel-panels-ignoreHref"><span class="fa fa-file-text-o">Article</span></a></li>
+                {% if page.tldr %}
+                <li><a href="#tldr" id="article-tldr" class="sekl-panels-ignoreHref"><span class="fa fa-bolt">TL;DR</span></a></li>
+                {% endif %}
                 <li><a href="#comments" id="comments-link" class="skel-panels-ignoreHref"><span class="fa fa-comments-o">Commentaires</span></a></li>
               </ul>
               {% when "cv" %}

@@ -5,8 +5,9 @@ title: SOLID par l'exemple
 date: 2015-03-20
 category: article
 tags: []
-description: Découvrez le principe SOLID avec des exemples concrêts en PHP
+description: Comprendre les principes SOLID avec des exemples concrêts en PHP
 spritzable: no
+tldr: yes
 image: /images/articles/captain-shield.jpg
 related:
 - title: Quand le code devient toxique
@@ -19,12 +20,12 @@ related:
 
 En conception orientée-objet, on fait souvent face à une problématique réccurente: comment construire un code à la fois robuste, simple et maintenable ? Avant de parler des principes __SOLID__, penchons nous sur ce qui rends le code __cauchemardesque__ pour les développeurs: le code STUPID
 
-+ <abbr title="Ou tout ce qui est global en général"><kbd>__S__</kbd> ingleton</abbr>
-+ <abbr title="Couplate fort"><kbd>__T__</kbd> ight-coupling</abbr>
-+ <abbr title="Impossible a tester"><kbd>__U__</kbd> ntestability</abbr>
-+ <abbr title="Optimisation prématurée"><kbd>__P__</kbd> remature optimization</abbr>
-+ <abbr title="Nommage incohérent"><kbd>__I__</kbd> nconsistence naming</abbr>
-+ <abbr title="Code duppliqué"><kbd>__D__</kbd> upplication</abbr>
++ <abbr title="Ou tout ce qui est global en général">__S__ingleton</abbr>
++ <abbr title="Couplate fort">__T__ight-coupling</abbr>
++ <abbr title="Impossible a tester">__U__ntestability</abbr>
++ <abbr title="Optimisation prématurée">__P__remature optimization</abbr>
++ <abbr title="Nommage incohérent">__I__nconsistence naming</abbr>
++ <abbr title="Code duppliqué">__D__upplication</abbr>
 
 Je parie mon chapeau que vous avez été (ou êtes encore) en contact avec du code présentant ce genre de problèmes. Un code STUPID (en général l'héritage de vos prédécesseurs) engendre <abbr title="Les changements se font en cascade">rigidité</abbr>, <abbr title="Des régressions apparaissent facilement">fragilité</abbr>, <abbr title="Il est impossible de réutiliser du code">immobilisme</abbr>, <abbr title="Il est plus facile de contourner les problèmes que de les résoudre correctement">viscosité</abbr> et <abbr title="Le code est illisible, voire incompréhensible">opacité</abbr>. En somme, le code devient intolérant aux changements et, comme je l'expliquais dans l'article [Quand le code devient toxique](/article/quand-le-code-devient-toxique), il devient urgent d'y remédier.
 
@@ -32,15 +33,15 @@ Je parie mon chapeau que vous avez été (ou êtes encore) en contact avec du co
 
 __SOLID__ est un acronyme mnémonique amusant qui rassemble les 5 principes de bases de la conception orientée-objet:
 
-+ <abbr title="Une seule responsabilité"><kbd>__S__</kbd> ingle responsibility</abbr>
-+ <abbr title="Ouvert / Fermé"><kbd>__O__</kbd> pen-closed</abbr>
-+ <abbr title="Principe de substitution de Liskov"><kbd>__L__</kbd> iskov Substitution</abbr>
-+ <abbr title="Ségrégation des interfaces"><kbd>__I__</kbd> nterface segregation</abbr>
-+ <abbr title="Inversion de dépendances"><kbd>__D__</kbd> ependency inversion</abbr>
++ <abbr title="Une seule responsabilité">__S__ingle responsibility</abbr>
++ <abbr title="Ouvert / Fermé">__O__pen-closed</abbr>
++ <abbr title="Principe de substitution de Liskov">__L__iskov Substitution</abbr>
++ <abbr title="Ségrégation des interfaces">__I__nterface segregation</abbr>
++ <abbr title="Inversion de dépendances">__D__ependency inversion</abbr>
 
-Voyons quelques exemples simples pour comprendre en quoi l'application de ces principes peuvent vous aider.
+Voyons quelques exemples simples pour comprendre en quoi l'application de ces principes peut nous aider.
 
-Remarque: les exemples ci-dessous sont purement fictifs et donnés uniquement à titre indicatif.
+__Remarque__: les exemples ci-dessous sont purement fictifs et donnés uniquement à titre indicatif.
 
 ## Principe de seule responsabilité (SRP)
 
@@ -117,7 +118,7 @@ class User
 class CookiesAuth
 {
     public function authenticate($user, $password)
-    {       
+    {
         $user = new User;
 
         // rechercher l'utilisateur correspondant
@@ -150,7 +151,7 @@ __Définition__:
 
 > Les classes doivent être ouvertes aux extensions mais fermées aux modifications
 
-En somme, on doit pouvoir changer un comportement sans devoir modifier à la main la définition des méthodes d'une classe. Il s'agit en réalité de l'application directe du principe de polymorphisme.
+En somme, on doit pouvoir changer un comportement sans devoir modifier à la main la définition des méthodes d'une classe. Il s'agit en réalité de l'application correcte du polymorphisme.
 
 __Démonstration__:
 
@@ -251,7 +252,7 @@ class Square extends Rectangle
     public function setDimentions($width, $height)
     {
         if (!$width == $height)
-            throw new UnexpectedValueException("with should be equal to height");
+            throw new UnexpectedValueException("width should be equal to height");
 
         parent::setDimentions($width, $height);
     }
@@ -272,7 +273,7 @@ function set_size(Rectangle $r, $w, $h)
     } catch (InvalidArgumentException $e) {
         return false;
     }
-    
+
     return $r;
 }
 
@@ -302,14 +303,221 @@ class Square
 
 Ce n'est bien sûr pas la seule option, encore une fois je vous laisse seul juge. On aurait tout aussi pu implémenter une méthode `validateDimentions` que `set_size` aurait pu utiliser pour valider en amont la largeur et la hauteur.
 
-Ce qui vaut pour les exceptions de `Rectangle` vaut également pour les valeurs de retour ansi que l'ordre, le type et le nombre des arguments. Le respect du principe de substitution de Liskov garantis que les changements dans les implémentation concrêtes des interfaces n'impacteront pas le bon déroulement du code client. C'est un gage de robustesse.
+Ce qui vaut pour les exceptions vaut également pour les valeurs de retour ansi que l'ordre, le type et le nombre des arguments des méthodes. Le respect du principe de substitution de Liskov garantis que les changements dans les implémentation concrêtes des interfaces n'impacteront pas le bon déroulement du code client. C'est un gage de robustesse.
 
 __Attention__: en PHP il est extrêmement facile de violer ce principe car les retours des méthodes __ne sont pas typés__ ! On ne peut donc (théoriquement) jamais garantir que ce que renvoie une méthode respecte le contrat prévu par l'interface. Immaginons qu'une méthode `incrementCounter` telle que déclarée sur l'interface soit supposée renvoyer un compteur après l'avoir incrémenté; le code client s'attendra à recevoir un entier mais pas de chance: l'implémentation réalisée renvoie `null`, ce qui peut exposer le premier à des erreurs inattendues voire des plantages !
 
 ## Principe de ségrégation des interfaces (ISP)
 
+__Définition__:
+
+> Plusieurs interfaces spécialisées valent mieux qu'une interface fourre-tout
+
+Les client ne devraient pas dépendre de méthodes qu'ils n'utilisent pas. On pourrait presque y voir une forme d'héritage fonctionnel: une interface ne devrait pas déclarer plus d'un ensemble _cohérent_ de méthodes. On parle aussi _d'interfaces de rôles_.
+
+__Démonstration__:
+
+{% highlight php linenos %}
+<?php
+
+interface UserInterface
+{
+    public function login($user, $password);
+
+    public function logout();
+
+    public function isConnected();
+
+    public function isAdmin();
+
+    public function getRights();
+}
+
+class User implements UserInterface
+{
+
+}
+
+?>
+{% endhighlight %}
+
+Ici l'interface `UserInterface` présente deux rôles: la gestion du login ainsi que la gestion des droits. Il eut été préférable de séparer ces deux rôles dans deux interfaces séparées, quitte à les réunir par la suite dans l'implémentation concrête de la classe `User`:
+
+{% highlight php linenos %}
+<?php
+
+interface LoginInterface
+{
+    public function login($user, $password);
+
+    public function logout();
+
+    public function isConnected();
+}
+
+interface PermissionInterface
+{
+    public function isAdmin();
+
+    public function getRights();
+}
+
+class User implements LogginInterface, PermissionInterface
+{
+
+}
+
+?>
+{% endhighlight %}
+
+Cette aproche est beaucoup plus souple car désormais les classes clientes pourront utiliser les instances de `LoginInterface` et `PermissionInterface` suivant leur besoin sans se retrouver obligé de supporter d'autres méthodes que celles décrites par le rôle qu'elles veulent utiliser. Par exemple, un composant qui ne s'occupe que de vérifier qu'un utilisateur dispose bien des droits d'accès à une ressource se fiche pas mal des méthodes de `LoginInterface`.
+
+Il faut cependant faire attention à ne pas trop segmenter les rôles et se retrouver ainsi avec une multitude d'interfaces. Ici encore, il faut faire preuve de bon sens.
+
 ## Principe d'inversion de dépendances (DIP)
 
-## Don't be a fool (DBFP)
+__Définition__:
 
-## TL;DR
+> Les modules haut-niveau ne devraient pas dépendre des modules bas-niveau, les deux devraient dépendre d'abstractions
+
+> Les abstractions ne devraient pas dépendre des détails, les détails devraient dépendre des abstractions
+
+Traduction: il faut autant que possible éviter le couplage de types concrêts et lui préférer un couplage de types abstraits. Les abstraction pouvant être implémentés de différentes façon sans remettre en question la hiérarchie des types abstraits, les changements dans les modules _bas-niveau_ n'impactenteront pas les modules _haut-niveau_ (généralement le business.) Tant que le principe de substitution de Liskov est repecté, les modules _haut-niveau_ sont à priori garantis de ne pas changer quand l'implémentation des modules _bas-niveau_ est modifiée.
+
+__Démonstration__:
+
+{% highlight php linenos %}
+<?php
+
+class EBookReader
+{
+    private $book;
+
+    function __construct(PDFBook $book)
+    {
+        $this->book = $book;
+    }
+
+    function read()
+    {
+        return $this->book->read();
+    }
+}
+
+class PDFBook
+{
+    function read()
+    {
+        echo "reading a pdf book.";
+    }
+}
+
+?>
+{% endhighlight %}
+
+Imaginons un instant que le scénario suivant: vous travaillez pour un éditeur de livres en ligne dont le choix initial était de proposer des livres au format PDF. Vous avez alors créé la classe `PDFBook` pour représenter les entrées de la table `pdf_books` ainsi que la liseuse `EBookReader` et tout fonctionne bien.
+
+Jusqu'au jour où un commercial vient vous voir avec une idée révolutionnaire ! On va se plugger sur l'API d'un partenaire pour proposer la lecture de ses bouquins au travers de notre interface afin d'augmenter pour l'utilisateur la taille de la bibliothèque. Chouette ! A ceci près que l'API vous envoie des fichiers au format ePub, illisibles par votre liseuse. Vous êtes donc obligé de mettre à jour EBookReader en ajoutant la gestion du nouveau format:
+
+{% highlight php linenos %}
+<?php
+
+class EBookReader
+{
+    private $book;
+
+    function __construct($book)
+    {
+        if (!$book instanceof EPubBook && !$book instanceof PDFBook)
+            throw new InvalidArgumentException("invalid book");
+
+        $this->book = $book;
+    }
+
+    function read()
+    {
+        return $this->book->read();
+    }
+}
+
+class EPubBook
+{
+    function read()
+    {
+        echo "reading a epub book.";
+    }
+}
+
+?>
+{% endhighlight %}
+
+Puis vient le jour où on décide d'ajouter le format Docx, puis le format Kindle, puis le format TXT etc. En regardant en arrière, il aurait mieux valu que la liseuse accepte un type abstrat d'EBook plutôt qu'un type concrêt:
+
+{% highlight php linenos %}
+<?php
+
+interface EBook
+{
+    public function read();
+}
+
+class EBookReader(EBook $book)
+{
+    private $book;
+
+    function __construct($book)
+    {
+        if (!$book instanceof EPubBook && !$book instanceof PDFBook)
+            throw new InvalidArgumentException("invalid book");
+
+        $this->book = $book;
+    }
+
+    function read()
+    {
+        return $this->book->read();
+    }
+}
+
+?>
+{% endhighlight %}
+
+Désormais, vous pouvez créer autant de types d'EBook que vous voulez sans devoir toucher à la classe EBookReader à chaque fois.
+
+Le principe d'inversion de dépendance vous oblige donc à respecter le principe ouvert / fermé en permettant de fournir des types abstraits. Tant que tout le monde respecte le contrat prévu par l'interface, les détails d'implémentation n'impactent pas la validité du code client, ce qui augment considérablement la réutilisabilité du code !
+
+## <abbr title="Ne soyez pas idiot">Don't be a fool principle</abbr> (DBFP)
+
+Il vous est peut être apparu que tous ces principes se renforcent mutuellement dans une démarche vertueuse dont l'aboutissement est de produire un code très perméable aux changements. Mais est-ce vraiment __la__ chose à faire dans tous les cas ? Pas forcément. Ces principes sont à la conception objet ce que les [formes normales](http://fr.wikipedia.org/wiki/Forme_normale_%28bases_de_donn%C3%A9es_relationnelles%29) sont à la modélisation des bases de données: il faut savoir faire des exceptions. Il faut les comprendre, les assimiler, mais pas les appliquer à la lettre au mépris de tout bon sens.
+
+Soyons honnête, le respect _stricto sensu_ de ces principes à pour conséquence néfaste de produire un code plus complexe et plus éparpillé et, in fine, plus difficile à apréhender dans son ensemble qu'un code qui se cantone à la description de la logique métier telle qu'exprimée dans le cahier des charges.
+
+On a vite fait de se retrouver avec des interfaces qui ne sont utilisées que par une seule classe, des adaptateurs pour un seul type concrêt, des factories qui renvoient toujours la même chose etc. Il faut donc faire preuve de __bon sens__ pour déterminer ce qui doit être __SOLID__ et ce qu'on peut se permettre de laisser en jachère; le mieux est l'ennemi du bien.
+
+En résumé, ces principes sont, vous l'avez compris, fondamentaux pour l'écriture d'un code propre __mais__ en aucun cas ils ne se substituent aux principes <abbr title="Keep It Simple, Stupid">__KISS__</abbr> et <abbr title="You Ain't Gonna Need It">__YAGNI__</abbr>. Rappellez-vous que la complexité architecturable d'un projet doit être le reflet de sa complexité métier; ne vous compliquez pas la vie inutilement et faites preuve de discernement avec les principes __SOLID__.
+
+> __boss__: t'en es où avec la page de listing des ventes ? ça fait 2 semaines qu'on l'attend...
+
+> __dev__: j'avance, là j'écris la classe _AbstractEntityControllerFactory_ qui est utilisée au niveau du _HTTPKernel_ et utilise _HTTPRequest_ qui sert à abstraire le contexte des requêtes afin de fournir une validation en amont en utilisant un _EventDispatcher_ couplé avec un _DataValidator_, tout ça derrière l'_AuthManager_ bien entendu.
+
+> __boss__: ...
+
+> __boss__: d'accord, mais c'était juste un script pour Sophie de la compta pour qu'elle voit les ID des ventes quand elle fait les factures...
+
+## <b id="tldr">TL;DR</b>
+
+__SOLID__ = __S__RP + __O__CP + __L__SP + __I__SP__ + __D__IP + [bon sens](http://fr.wiktionary.org/wiki/bon_sens)
+
+<dl>
+    <dt><abbr title="Single Reponsibility Principle">SRP</abbr></dt>
+    <dd>Principe de seule responsabilité: une classe devrait avoir une et une seule raison de changer</dd>
+    <dt><abbr title="Open-Closed Principle">OCP</abbr></dt>
+    <dd>Principe ouvert-fermé: Les classes doivent être ouvertes aux extensions mais fermées aux modifications</dd>
+    <dt><abbr title="Liskov Substitution Principle">LSP</abbr></dt>
+    <dd>Principe de substitution de Liskov: les classes doivent pouvoir être remplacées par leurs filles sans altérer le comportement de ses utilisateurs</dd>
+    <dt><abbr title="Interface Segregation Principle">ISP</abbr></dt>
+    <dd>Plusieurs interfaces spécifiques aux clients valent mieux qu'une interface fourre-tout</dd>
+    <dt><abbr title="Dependency Inversion Principle">DIP</abbr></dt>
+    <dd>Les modules haut-niveau ne devraient pas dépendre des modules bas-niveau, les deux devraient dépendre d'abstractions</dd>
+    <dd>Les abstractions ne devraient pas dépendre des détails, les détails devraient dépendre des abstractions</dd>
+</dl>
