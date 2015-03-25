@@ -98,7 +98,7 @@ class User
 ?>
 {% endhighlight %}
 
-La méthode `User::login` à deux casquettes: elle se charge de trouver les données de l'utilisateur __et__ s'occuper de gêrer la session. Ce qui pose plusieurs problèmes:
+La méthode `User::login` à deux casquettes: elle se charge de trouver les données de l'utilisateur __et__ de gêrer la session. Ce qui pose plusieurs problèmes:
 
 * si on change la structure de la table `users`, alors tous les scripts qui dépendent du contenu de $_SESSION['user'] sont potentiellement invalides
 * si on décide de changer la méthode d'authentification, alors il faut également changer la classe `User` et potentiellement la requête de sélection (pour effectuer une jointure par exemple)
@@ -294,7 +294,7 @@ set_size(new Square, 10, 20);
 ?>
 {% endhighlight %}
 
-`reset_size` devrait-elle se spécialiser en fonction du type précis de `Rectangle` pour essayer d'attraper l'exception levée par `Square::setDimentions` ? Le principe de Liskov impose de respecter le _contrat_ défini par la classe mère (voire par l'interface si il y en a une), y compris au niveau de ses exceptions:
+`set_size` devrait-elle se spécialiser en fonction du type précis de `Rectangle` pour essayer d'attraper l'exception levée par `Square::setDimentions` ? Le principe de Liskov impose de respecter le _contrat_ défini par la classe mère (voire par l'interface si il y en a une), y compris au niveau de ses exceptions:
 
 {% highlight php linenos %}
 <?php
@@ -500,7 +500,7 @@ Le principe d'inversion de dépendance vous oblige donc à respecter le principe
 
 ## <abbr title="Ne soyez pas idiot">Don't be a fool principle</abbr> (DBFP)
 
-Il vous est peut être apparu que tous ces principes se renforcent mutuellement dans une démarche vertueuse dont l'aboutissement est de produire un code très perméable aux changements. Mais est-ce vraiment __la__ chose à faire dans tous les cas ? Pas forcément. Ces principes sont à la conception objet ce que les [formes normales](http://fr.wikipedia.org/wiki/Forme_normale_%28bases_de_donn%C3%A9es_relationnelles%29) sont à la modélisation des bases de données: il faut savoir faire des exceptions. Il faut les comprendre, les assimiler, mais pas les appliquer à la lettre au mépris de tout bon sens.
+Il vous est peut être apparu que tous ces principes se renforcent mutuellement dans une démarche vertueuse dont l'aboutissement est de produire un code très perméable aux changements. Mais est-ce vraiment __la__ chose à faire dans tous les cas ? Pas forcément. Ces principes sont à la conception objet ce que les [formes normales](http://fr.wikipedia.org/wiki/Forme_normale_%28bases_de_donn%C3%A9es_relationnelles%29) sont à la modélisation des bases de données: il faut savoir faire des exceptions. Il faut les comprendre, les assimiler, mais pas les appliquer à la lettre en dépit de tout bon sens.
 
 Soyons honnête, le respect _stricto sensu_ de ces principes à pour conséquence néfaste de produire un code plus complexe et plus éparpillé et, in fine, plus difficile à apréhender dans son ensemble qu'un code qui se cantone à la description de la logique métier telle qu'exprimée dans le cahier des charges.
 
