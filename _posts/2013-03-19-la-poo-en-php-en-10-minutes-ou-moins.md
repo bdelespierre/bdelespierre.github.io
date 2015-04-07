@@ -439,10 +439,10 @@ Exemple d'interface:
 interface Forme2D
 {
     // toutes les formes en deux dimention ont une aire...
-    public function obtenirAire ();
+    public function obtenirAire();
 
     // ... et un périmètre
-    public function obtenirPerimetre ();
+    public function obtenirPerimetre();
 }
 
 class Carre implements Forme2D
@@ -538,7 +538,7 @@ class Figure2D
     }
 }
 
-$figure = new Figure;
+$figure = new Figure2D;
 $figure->ajouter(new Cercle(3));
 $figure->ajouter(new Carre(4));
 $figure->ajouter(new Rectangle(5,6));
@@ -550,30 +550,31 @@ echo "Ces trois figures ont une surface totale de " . $figure->surfaceTotale(); 
 
 On voit rapidement l'intérêt du polymorphisme dans ce cas: grâce à l'interface `Forme2D`, on peut créer autant de type de formes qu'on veut, par exemple le triangle, le losange, le polygone etc. Et tous ces objets, aussi longtemps qu'ils hériteront de `Forme2D`, seront utilisables avec la classe `Figure2D`.
 
-Contrairement aux classes, une interface peut étendre plusieurs interfaces avec le mot clé `extends`. On notera également que les cas qui justifient un héritage d'interfaces sont assez rares, il est peu probable que vous en ayez besoin un jour.
+Contrairement aux classes, une interface peut étendre plusieurs interfaces avec le mot clé `extends`. On notera également que les cas qui justifient un héritage d'interfaces en vue d'un sous typage sont assez rares, il est plus fréquent de voir des interfaces rassemblant les déclarations de plusieurs autres dans un but pratique:
 
 Exemple d'héritage d'interfaces:
 
 {% highlight php linenos %}
 <?php
 
-interface Forme
-{
-    // ...
-}
-
-interface Forme2D extends Forme
-{
-    // ...
-}
-
-interface Forme3D extends Forme
+interface MaCollection extends Serializable, Countable, ArrayAccess, Iterator
 {
     // ...
 }
 
 ?>
 {% endhighlight %}
+
+En PHP il existe plusieurs interfaces pré-définies qui sont assez pratiques et dont on se sert souvent notamment pour la surcharge des opérateurs comme:
+
++ Serializable qui permet de spécialiser le comportement de la fonction fonction `serialize()` pour un objet
++ Countable qui permet d'utiliser directement la fonction `count()` sur l'objet
++ ArrayAccess qui permet d'utiliser l'opérateur [] (crochet-crochet)
++ Iterator spécifie le comportement de l'objet comme un iterateur, utilisable avec `foreach`
+
+Ces interfaces et leurs usages feront l'objet d'un futur article.
+
+Vous trouverez la liste de ces interfaces pré-déclarées sur [la page du manuel](http://php.net/manual/fr/reserved.interfaces.php).
 
 ## Conclusion
 
