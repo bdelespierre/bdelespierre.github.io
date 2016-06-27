@@ -1,0 +1,193 @@
+---
+layout: main
+title: Le blog de Benjamin Delespierre
+tags: [blog,php,projets,developpement,web,oop,javascript,js,benjamin delespierre]
+image: http://bdelespierre.fr/images/avatar.jpg
+---
+<!-- Intro -->
+<section id="top" class="one front-page">
+  <div class="container">
+
+    <header>
+      <h2 class="alt animated fadeInDown">Bonjour, je suis <strong>Benjamin Delespierre</strong> et je suis développeur web</h2>
+    </header>
+
+    <p class="animated fadeInDown">Mon métier est ma passion, ma philosophie s'exprime en deux mots: <strong>simplicité</strong> et <strong>cohérence</strong>. J'évangélise souvent en faveur des bonnes pratiques, du respect des conventions et j'écris parfois <a href="#articles" class="scrolly">quelques articles</a> pour exprimer mon point de vue ou faire connaitre les technologies qui font mon quotidien.</p>
+
+    <footer>
+      <a href="#articles" class="button scrolly animated fadeInUp">Mes articles</a>
+      <a href="#projects" class="button scrolly animated fadeInUp">Mes projets</a>
+      <span class="button animated fadeInUp" id="raptor">Mon ami Fred</span>
+    </footer>
+
+  </div>
+</section>
+
+<!-- Articles -->
+<section id="articles" class="two">
+  <div class="container">
+
+    <header>
+      <h2>Articles</h2>
+    </header>
+
+    <ul class="article-list">
+      {% for post in site.posts %}
+      <li class="animated">
+        <a href="{{ post.url }}">
+          <span class="date">{{ post.date | date: "%d/%m/%Y" }}</span>
+          <span class="title">{{ post.title }}</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+
+  </div>
+</section>
+
+<!-- Projets -->
+<section id="projects" class="three">
+  <div class="container">
+
+    <header>
+      <h2>Projets</h2>
+    </header>
+
+    <p>Que ce soit pour expérimenter de nouvelles technologies, pour perfectionner mes compétences ou tout simplement pour m'amuser, je réalise et publie mes projets sous license libre sur <a href="https://github.com/bdelespierre"></a>GitHub. Je vous présente ici quelques uns des plus intéressants et des plus aboutis.</p>
+
+    <div class="row">
+      <div class="6u animated">
+        <header>
+          <h3><a href="https://github.com/bdelespierre/underscore.php">Underscore.php</a></h3>
+        </header>
+        <p>Portage de la célèbre librairie Underscore.js en PHP.</p>
+      </div>
+      <div class="6u animated">
+        <header>
+          <h3><a href="https://github.com/bdelespierre/phoebe">Phoebe</a></h3>
+        </header>
+        <p>Mon framework de tests unitaires PHP, inspiré par Jasmine.</p>
+      </div>
+      <div class="6u animated">
+        <header>
+          <h3><a href="https://github.com/bdelespierre/prototype.php">Prototype.php</a></h3>
+        </header>
+        <p>Une implémentation du prototype en PHP.</p>
+      </div>
+      <div class="6u animated">
+        <header>
+          <h3><a href="https://github.com/bdelespierre/jquery-folding">jQuery-Folding</a></h3>
+        </header>
+        <p>Un plugin jQuery tout bête pour déplier/replier des blocs.</p>
+      </div>
+      <div class="6u animated">
+        <header>
+          <h3><a href="https://github.com/bdelespierre/jquery-quickfilter">jQuery-QuickFilter</a></h3>
+        </header>
+        <p>Un plugin jQuery pour filtrer simplement une liste.</p>
+      </div>
+      <div class="6u animated">
+        <header>
+          <h3><a href="https://github.com/bdelespierre/cobalt">Cobalt</a></h3>
+        </header>
+        <p>Un nano-framework PHP taillé pour REST.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- About Me -->
+<section id="about" class="four">
+  <div class="container">
+
+    <header>
+      <h2>&Agrave; propos</h2>
+    </header>
+
+    <a href="https://plus.google.com/+BenjaminDelespierre" class="image"><img src="/images/avatar.jpg" alt="Ma photo de profil" class="round polaroid animated" /></a>
+
+    <p class="animated">Je suis avant tout un technicien, ce que j'aime c'est participer à des projets innovants mettant en oeuvre les nouvelles technologies. C'est surtout pour cette raison que je suis devenu développeur web, c'est un secteur en perpétuel mouvement avec des révolutions tous les ans et sans cesses de nouvelles choses à apprendre, de nouveaux défis à réaliser. Je recherche dans mon travail le même dynamisme et la même fraîcheur.</p>
+
+    <footer>
+      <a href="cv.html" class="button animated">Voir mon CV</a>
+      <a href="" class="button mailto animated">Me Contacter</a>
+    </footer>
+
+  </div>
+</section>
+
+<!-- Contact
+<section id="contact" class="five">
+  <div class="container">
+
+    <header>
+      <h2>Contact</h2>
+    </header>
+
+    <p>Elementum sem parturient nulla quam placerat viverra
+    mauris non cum elit tempus ullamcorper dolor. Libero rutrum ut lacinia
+    donec curae mus. Eleifend id porttitor ac ultricies lobortis sem nunc
+    orci ridiculus faucibus a consectetur. Porttitor curae mauris urna mi dolor.</p>
+
+    <form method="post" action="#">
+      <div class="row half">
+        <div class="6u"><input type="text" class="text" name="name" placeholder="Name" /></div>
+        <div class="6u"><input type="text" class="text" name="email" placeholder="Email" /></div>
+      </div>
+      <div class="row half">
+        <div class="12u">
+          <textarea name="message" placeholder="Message"></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="12u">
+          <a href="#" class="button submit">Send Message</a>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</section>
+-->
+
+<script src="/js/jquery.raptorize.1.0.js"></script>
+<script>
+$(function () {
+
+  // Fred le raptor
+
+  var raptorMessages = [
+    "J'espère qu'il ne vous a pas fait peur",
+    "Fred, arrête d'embêter les gens !",
+    "Au pied, Fred !",
+    "Alors Fred, tu veux bouffer John Ammond ?",
+    "J'ai adopté Fred quand Jurassic Park a fermé",
+    "Depuis on est super potes",
+    "Pas vrai Fred ?"
+  ].reverse();
+
+  $("#raptor").raptorize({ complete: function () {
+    $('#raptor').html(raptorMessages.pop() || "Raaaawwwrrrr...");
+  }});
+
+  // animations
+
+  $('#articles li').one('inview', function (event, visible) {
+    visible && $(this).addClass('fadeInUpBig');
+  });
+
+  $('#projects .row > div').one('inview', function (event, visible) {
+    visible && $(this).addClass('bounceIn');
+  });
+
+  $('#about .image img').one('inview', function (event, visible) {
+    visible && $(this).addClass('flipInX');
+  });
+
+  $('#about p, #about .button').one('inview', function (event, visible) {
+    visible && $(this).addClass('fadeInDown');
+  });
+
+});
+</script>

@@ -1,9 +1,9 @@
 name: Benjamin Delespierre
-description: Ma vie mon oeuvre mon blog
+description: Ma vie, mon oeuvre, mon blog
 url: http://bdelespierre.fr
 markdown: redcarpet
 pygments: true
 exclude: ['blog.sublime-project', 'blog.sublime-workspace']
 permalink: /article/:title
-main_title: bdelespierre
-description: blog d'un développeur web et midnight-projects
+main_title: @@bdelespierre
+description: blog d'un développeur web et ses midnight-projects

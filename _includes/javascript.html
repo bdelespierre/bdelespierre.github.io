@@ -1,0 +1,31 @@
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.scrollex.min.js"></script>
+<script src="assets/js/jquery.scrolly.min.js"></script>
+<script src="assets/js/skel.min.js"></script>
+<script src="assets/js/util.js"></script>
+<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+<script src="assets/js/main.js"></script>
+
+<script type="text/javascript">
+    $(function() {
+        $('#intro a.button').click(function(event) {
+            event.preventDefault();
+            $(this).parents('.actions').hide('fast').after('<strong>' + $(this).text() + '<strong>');
+            $($(this).attr('href')).show('fast');
+        })
+
+        var raptorMessages = [
+            "J'espère qu'il ne vous a pas fait peur",
+            "Fred, arrête d'embêter les gens !",
+            "Au pied, Fred !",
+            "Alors Fred, tu veux bouffer John Ammond ?",
+            "J'ai adopté Fred quand Jurassic Park a fermé",
+            "Depuis on est super potes",
+            "Pas vrai Fred ?"
+        ].reverse();
+
+        $('[href=#raptor]').raptorize({ complete: function () {
+            $(this).html(raptorMessages.pop() || "Raaaawwwrrrr...");
+        }});
+    })
+</script>

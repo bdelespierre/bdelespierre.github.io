@@ -1,0 +1,36 @@
+<meta charset="utf-8">
+<meta http-equiv="content-language" content="fr">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="description" content="{{ page.description | default: site.description }}">
+<meta name="keywords" content="{{page.tags | join: ','}}">
+
+<!-- twitter -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@bdelespierre">
+<meta name="twitter:title" content="{{ page.title }}">
+<meta name="twitter:description" content="{{ page.description | default: site.description }}">
+<meta name="twitter:creator" content="@bdelespierre">
+<meta name="twitter:image:src" content="{{ page.image | default: site.image }}">
+<meta name="twitter:domain" content="bdelespierre.fr">
+<!-- endtwitter -->
+
+<!-- facebook -->
+<meta property="og:title" content="{{ page.title }}">
+<meta property="og:type" content="{% if page.type == 'post' %}article{% else %}website{% endif %}">
+<meta property="og:url" content="{{ site.url }}{{ page.url }}">
+<meta property="og:image" content="{{ page.image | default: site.image }}">
+<meta property="og:description" content="{{ page.description | default: site.description }}">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="@bdelespierre">
+{% if page.type == "article" %}
+    <meta property="og:article:published_time" content="{{ page.date }}">
+    <meta property="og:article:author" content="Benjamin Delespierre">
+    {% if page.category %}
+        <meta property="og:article:section" content="{{ page.category }}">
+    {% endif %}
+    {% for tag in page.tags %}
+        <meta property="og:article:tag" content="{{ tag }}">
+    {% endfor %}
+{% endif %}
+<!-- endfacebook -->
