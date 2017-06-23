@@ -160,7 +160,6 @@
         <div class="row justify-content-center">
           <div class="col-md-6">
             <p class="text-shadow-drop-center">Ingénieur d'&Eacute;tudes et Développement - Spécialiste PHP - 8 ans d'expérience professionnelle - <a href="#faq">FAQ</a></p>
-            
           </div>
         </div>
       </div>
@@ -422,9 +421,9 @@
     
     <div id="locked">
       <div class="container text-center">
-        <p>Vous consultez actuellement une version restreinte de ce CV.</p>
+        <p>Pour voir la version complète</p>
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#unlock">
-          Voir la version complète <b>gratuitement</b>
+          Envoyez moi un <b>message</b>
         </button>
       </div>
     </div>
@@ -450,22 +449,10 @@
           unlock() && $('#unlock').modal('hide');
         })
         
-        localStorage.getItem('unlocked') && unlock();
+        if (localStorage.getItem('unlocked') || location.hash == "#42") {
+          unlock();
+        }
       })
     </script>
-    
-    
-    <!-- Hotjar Tracking Code for www.bdelespierre.fr -->
-    <script>
-      (function(h,o,t,j,a,r){
-        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-        h._hjSettings={hjid:537586,hjsv:5};
-        a=o.getElementsByTagName('head')[0];
-        r=o.createElement('script');r.async=1;
-        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-        a.appendChild(r);
-      })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
-    </script>
-    <!-- End Hotjar Tracking Code -->
   </body>
 </html>
