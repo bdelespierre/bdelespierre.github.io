@@ -17,8 +17,7 @@ var banner = ['/*!\n',
 ].join('');
 
 // Copy third party libraries from /node_modules into /vendor
-gulp.task('vendor', function() {
-
+const vendorTask = function(done) {
   // Bootstrap
   gulp.src([
       './node_modules/bootstrap/dist/**/*',
@@ -73,19 +72,20 @@ gulp.task('vendor', function() {
     ])
     .pipe(gulp.dest('./vendor/simple-line-icons/css'))
 
-});
+  done();
+}
 
 // Compile SCSS
-gulp.task('css:compile', function() {
+const cssCompileTask = function() {
   return gulp.src('./scss/**/*.scss')
     .pipe(sass.sync({
       outputStyle: 'expanded'
     }).on('error', sass.logError))
     .pipe(gulp.dest('./css'))
-});
+}
 
 // Minify CSS
-gulp.task('css:minify', ['css:compile'], function() {
+const cssMinifyTask = function() {
   return gulp.src([
       './css/*.css',
       '!./css/*.min.css'
@@ -96,13 +96,10 @@ gulp.task('css:minify', ['css:compile'], function() {
     }))
     .pipe(gulp.dest('./css'))
     .pipe(browserSync.stream());
-});
-
-// CSS
-gulp.task('css', ['css:compile', 'css:minify']);
+}
 
 // Minify JavaScript
-gulp.task('js:minify', function() {
+const jsMinifyTask = function() {
   return gulp.src([
       './js/*.js',
       '!./js/*.min.js'
@@ -113,26 +110,27 @@ gulp.task('js:minify', function() {
     }))
     .pipe(gulp.dest('./js'))
     .pipe(browserSync.stream());
-});
-
-// JS
-gulp.task('js', ['js:minify']);
-
-// Default task
-gulp.task('default', ['css', 'js', 'vendor']);
+}
 
 // Configure the browserSync task
-gulp.task('browserSync', function() {
+const browserSyncTask = function() {
   browserSync.init({
     server: {
       baseDir: "./"
     }
   });
-});
+}
 
 // Dev task
-gulp.task('dev', ['css', 'js', 'browserSync'], function() {
+const devTask = function() {
   gulp.watch('./scss/*.scss', ['css']);
   gulp.watch('./js/*.js', ['js']);
   gulp.watch('./*.html', browserSync.reload);
-});
+}
+
+exports.vendor = vendorTask;
+exports.css = gulp.series(cssCompileTask, cssMinifyTask);
+exports.js = jsMinifyTask;
+exports.default = gulp.series(exports.css, exports.js, exports.vendor);
+exports.browserSync = browserSyncTask;
+exports.dev = devTask;
