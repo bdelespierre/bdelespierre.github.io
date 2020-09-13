@@ -1,0 +1,17 @@
+// Core variables and mixins
+@import "variables.scss";
+@import "mixins.scss";
+// Boostrap
+@import "node_modules/bootstrap/scss/bootstrap";
+// Global CSS
+@import "global.scss";
+@import "lang.scss";
+@import "nav.scss";
+@import "resume-item.scss";
+@import "bootstrap-overrides.scss";
+// Components
+@import "node_modules/@fortawesome/fontawesome-free/scss/fontawesome";
+@import "node_modules/@fortawesome/fontawesome-free/scss/solid";
+@import "node_modules/@fortawesome/fontawesome-free/scss/brands";
+@import "node_modules/devicon/devicon";
+@import "node_modules/devicon/devicon-colors";
