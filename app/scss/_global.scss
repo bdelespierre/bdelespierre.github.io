@@ -5,6 +5,7 @@ body {
   padding-top: 54px;
   color: $gray-600;
 }
+
 @media (min-width: 992px) {
   body {
     padding-top: 0;
@@ -29,6 +30,13 @@ h1 {
   line-height: 5.5rem;
 }
 
+@media (max-width: 576px) {
+  h1 {
+    font-size: 20vw;
+    line-height: 18vw;
+  }
+}
+
 h2 {
   font-size: 3.5rem;
 }
@@ -50,6 +58,10 @@ h2 {
       font-size: 1.75rem;
     }
   }
+}
+
+.list-inline-item {
+  margin-bottom: .5rem;
 }
 
 .list-icons {
